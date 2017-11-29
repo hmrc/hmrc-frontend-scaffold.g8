@@ -1,0 +1,30 @@
+@import utils.RadioOption
+
+@(
+        field: Field,
+        legend: String,
+        legendClass: Option[String] = None,
+        hint: Option[String] = None,
+        trackGa: Boolean = false,
+        inputs: Seq[RadioOption]
+)(implicit messages: Messages)
+
+<div class="form-field @if(field.hasErrors){form-field--error}">
+    <fieldset class="form-group" id="@{field.id}">
+        <legend>
+            <span class="bold-small @if(legendClass.nonEmpty){@{legendClass.get}}">@legend</span>
+            @if(hint.nonEmpty){
+                <span class="form-hint">@{hint.get}</span>
+            }
+            @field.errors.map { error =>
+                <span class="error-notification" id="error-message-@{field.id}-input">@messages(error.message, error.args: _*)</span>
+            }
+        </legend>
+        @for(input <- inputs) {
+            <label class="block-label selection-button-radio" for="@{input.id}">
+                <input id="@{input.id}" type="radio" name="@{field.name}" value="@{input.value}" @if(field.value == Some(input.value)){checked="checked"} @if(trackGa){data-journey-click="$name$:click:@{input.id}"} />
+                @messages(input.messageKey)
+            </label>
+        }
+    </fieldset>
+</div>

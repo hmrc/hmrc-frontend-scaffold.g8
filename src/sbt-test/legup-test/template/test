@@ -1,0 +1,8 @@
+# Calls applies the template in a tmp directory, the output dir is 'g8'
+# make sure to include this as the route for any file checks.
+> g8
+
+$ exists g8/app
+$ exists g8/test
+$ exists g8/.gitignore
+

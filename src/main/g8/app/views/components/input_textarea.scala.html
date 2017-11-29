@@ -1,0 +1,39 @@
+@(
+        field: Field,
+        label: String,
+        secondaryLabel: Option[String] = None,
+        inputClass: Option[String] = None,
+        hint: Option[String] = None,
+        charLimit: Option[Int] = None
+)(implicit messages: Messages)
+
+<div class="form-field @if(field.hasErrors){form-field--error}">
+    <label class="form-label" for="@{field.id}">
+        <span class="bold">@label</span>
+        @hint.map { hint =>
+            <span class="form-hint">@hint</span>
+        }
+        @field.errors.map { error =>
+            <span class="error-notification" id="error-message-@{field.id}-input">@messages(error.message, error.args: _*)</span>
+        }
+    </label>
+    <div class="form-control-wrapper char-counter" data-char-counter>
+        <textarea
+        class="form-control form-control--full-width @inputClass"
+        id="@{field.id}"
+        name="@{field.id}"
+        value="@{field.value}"
+        aria-describedby="error-message-@{field.id}-input"
+            @if(charLimit.isDefined){maxLength="@{charLimit}"}
+        data-char-field
+        cols="30"
+        rows="20"
+        ></textarea>
+        @if(charLimit.isDefined){
+            <noscript>
+                <p class="char-counter-text flush">@messages("site.textarea.char_limit", charLimit.get)</p>
+            </noscript>
+        }
+    </div>
+</div>
+

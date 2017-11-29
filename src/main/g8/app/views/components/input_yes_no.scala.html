@@ -1,0 +1,36 @@
+@(
+        field: Field,
+        label: String,
+        secondaryLabel: Option[String] = None,
+        inputClass: Option[String] = None,
+        hint: Option[String] = None,
+        yesAssoc: Option[String] = None,
+        noAssoc: Option[String] = None,
+        labelClass: Option[String] = None
+)(implicit messages: Messages)
+
+
+<div class="form-field @if(field.hasErrors){form-field--error}">
+    <fieldset class="inline" id="@{field.id}">
+
+        <legend>
+            <span @if(labelClass.nonEmpty){class="@labelClass"}>@label</span>
+            @if(hint.nonEmpty){
+                <span class="form-hint">@hint</span>
+            }
+            @field.errors.map { error =>
+                <span class="error-notification" id="error-message-@{field.id}-input">@messages(error.message, error.args: _*)</span>
+            }
+        </legend>
+        <label class="block-label selection-button-radio" for="@{field.id}-yes" data-target="@if(yesAssoc.nonEmpty){@yesAssoc}">
+            <input id="@{field.id}-yes" type="radio" name="@{field.id}" value="true" @if(field.value.contains("true")){checked="checked"} />
+            @messages("site.yes")
+        </label>
+        <label class="block-label selection-button-radio" for="@{field.id}-no" data-target="@if(noAssoc.nonEmpty){@noAssoc}">
+            <input id="@{field.id}-no" type="radio" name="@{field.id}" value="false" @if(field.value.contains("false")){checked="checked"} />
+            @messages("site.no")
+        </label>
+
+    </fieldset>
+</div>
+

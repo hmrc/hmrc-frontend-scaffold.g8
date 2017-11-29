@@ -1,0 +1,13 @@
+@import config.FrontendAppConfig
+
+@(pageTitle: String, heading: String, message: String, appConfig: FrontendAppConfig)(implicit request: Request[_], messages: Messages)
+
+@contentHeader = {
+  <h1>@heading</h1>
+}
+
+@mainContent = {
+  <p>@message</p>
+}
+
+@govuk_wrapper(appConfig = appConfig, title = pageTitle, contentHeader = Some(contentHeader), mainContent = mainContent)

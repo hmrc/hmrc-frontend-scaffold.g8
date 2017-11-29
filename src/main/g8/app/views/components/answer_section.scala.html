@@ -1,0 +1,14 @@
+@import viewmodels.AnswerSection
+@import views.html._
+
+@(answerSection: AnswerSection)(implicit messages: Messages)
+
+@if(answerSection.headingKey.isDefined){
+    <h2>@messages(answerSection.headingKey.get)</h2>
+}
+
+<ul role="list" class="tabular-data tabular-data--list">
+    @for(row <- answerSection.rows){
+        @components.answer_row(row)
+    }
+</ul>

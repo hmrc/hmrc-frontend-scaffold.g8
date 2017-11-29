@@ -1,0 +1,12 @@
+@import config.FrontendAppConfig
+
+@(appConfig: FrontendAppConfig)(implicit request: Request[_], messages: Messages)
+
+@main_template(
+    title = messages("unauthorised.title"),
+    appConfig = appConfig,
+    bodyClasses = None) {
+
+    <h1 class="heading-xlarge">@messages("unauthorised.heading")</h1>
+
+}

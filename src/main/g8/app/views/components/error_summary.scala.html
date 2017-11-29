@@ -1,0 +1,18 @@
+@(errors: Seq[FormError])(implicit messages: Messages)
+@if(errors.nonEmpty) {
+    <div class="error-summary error-summary--show" role="group" aria-labelledby="error-summary-heading" tabindex="-1">
+
+        <h2 class="h2-heading" id="error-summary-heading">
+        @messages("error.summary.title")
+        </h2>
+
+        <p>@messages("error.summary.text")</p>
+
+        <ul role="list" class="error-summary-list">
+            @for(error <- errors) {
+                <li><a href="#@{error.key}">@messages(error.message, error.args:_*)</a></li>
+            }
+        </ul>
+
+    </div>
+}

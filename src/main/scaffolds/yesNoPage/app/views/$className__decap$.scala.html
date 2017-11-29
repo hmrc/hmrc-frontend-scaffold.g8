@@ -1,0 +1,28 @@
+@import config.FrontendAppConfig
+@import uk.gov.hmrc.play.views.html._
+@import controllers.routes._
+@import models.Mode
+@import utils.FormHelpers
+
+@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+
+@main_template(
+    title = messages("$className;format="decap"$.title"),
+    appConfig = appConfig,
+    bodyClasses = None) {
+
+    @helpers.form(action = $className$Controller.onSubmit(mode), 'autoComplete -> "off") {
+
+        @components.error_summary(form.errors)
+
+        @components.heading("$className;format="decap"$.heading")
+
+        @components.input_yes_no(
+            field = form("value"),
+            label = messages("$className;format="decap"$.heading"),
+            labelClass = Some("visually-hidden")
+        )
+
+        @components.submit_button()
+    }
+}

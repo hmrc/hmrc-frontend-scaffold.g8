@@ -1,0 +1,29 @@
+@import viewmodels.RepeaterAnswerSection
+@import views.html._
+
+@(answerSection: RepeaterAnswerSection)(implicit messages: Messages)
+
+<h2>@messages(answerSection.headingKey)</h2>
+
+<ul role="list" class="tabular-data tabular-data--list">
+    @components.answer_row(answerSection.relevanceRow)
+@for(row <- answerSection.rows){
+    <li class="tabular-data__entry tabular-data__entry--grouped divider--bottom">
+        <div class="tabular-data__data tabular-data__data--6-12">@row.answer</div>
+        <div class="tabular-data__data tabular-data__data--3-12">
+            <a href="@row.deleteUrl">
+                <span aria-hidden="true">@messages("site.delete")</span>
+                <span class="visually-hidden">@messages("site.hidden-delete", row.answer)</span>
+            </a>
+        </div>
+        <div class="tabular-data__data tabular-data__data--3-12 u-align--tablet-right">
+            <a href="@row.changeUrl">
+                <span aria-hidden="true">@messages("site.edit")</span>
+                <span class="visually-hidden">@messages("site.hidden-edit", row.answer)</span>
+            </a>
+        </div>
+    </li>
+}
+</ul>
+
+<a href="@answerSection.addLinkUrl">@messages(answerSection.addLinkKey)</a>

@@ -1,0 +1,153 @@
+@import '_forms__mixin';
+
+/*
+====================================
+Makes relationship between legend and inputs/hint tighter
+Legend in Assets Frontend implements a margin bottom
+====================================
+ */
+fieldset legend {
+  margin-bottom: 0;
+}
+
+
+
+/*
+====================================
+Aligns inputs with top of label
+Especially important where hints are present
+This is a temporary fix until Assets Frontend aligns with GDS
+====================================
+
+*/
+.block-label--with-hint input[type="checkbox"],
+.block-label--with-hint input[type="radio"] {
+  transform: none;
+  top: 1.6em;
+}
+
+
+/*
+=====================================
+Remove border from radio buttons
+Seen on IE8-9
+=====================================
+*/
+input[type="radio"],
+input[type="radio"]:checked {
+    border-width: 0;
+    background: none;
+}
+
+
+/*
+====================================
+A short form group
+For inputs such as currency (supports up to 1,000,000.00) or Post codes
+Added double-class selectors to by-pass the full-width in panel rule
+Taken from GDS Elements
+====================================
+*/
+.form-control--full-width {
+    width: 100%;
+}
+.form-control-1-4 {
+  width: 100%;
+}
+.form-control-1-3 {
+  width: 100%;
+}
+
+@media screen and (min-width: 641px) {
+    @include form-control-sizes;
+}
+
+
+.form-hint {
+    display: block;
+}
+
+/*
+=====================================
+Error styling to bring in line with GDS
+=====================================
+*/
+.form-field--error {
+    margin-left: -0.84211em;
+}
+    .panel-indent .form-field--error {
+        margin-left: 0;
+    }
+.form-field--error .error-notification {
+    font-weight: 700;
+}
+@media screen and (min-width: 640px){
+    .form-field--error .error-notification {
+        font-size: 19px;
+    }
+}
+.form-field--error .form-control {
+    border: 4px solid #b10e1e;
+}
+.error-summary {
+    border: 4px solid #b10e1e;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 15px 10px;
+}
+@media (min-width: 641px){
+    .error-summary {
+        border: 5px solid #b10e1e;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        padding: 20px 15px 15px;
+    }
+}
+.error-summary .error-summary-list a {
+    color: #b10e1e;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/*
+=====================================
+Input prefix / suffix
+=====================================
+*/
+.form-control-wrapper[data-type="currency"] input {
+    max-width: 12em;
+}
+.form-control-wrapper[data-type="currency"]:before {
+    content: "£";
+    margin-right: 0.25em;
+    font-weight: 700;
+}
+.form-control-wrapper[data-type="percentage"] input {
+    max-width: 5em;
+}
+.form-control-wrapper[data-type="percentage"]:after {
+    content: "%";
+    margin-left: 0.25em;
+    font-weight: 700;
+}
+
+/*
+Remove spinner from number inputs
+*/
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance:textfield;
+}
+
+/*
+override character count display
+*/
+@media screen and (min-width: 641px){
+    .char-counter {
+        display: block;
+    }
+}

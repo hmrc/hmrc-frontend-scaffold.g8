@@ -1,0 +1,8 @@
+@(
+messageKey: String = "",
+inputType: String = "button"
+)(implicit messages: Messages)
+
+<div class="section">
+    <input type="@inputType" class="button" value="@messages(messageKey)" />
+</div>

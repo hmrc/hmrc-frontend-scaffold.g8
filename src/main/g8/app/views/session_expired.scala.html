@@ -1,0 +1,13 @@
+@import config.FrontendAppConfig
+
+@(appConfig: FrontendAppConfig)(implicit request: Request[_], messages: Messages)
+
+@main_template(
+    title = messages("session_expired.title"),
+    appConfig = appConfig,
+    bodyClasses = None) {
+
+    <h1 class="heading-xlarge">@messages("session_expired.heading")</h1>
+
+    <p>@messages("session_expired.guidance")</p>
+}
