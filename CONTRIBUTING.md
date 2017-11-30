@@ -49,7 +49,7 @@ developers on your project. This includes:
 * any future developers (including yourself) who want to see why a change was
   made
 
-** Recommended reading on this topic **
+**Recommended reading on this topic**
 
 * [5 useful tips for a better commit message](http://robots.thoughtbot.com/5-useful-tips-for-a-better-commit-message)
 * [Every line of code is always documented](http://mislav.uniqpath.com/2014/02/hidden-documentation/)

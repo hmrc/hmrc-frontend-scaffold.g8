@@ -31,7 +31,10 @@ Please drop by our [Slack channel](https://hmrcdigital.slack.com/archives/team-s
 
 ### Creating a new service
 
-To create a new service, run `sbt new hmrc/hmrc-frontend-scaffold.g8` and supply a name, e.g. _example-frontend_.  Then initialise a git repository and make an initial commit in the newly-created directory.
+To create a new service:
+* Run `sbt new hmrc/hmrc-frontend-scaffold.g8` and supply a name, e.g. _example-frontend_.
+* `cd` into the new directory, e.g. `cd example-frontend`
+* Initialise a git repo and make an initial commit, e.g. `git init && git add . && git commit -m 'Initial commit'`
 
 ### Adding new pages using scaffolds
 

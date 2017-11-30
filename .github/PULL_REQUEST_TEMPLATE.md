@@ -1,13 +1,10 @@
 # Descriptive Title
 
+**Bug fix / New feature** (delete as appropriate)
+
 Please include a summary / description of the change and which issue it fixes.  Include any relevant user needs and context.
 
 Fixes # (issue)
-
-## Type of change
-
-* [ ] Bug fix
-* [ ] New feature
 
 ## Checklist
 
