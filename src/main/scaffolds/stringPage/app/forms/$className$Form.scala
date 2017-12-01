@@ -6,9 +6,7 @@ import play.api.data.format.Formatter
 
 object $className$Form extends FormErrorHelper {
 
-  private val errorKeyBlank = "error.required"
-
-  def $className;format="decap"$Formatter() = new Formatter[String] {
+  def $className;format="decap"$Formatter(errorKeyBlank: String) = new Formatter[String] {
 
     def bind(key: String, data: Map[String, String]) = {
       data.get(key) match {
@@ -21,5 +19,6 @@ object $className$Form extends FormErrorHelper {
     def unbind(key: String, value: String) = Map(key -> value)
   }
 
-  def apply(): Form[String] = Form(single("value" -> of($className;format="decap"$Formatter(errorKeyBlank))))
+  def apply(errorKeyBlank: String = "error.required"): Form[String] =
+    Form(single("value" -> of($className;format="decap"$Formatter(errorKeyBlank))))
 }
