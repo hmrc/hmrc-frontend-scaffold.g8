@@ -1,7 +1,7 @@
 package forms
 
 import forms.behaviours.FormBehaviours
-import models.$className$
+import models.{$className$, MandatoryField}
 
 class $className$FormSpec extends FormBehaviours {
 
@@ -15,6 +15,9 @@ class $className$FormSpec extends FormBehaviours {
   "$className$ form" must {
     behave like questionForm($className$("value 1", "value 2"))
 
-    behave like formWithMandatoryTextFields("field1", "field2")
+    behave like formWithMandatoryTextFields(
+      MandatoryField("field1"),
+      MandatoryField("field2")
+    )
   }
 }
