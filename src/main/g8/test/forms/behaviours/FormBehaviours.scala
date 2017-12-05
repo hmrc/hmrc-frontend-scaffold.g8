@@ -2,6 +2,7 @@ package forms.behaviours
 
 import play.api.data.Form
 import forms.FormSpec
+import models._
 
 trait FormBehaviours extends FormSpec {
 
@@ -26,17 +27,17 @@ trait FormBehaviours extends FormSpec {
     }
   }
 
-  def formWithMandatoryTextFields(fields: String*) = {
+  def formWithMandatoryTextFields(fields: Field*) = {
     for (field <- fields) {
-      s"fail to bind when \$field is omitted" in {
-        val data = validData - field
-        val expectedError = error(field, "error.required")
+      s"fail to bind when \${field.name} is omitted" in {
+        val data = validData - field.name
+        val expectedError = error(field.name, field.errorKeys(Required))
         checkForError(form, data, expectedError)
       }
 
-      s"fail to bind when \$field is blank" in {
-        val data = validData + (field -> "")
-        val expectedError = error(field, "error.required")
+      s"fail to bind when \${field.name} is blank" in {
+        val data = validData + (field.name -> "")
+        val expectedError = error(field.name, field.errorKeys(Required))
         checkForError(form, data, expectedError)
       }
     }
@@ -72,28 +73,28 @@ trait FormBehaviours extends FormSpec {
     }
   }
 
-  def formWithOptionField(field: String, validValues: String*) = {
+  def formWithOptionField(field: Field, validValues: String*) = {
     for (validValue <- validValues) {
-      s"bind when \$field is set to \$validValue" in {
-        val data = validData + (field -> validValue)
+      s"bind when \${field.name} is set to \$validValue" in {
+        val data = validData + (field.name -> validValue)
         val boundForm = form.bind(data)
         boundForm.errors.isEmpty shouldBe true
       }
     }
 
-    s"fail to bind when \$field is omitted" in {
-      val data = validData - field
-      val expectedError = error(field, "error.required")
+    s"fail to bind when \${field.name} is omitted" in {
+      val data = validData - field.name
+      val expectedError = error(field.name, field.errorKeys(Required))
       checkForError(form, data, expectedError)
     }
 
-    s"fail to bind when \$field is invalid" in {
-      val data = validData + (field -> "invalid value")
-      val expectedError = error(field, "error.unknown")
+    s"fail to bind when \${field.name} is invalid" in {
+      val data = validData + (field.name -> "invalid value")
+      val expectedError = error(field.name, field.errorKeys(Invalid))
       checkForError(form, data, expectedError)
     }
   }
-  
+
   def formWithDateField(field: String) = {
     s"fail to bind when \$field day is omitted" in {
       val data = validData - s"\$field.day"
