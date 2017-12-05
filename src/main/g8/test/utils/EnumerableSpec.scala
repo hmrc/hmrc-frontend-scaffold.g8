@@ -10,12 +10,16 @@ object EnumerableSpec {
   case object Bar extends Foo
   case object Baz extends Foo
 
-  object Foo extends Enumerable[Foo] {
-    override def values: Set[Foo] = Set(Bar, Baz)
+  object Foo {
+
+    val values: Set[Foo] = Set(Bar, Baz)
+
+    implicit val fooEnumerable: Enumerable[Foo] =
+      Enumerable(values.toSeq.map(v => v.toString -> v): _*)
   }
 }
 
-class EnumerableSpec extends WordSpec with MustMatchers with EitherValues with OptionValues {
+class EnumerableSpec extends WordSpec with MustMatchers with EitherValues with OptionValues with Enumerable.Implicits {
 
   import EnumerableSpec._
 
@@ -55,20 +59,6 @@ class EnumerableSpec extends WordSpec with MustMatchers with EitherValues with O
 
     "be found implicitly" in {
       implicitly[Format[Foo]]
-    }
-  }
-
-  ".withName" must {
-
-    "be undefined when an invalid string is used" in {
-      Foo.withName("invalid") mustNot be(defined)
-    }
-
-    Foo.values.foreach {
-      value =>
-        s"return `Some(\$value)`" in {
-          Foo.withName(value.toString).value mustEqual value
-        }
     }
   }
 }
