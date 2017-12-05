@@ -8,7 +8,7 @@ import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 import connectors.DataCacheConnector
 import controllers.actions._
 import config.FrontendAppConfig
-import forms.BooleanForm
+import forms.$className$FormProvider
 import identifiers.$className$Id
 import models.Mode
 import utils.{Navigator, UserAnswers}
@@ -22,20 +22,23 @@ class $className;format="cap"$Controller @Inject()(appConfig: FrontendAppConfig,
                                          navigator: Navigator,
                                          authenticate: AuthAction,
                                          getData: DataRetrievalAction,
-                                         requireData: DataRequiredAction) extends FrontendController with I18nSupport {
+                                         requireData: DataRequiredAction,
+                                         formProvider: $className$FormProvider) extends FrontendController with I18nSupport {
+
+  val form: Form[Boolean] = formProvider()
 
   def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.$className;format="decap"$ match {
-        case None => BooleanForm()
-        case Some(value) => BooleanForm().fill(value)
+        case None => form
+        case Some(value) => form.fill(value)
       }
       Ok($className;format="decap"$(appConfig, preparedForm, mode))
   }
 
   def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
     implicit request =>
-      BooleanForm().bindFromRequest().fold(
+      form.bindFromRequest().fold(
         (formWithErrors: Form[_]) =>
           Future.successful(BadRequest($className;format="decap"$(appConfig, formWithErrors, mode))),
         (value) =>

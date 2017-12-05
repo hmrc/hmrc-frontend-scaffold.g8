@@ -4,27 +4,32 @@ import play.api.libs.json._
 
 trait Enumerable[A] {
 
-  def values: Set[A]
+  def withName(str: String): Option[A]
+}
 
-  def withName(str: String): Option[A] =
-    mappings.get(str)
+object Enumerable {
 
-  private lazy val mappings: Map[String, A] =
-    values.map {
-      value =>
-        (value.toString, value)
-    }.toMap
+  def apply[A](entries: (String, A)*): Enumerable[A] =
+    new Enumerable[A] {
+      override def withName(str: String): Option[A] =
+        entries.toMap.get(str)
+     }
 
-  implicit lazy val reads: Reads[A] =
-    Reads {
-      case JsString(str) if mappings.contains(str) =>
-        JsSuccess(mappings(str))
-      case _ =>
-        JsError("error.invalid")
+  trait Implicits {
+
+    implicit def reads[A](implicit ev: Enumerable[A]): Reads[A] = {
+      Reads {
+        case JsString(str) =>
+          ev.withName(str).map {
+            s => JsSuccess(s)
+          }.getOrElse(JsError("error.invalid"))
+        case _ =>
+          JsError("error.invalid")
+       }
     }
 
-  implicit lazy val writes: Writes[A] =
-    Writes(value => JsString(value.toString))
-
-  implicit lazy val formats: Format[A] = Format(reads, writes)
+    implicit def writes[A : Enumerable]: Writes[A] = {
+      Writes(value => JsString(value.toString))
+    }
+  }
 }
