@@ -3,6 +3,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## v0.3.0 - 2017-12-06
+
+### Added
+* Field mappings for text, int, boolean and enumerable
+* Formatters for strings, ints, booleans and enumerables
+* Constraints for max and min value, max length, regex
+* Constraint to present only the first of multiple errors
+
+### Changed
+* All scaffolds to use new field mappings and constraints
+
 ## v0.2.1 - 2017-12-01
 
 ### Fixed
