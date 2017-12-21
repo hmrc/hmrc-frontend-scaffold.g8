@@ -1,13 +1,9 @@
 package views
 
-import play.api.data.Form
-import controllers.routes
-import forms.BooleanForm
-import views.behaviours.YesNoViewBehaviours
-import models.NormalMode
+import views.behaviours.ViewBehaviours
 import views.html.$className;format="decap"$
 
-class $className$ViewSpec extends YesNoViewBehaviours {
+class $className$ViewSpec extends ViewBehaviours {
 
   val messageKeyPrefix = "$className;format="decap"$"
 
