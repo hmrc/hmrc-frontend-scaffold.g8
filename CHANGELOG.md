@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## v0.4.2 - 2017-12-21
+
+### Fixed
+* Removed redundant imports
+
 ## v0.4.1 - 2017-12-21
 
 ### Fixed
