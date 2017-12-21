@@ -15,7 +15,7 @@ object $className$ {
 
   val options: Set[RadioOption] = values.map {
     value =>
-      RadioOption("myOptionsPage", value.toString)
+      RadioOption("$className;format="decap"$", value.toString)
   }
 
   implicit val enumerable: Enumerable[$className$] =
