@@ -13,6 +13,6 @@ class $className$FormProvider @Inject() extends FormErrorHelper with Mappings {
         "$className;format="decap"$.error.required",
         "$className;format="decap"$.error.wholeNumber",
         "$className;format="decap"$.error.nonNumeric")
-          .verifying(minimumValue(0, "$className;format="decap"$.error.minimum"))
+          .verifying(inRange($minimum$, $maximum$, "$className;format="decap"$.error.outOfRange"))
     )
 }
