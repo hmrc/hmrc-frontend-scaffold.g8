@@ -19,6 +19,7 @@ echo "$className;format="decap"$.checkYourAnswersLabel = $className;format="deca
 echo "$className;format="decap"$.error.nonNumeric = Please give an answer for $className;format="decap"$ using numbers" >> ../conf/messages.en
 echo "$className;format="decap"$.error.required = Please give an answer for $className;format="decap"$" >> ../conf/messages.en
 echo "$className;format="decap"$.error.wholeNumber = Please give an answer for $className;format="decap"$ using whole numbers" >> ../conf/messages.en
+echo "$className;format="decap"$.error.outOfRange = $className;format="decap"$ must be between {0} and {1}" >> ../conf/messages.en
 
 echo "Adding helper line into UserAnswers"
 awk '/class/ {\

@@ -1,54 +1,46 @@
 package forms
 
-class $className$FormProviderSpec extends FormSpec {
+import forms.behaviours.IntFieldBehaviours
+import play.api.data.FormError
 
-  val errorKeyBlank = "$className;format="decap"$.error.required"
-  val errorKeyDecimal = "$className;format="decap"$.error.wholeNumber"
-  val errorKeyNonNumeric = "$className;format="decap"$.error.nonNumeric"
-  val errorKeyMinimum = "$className;format="decap"$.error.minimum"
+class $className$FormProviderSpec extends IntFieldBehaviours {
 
-  "$className$ Form" must {
+  val form = new $className$FormProvider()()
 
-    val formProvider = new $className$FormProvider()
+  ".value" must {
 
-    "bind zero" in {
-      val form = formProvider().bind(Map("value" -> "0"))
-      form.get shouldBe 0
-    }
+    val fieldName = "value"
 
-    "bind positive numbers" in {
-      val form = formProvider().bind(Map("value" -> "1"))
-      form.get shouldBe 1
-    }
+    val minimum = $minimum$
+    val maximum = $maximum$
 
-    "bind positive, comma separated numbers" in {
-      val form = formProvider().bind(Map("value" -> "10,000"))
-      form.get shouldBe 10000
-    }
+    val validDataGenerator = intsInRangeWithCommas(minimum, maximum)
 
-    "fail to bind negative numbers" in {
-      val expectedError = error("value", errorKeyMinimum, 0)
-      checkForError(formProvider(), Map("value" -> "-1"), expectedError)
-    }
+    behave like fieldThatBindsValidData(
+      form,
+      fieldName,
+      validDataGenerator
+    )
 
-    "fail to bind non-numerics" in {
-      val expectedError = error("value", errorKeyNonNumeric)
-      checkForError(formProvider(), Map("value" -> "not a number"), expectedError)
-    }
+    behave like intField(
+      form,
+      fieldName,
+      nonNumericError  = FormError(fieldName, "$className;format="decap"$.error.nonNumeric"),
+      wholeNumberError = FormError(fieldName, "$className;format="decap"$.error.wholeNumber")
+    )
 
-    "fail to bind a blank value" in {
-      val expectedError = error("value", errorKeyBlank)
-      checkForError(formProvider(), Map("value" -> ""), expectedError)
-    }
+    behave like intFieldWithRange(
+      form,
+      fieldName,
+      minimum       = minimum,
+      maximum       = maximum,
+      expectedError = FormError(fieldName, "$className;format="decap"$.error.outOfRange", Seq(minimum, maximum))
+    )
 
-    "fail to bind when value is omitted" in {
-      val expectedError = error("value", errorKeyBlank)
-      checkForError(formProvider(), emptyForm, expectedError)
-    }
-
-    "fail to bind decimal numbers" in {
-      val expectedError = error("value", errorKeyDecimal)
-      checkForError(formProvider(), Map("value" -> "123.45"), expectedError)
-    }
+    behave like mandatoryField(
+      form,
+      fieldName,
+      requiredError = FormError(fieldName, "$className;format="decap"$.error.required")
+    )
   }
 }

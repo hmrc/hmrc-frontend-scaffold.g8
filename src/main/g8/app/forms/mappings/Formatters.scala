@@ -40,7 +40,7 @@ trait Formatters {
   private[mappings] def intFormatter(requiredKey: String, wholeNumberKey: String, nonNumericKey: String): Formatter[Int] =
     new Formatter[Int] {
 
-      val decimalRegexp = """^(\d*\.\d*)\$"""
+      val decimalRegexp = """^-?(\d*\.\d*)\$"""
 
       private val baseFormatter = stringFormatter(requiredKey)
 
