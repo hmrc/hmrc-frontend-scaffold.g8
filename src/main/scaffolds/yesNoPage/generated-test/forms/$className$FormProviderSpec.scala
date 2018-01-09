@@ -1,37 +1,29 @@
 package forms
 
-class $className$FormProviderSpec extends FormSpec {
+import forms.behaviours.BooleanFieldBehaviours
+import play.api.data.FormError
+
+class $className$FormProviderSpec extends BooleanFieldBehaviours {
 
   val requiredKey = "$className;format="decap"$.error.required"
   val invalidKey = "error.boolean"
 
-  val formProvider = new $className$FormProvider()
+  val form = new $className$FormProvider()()
 
-  "$className$ Form Provider" must {
+  ".value" must {
 
-    "bind true" in {
-      val form = formProvider().bind(Map("value" -> "true"))
-      form.get shouldBe true
-    }
+    val fieldName = "value"
 
-    "bind false" in {
-      val form = formProvider().bind(Map("value" -> "false"))
-      form.get shouldBe false
-    }
+    behave like booleanField(
+      form,
+      fieldName,
+      invalidError = FormError(fieldName, invalidKey)
+    )
 
-    "fail to bind non-booleans" in {
-      val expectedError = error("value", invalidKey)
-      checkForError(formProvider(), Map("value" -> "not a boolean"), expectedError)
-    }
-
-    "fail to bind a blank value" in {
-      val expectedError = error("value", requiredKey)
-      checkForError(formProvider(), Map("value" -> ""), expectedError)
-    }
-
-    "fail to bind when value is omitted" in {
-      val expectedError = error("value", requiredKey)
-      checkForError(formProvider(), emptyForm, expectedError)
-    }
+    behave like mandatoryField(
+      form,
+      fieldName,
+      requiredError = FormError(fieldName, requiredKey)
+    )
   }
 }
