@@ -1,25 +1,29 @@
 package forms
 
-import forms.behaviours.FormBehaviours
-import models._
+import forms.behaviours.OptionFieldBehaviours
+import models.$className$
+import play.api.data.FormError
 
-class $className$FormProviderSpec extends FormBehaviours {
-
-  val validData: Map[String, String] = Map(
-    "value" -> $className$.options.head.value
-  )
+class $className$FormProviderSpec extends OptionFieldBehaviours {
 
   val form = new $className$FormProvider()()
 
-  "$className$ form" must {
+  ".value" must {
 
-    behave like questionForm[$className$]($className$.values.head)
+    val fieldName = "value"
+    val requiredKey = "$className;format="decap"$.error.required"
 
-    behave like formWithOptionField(
-      Field(
-        "value",
-        Required -> "$className;format="decap"$.error.required",
-        Invalid -> "error.invalid"),
-      $className$.options.toSeq.map(_.value): _*)
+    behave like optionsField[$className$](
+      form,
+      fieldName,
+      validValues  = $className$.values,
+      invalidError = FormError(fieldName, "error.invalid")
+    )
+
+    behave like mandatoryField(
+      form,
+      fieldName,
+      requiredError = FormError(fieldName, requiredKey)
+    )
   }
 }

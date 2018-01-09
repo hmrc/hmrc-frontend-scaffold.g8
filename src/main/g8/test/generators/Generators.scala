@@ -74,4 +74,7 @@ trait Generators {
 
   def stringsLongerThan(minLength: Int): Gen[String] =
     arbitrary[String] suchThat (_.length > minLength)
+
+  def stringsExceptSpecificValues(excluded: Set[String]): Gen[String] =
+    nonEmptyString suchThat (!excluded.contains(_))
 }
