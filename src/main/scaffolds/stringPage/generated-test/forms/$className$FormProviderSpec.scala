@@ -1,26 +1,28 @@
 package forms
 
-class $className$FormProviderSpec extends FormSpec {
+import forms.behaviours.FieldBehaviours
+import play.api.data.FormError
+
+class $className$FormProviderSpec extends FieldBehaviours {
 
   val requiredKey = "$className;format="decap"$.error.required"
 
-  "$className$ Form" must {
+  val form = new $className$FormProvider()()
 
-    val formProvider = new $className$FormProvider()
+  ".value" must {
 
-    "bind a string" in {
-      val form = formProvider().bind(Map("value" -> "answer"))
-      form.get shouldBe "answer"
-    }
+    val fieldName = "value"
 
-    "fail to bind a blank value" in {
-      val expectedError = error("value", requiredKey)
-      checkForError(formProvider(), Map("value" -> ""), expectedError)
-    }
+    behave like fieldThatBindsValidData(
+      form,
+      fieldName,
+      nonEmptyString
+    )
 
-    "fail to bind when value is omitted" in {
-      val expectedError = error("value", requiredKey)
-      checkForError(formProvider(), emptyForm, expectedError)
-    }
+    behave like mandatoryField(
+      form,
+      fieldName,
+      requiredError = FormError(fieldName, requiredKey)
+    )
   }
 }
