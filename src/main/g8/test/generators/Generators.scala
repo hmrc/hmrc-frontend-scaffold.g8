@@ -62,4 +62,7 @@ trait Generators {
       .suchThat (_.nonEmpty)
       .suchThat (_ != "true")
       .suchThat (_ != "false")
+
+  def nonEmptyString: Gen[String] =
+    arbitrary[String] suchThat (_.nonEmpty)
 }
