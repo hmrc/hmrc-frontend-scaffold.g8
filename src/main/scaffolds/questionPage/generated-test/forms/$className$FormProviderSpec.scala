@@ -1,23 +1,63 @@
 package forms
 
-import forms.behaviours.FormBehaviours
-import models.{Field, $className$, Required}
+import forms.behaviours.StringFieldBehaviours
+import play.api.data.FormError
 
-class $className$FormProviderSpec extends FormBehaviours {
-
-  val validData: Map[String, String] = Map(
-    "field1" -> "value 1",
-    "field2" -> "value 2"
-  )
+class $className$FormProviderSpec extends StringFieldBehaviours {
 
   val form = new $className$FormProvider()()
 
-  "$className$ form" must {
-    behave like questionForm($className$("value 1", "value 2"))
+  ".field1" must {
 
-    behave like formWithMandatoryTextFields(
-      Field("field1", Required -> "$className;format="decap"$.error.field1.required"),
-      Field("field2", Required -> "$className;format="decap"$.error.field2.required")
+    val fieldName = "field1"
+    val requiredKey = "$className;format="decap"$.error.field1.required"
+    val lengthKey = "$className;format="decap"$.error.field1.length"
+    val maxLength = $field1MaxLength$
+
+    behave like fieldThatBindsValidData(
+      form,
+      fieldName,
+      stringsWithMaxLength(maxLength)
+    )
+
+    behave like fieldWithMaxLength(
+      form,
+      fieldName,
+      maxLength = maxLength,
+      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
+    )
+
+    behave like mandatoryField(
+      form,
+      fieldName,
+      requiredError = FormError(fieldName, requiredKey)
+    )
+  }
+
+  ".field2" must {
+
+    val fieldName = "field2"
+    val requiredKey = "$className;format="decap"$.error.field2.required"
+    val lengthKey = "$className;format="decap"$.error.field2.length"
+    val maxLength = $field2MaxLength$
+
+    behave like fieldThatBindsValidData(
+      form,
+      fieldName,
+      stringsWithMaxLength(maxLength)
+    )
+
+    behave like fieldWithMaxLength(
+      form,
+      fieldName,
+      maxLength = maxLength,
+      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
+    )
+
+    behave like mandatoryField(
+      form,
+      fieldName,
+      requiredError = FormError(fieldName, requiredKey)
     )
   }
 }
