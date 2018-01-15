@@ -65,4 +65,13 @@ trait Generators {
 
   def nonEmptyString: Gen[String] =
     arbitrary[String] suchThat (_.nonEmpty)
+
+  def stringsWithMaxLength(maxLength: Int): Gen[String] =
+    for {
+      length <- choose(1, maxLength)
+      chars <- listOfN(length, arbitrary[Char])
+    } yield chars.mkString
+
+  def stringsLongerThan(minLength: Int): Gen[String] =
+    arbitrary[String] suchThat (_.length > minLength)
 }
