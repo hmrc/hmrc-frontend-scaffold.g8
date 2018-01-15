@@ -1,11 +1,13 @@
 package forms
 
-import forms.behaviours.FieldBehaviours
+import forms.behaviours.StringFieldBehaviours
 import play.api.data.FormError
 
-class $className$FormProviderSpec extends FieldBehaviours {
+class $className$FormProviderSpec extends StringFieldBehaviours {
 
   val requiredKey = "$className;format="decap"$.error.required"
+  val lengthKey = "$className;format="decap"$.error.length"
+  val maxLength = $maxLength$
 
   val form = new $className$FormProvider()()
 
@@ -16,7 +18,14 @@ class $className$FormProviderSpec extends FieldBehaviours {
     behave like fieldThatBindsValidData(
       form,
       fieldName,
-      nonEmptyString
+      stringsWithMaxLength(maxLength)
+    )
+
+    behave like fieldWithMaxLength(
+      form,
+      fieldName,
+      maxLength = maxLength,
+      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
     )
 
     behave like mandatoryField(
