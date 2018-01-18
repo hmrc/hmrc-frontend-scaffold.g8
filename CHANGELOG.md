@@ -3,6 +3,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## v0.5.0 - 2018-01-18
+
+### Added
+* New behaviours for forms, using propery based tests
+* Generators to facilitate property based testing
+* An `inRange` constraint on int page scaffold
+* A `maxLength` constraint on string and question page scaffolds
+
+### Changed
+* All scaffolds to use property testing for forms
+* Updated bootstrap-play-25 to v1.3.0
+
 ## v0.4.1 - 2017-12-21
 
 ### Fixed
