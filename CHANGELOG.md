@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## Changed
 * amended the optionsPage to include additional questions for the page title and the two radio buttons
+* Added extra loggers to logback.xml to reduce library logging down to INFO level and reduce the default chatter
 
 ## v0.5.0 - 2018-01-18
 
