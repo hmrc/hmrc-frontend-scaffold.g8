@@ -13,11 +13,11 @@ echo "POST       /change$className$               controllers.$className$Control
 
 echo "Adding messages to conf.messages"
 echo "" >> ../conf/messages.en
-echo "$className;format="decap"$.title = $className;format="decap"$" >> ../conf/messages.en
-echo "$className;format="decap"$.heading = $className;format="decap"$" >> ../conf/messages.en
-echo "$className;format="decap"$.option1 = $className;format="decap"$" Option 1 >> ../conf/messages.en
-echo "$className;format="decap"$.option2 = $className;format="decap"$" Option 2 >> ../conf/messages.en
-echo "$className;format="decap"$.checkYourAnswersLabel = $className;format="decap"$" >> ../conf/messages.en
+echo "$className;format="decap"$.title = $title$" >> ../conf/messages.en
+echo "$className;format="decap"$.heading = $title$" >> ../conf/messages.en
+echo "$className;format="decap"$.$option1key;format="decap"$ = $option1msg$" >> ../conf/messages.en
+echo "$className;format="decap"$.$option2key;format="decap"$ = $option2msg$" >> ../conf/messages.en
+echo "$className;format="decap"$.checkYourAnswersLabel = $title$" >> ../conf/messages.en
 echo "$className;format="decap"$.error.required = Please give an answer for $className;format="decap"$" >> ../conf/messages.en
 
 echo "Adding helper line into UserAnswers"
