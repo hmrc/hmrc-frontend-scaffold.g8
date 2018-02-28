@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## Unreleased
+
+## Changed
+* amended the optionsPage to include additional questions for the page title and the two radio buttons
+
 ## v0.5.0 - 2018-01-18
 
 ### Added
