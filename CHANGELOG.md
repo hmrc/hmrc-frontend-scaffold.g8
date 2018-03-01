@@ -6,8 +6,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## Unreleased
 
 ## Changed
-* amended the optionsPage to include additional questions for the page title and the two radio buttons
+* Amended the optionsPage to include additional questions for the page title and the two radio buttons
 * Added extra loggers to logback.xml to reduce library logging down to INFO level and reduce the default chatter
+* Updated bootstrap-play-25 to v1.4.0
+* Updated assets-frontend to v3.2.2
 
 ## v0.5.0 - 2018-01-18
 
