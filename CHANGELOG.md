@@ -10,6 +10,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 * Added extra loggers to logback.xml to reduce library logging down to INFO level and reduce the default chatter
 * Updated bootstrap-play-25 to v1.4.0
 * Updated assets-frontend to v3.2.2
+* Changed views to use heading component
+* Changed default h1 size to large
+
+## Fixed
+* Bug in int page controller tests affecting pages with low maximum values
 
 ## v0.5.0 - 2018-01-18
 
