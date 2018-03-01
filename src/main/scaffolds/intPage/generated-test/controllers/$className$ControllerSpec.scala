@@ -25,7 +25,7 @@ class $className$ControllerSpec extends ControllerSpecBase {
 
   def viewAsString(form: Form[_] = form) = $className;format="decap"$(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
 
-  val testNumber = 123
+  val testNumber = $minimum$
 
   "$className$ Controller" must {
 
