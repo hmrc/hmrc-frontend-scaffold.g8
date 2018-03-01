@@ -3,9 +3,9 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## Unreleased
+## v0.6.0 - 2018-03-01
 
-## Changed
+### Changed
 * Amended the optionsPage to include additional questions for the page title and the two radio buttons
 * Added extra loggers to logback.xml to reduce library logging down to INFO level and reduce the default chatter
 * Updated bootstrap-play-25 to v1.4.0
@@ -13,7 +13,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 * Changed views to use heading component
 * Changed default h1 size to large
 
-## Fixed
+### Fixed
 * Bug in int page controller tests affecting pages with low maximum values
 
 ## v0.5.0 - 2018-01-18
