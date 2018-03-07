@@ -1,6 +1,6 @@
 package controllers.actions
 
-import com.google.inject.{ImplementedBy, Inject}
+import com.google.inject.Inject
 import play.api.mvc.{ActionRefiner, Result}
 import play.api.mvc.Results.Redirect
 import controllers.routes
@@ -19,10 +19,9 @@ class DataRequiredActionImpl @Inject() extends DataRequiredAction {
 
     request.userAnswers match {
       case None => Future.successful(Left(Redirect(routes.SessionExpiredController.onPageLoad())))
-      case Some(data) => Future.successful(Right(DataRequest(request.request, request.externalId, data)))
+      case Some(data) => Future.successful(Right(DataRequest(request.request, request.internalId, data)))
     }
   }
 }
 
-@ImplementedBy(classOf[DataRequiredActionImpl])
 trait DataRequiredAction extends ActionRefiner[OptionalDataRequest, DataRequest]
