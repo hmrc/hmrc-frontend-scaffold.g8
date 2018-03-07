@@ -21,14 +21,14 @@ class $className$Controller @Inject()(
                                         override val messagesApi: MessagesApi,
                                         dataCacheConnector: DataCacheConnector,
                                         navigator: Navigator,
-                                        authenticate: AuthAction,
+                                        identify: CacheIdentifierAction,
                                         getData: DataRetrievalAction,
                                         requireData: DataRequiredAction,
                                         formProvider: $className$FormProvider) extends FrontendController with I18nSupport {
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode) = (authenticate andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode) = (identify andThen getData andThen requireData) {
     implicit request =>
       val preparedForm = request.userAnswers.$className;format="decap"$ match {
         case None => form
@@ -37,13 +37,13 @@ class $className$Controller @Inject()(
       Ok($className;format="decap"$(appConfig, preparedForm, mode))
   }
 
-  def onSubmit(mode: Mode) = (authenticate andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode) = (identify andThen getData andThen requireData).async {
     implicit request =>
       form.bindFromRequest().fold(
         (formWithErrors: Form[_]) =>
           Future.successful(BadRequest($className;format="decap"$(appConfig, formWithErrors, mode))),
         (value) =>
-          dataCacheConnector.save[Int](request.externalId, $className$Id.toString, value).map(cacheMap =>
+          dataCacheConnector.save[Int](request.internalId, $className$Id.toString, value).map(cacheMap =>
             Redirect(navigator.nextPage($className$Id, mode)(new UserAnswers(cacheMap))))
       )
   }

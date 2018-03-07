@@ -14,7 +14,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 class AuthActionSpec extends SpecBase {
 
-  class Harness(authAction: AuthAction) extends Controller {
+  class Harness(authAction: CacheIdentifierAction) extends Controller {
     def onPageLoad() = authAction { request => Ok }
   }
 
