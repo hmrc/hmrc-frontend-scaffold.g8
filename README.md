@@ -29,6 +29,8 @@ It also doesn't try to solve _every_ problem.  It takes a lot of the grunt work 
 
 Please drop by our [Slack channel](https://hmrcdigital.slack.com/archives/team-scaffolders) to say hi and see if we can offer you any support or guidance (requires an HMRC slack account).
 
+You will need to have sbt version 0.13.13 or later installed.
+
 ### Creating a new service
 
 To create a new service:
