@@ -24,14 +24,14 @@
         </legend>
         <div class="multiple-choice">
             <input id="@{field.id}-yes" type="radio" name="@{field.id}" value="true" @if(field.value.contains("true")){checked="checked"} />
-            <label class="block-label selection-button-radio" for="@{field.id}-yes" data-target="@if(yesAssoc.nonEmpty){@yesAssoc}">
+            <label for="@{field.id}-yes" data-target="@if(yesAssoc.nonEmpty){@yesAssoc}">
                 @messages("site.yes")
             </label>
         </div>
 
         <div class="multiple-choice">
             <input id="@{field.id}-no" type="radio" name="@{field.id}" value="false" @if(field.value.contains("false")){checked="checked"} />
-            <label class="block-label selection-button-radio" for="@{field.id}-no" data-target="@if(noAssoc.nonEmpty){@noAssoc}">
+            <label for="@{field.id}-no" data-target="@if(noAssoc.nonEmpty){@noAssoc}">
                 @messages("site.no")
             </label>
         </div>
