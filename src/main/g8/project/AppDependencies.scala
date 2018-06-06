@@ -3,14 +3,7 @@ import uk.gov.hmrc.SbtAutoBuildPlugin
 import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin
 import uk.gov.hmrc.versioning.SbtGitVersioning
 
-object FrontendBuild extends Build with MicroService {
-
-  val appName = "$name$"
-
-  override lazy val appDependencies: Seq[ModuleID] = AppDependencies()
-}
-
-private object AppDependencies {
+object AppDependencies {
   import play.sbt.PlayImport._
   import play.core.PlayVersion
 

@@ -30,6 +30,8 @@ Once you've identified (or created) an [issue](https://github.com/hmrc/hmrc-fron
 
 * Fork the repository
 * Write tests along with your code
+* Test your local template using file://
+  e.g. **sbt new file://hmrc-frontend-scaffold.g8**
 * Add logical, atomic commits with [good commit messages](#commit-messages)
 * Raise your Pull Request against the `develop` branch using our [Pull Request template](.github/PULL_REQUEST_TEMPLATE.md)
 * We will review and offer any feedback
