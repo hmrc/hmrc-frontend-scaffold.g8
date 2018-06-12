@@ -31,6 +31,13 @@
     }
   })
 
+  //======================================================
+  // Move immediate forcus to any error summary
+  //======================================================
+  if (\$('.error-summary a').length > 0){
+    \$('.error-summary').focus();
+  }
+
   // =====================================================
   // Adds data-focuses attribute to all containers of inputs listed in an error summary
   // This allows validatorFocus to bring viewport to correct scroll point
