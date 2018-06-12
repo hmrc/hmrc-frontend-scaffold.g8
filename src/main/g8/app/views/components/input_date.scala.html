@@ -13,7 +13,7 @@ secondaryLabel: Option[String] = None,
 hint: Option[String] = None
 )(implicit messages: Messages)
 
-<div class="form-field @if(errorKey.nonEmpty || dayErrorKey.nonEmpty || monthErrorKey.nonEmpty || yearErrorKey.nonEmpty){form-field--error}">
+<div class="form-group @if(errorKey.nonEmpty || dayErrorKey.nonEmpty || monthErrorKey.nonEmpty || yearErrorKey.nonEmpty){form-group-error}">
     <fieldset>
         <legend>
         <span class="form-label bold @if(legendClass.nonEmpty){@legendClass}">
@@ -23,16 +23,16 @@ hint: Option[String] = None
             <span class="form-hint" id="@{id}-date-hint">@hint</span>
         }
             @if(errorKey.nonEmpty){
-                <span class="error-notification" id="error-message-@{id}-date">@messages(errorKey)</span>
+                <span class="error-message" id="error-message-@{id}-date">@messages(errorKey)</span>
             }
             @if(dayErrorKey.nonEmpty){
-                <span class="error-notification" id="error-message-@{id}-day">@messages(dayErrorKey)</span>
+                <span class="error-message" id="error-message-@{id}-day">@messages(dayErrorKey)</span>
             }
             @if(monthErrorKey.nonEmpty){
-                <span class="error-notification" id="error-message-@{id}-month">@messages(monthErrorKey)</span>
+                <span class="error-message" id="error-message-@{id}-month">@messages(monthErrorKey)</span>
             }
             @if(yearErrorKey.nonEmpty){
-                <span class="error-notification" id="error-message-@{id}-year">@messages(yearErrorKey)</span>
+                <span class="error-message" id="error-message-@{id}-year">@messages(yearErrorKey)</span>
             }
         </legend>
         <div class="form-date">
