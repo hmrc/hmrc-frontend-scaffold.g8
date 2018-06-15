@@ -12,7 +12,7 @@ import scala.concurrent.Future
 
 class $className;format="cap"$Controller @Inject()(appConfig: FrontendAppConfig,
                                          override val messagesApi: MessagesApi,
-                                         identify: CacheIdentifierAction,
+                                         identify: IdentifierAction,
                                          getData: DataRetrievalAction,
                                          requireData: DataRequiredAction) extends FrontendController with I18nSupport {
 

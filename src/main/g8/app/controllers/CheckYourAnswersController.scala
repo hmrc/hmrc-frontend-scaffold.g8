@@ -2,7 +2,7 @@ package controllers
 
 import com.google.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
-import controllers.actions.{CacheIdentifierAction, DataRequiredAction, DataRetrievalAction}
+import controllers.actions.{IdentifierAction, DataRequiredAction, DataRetrievalAction}
 import utils.CheckYourAnswersHelper
 import viewmodels.AnswerSection
 import views.html.check_your_answers
@@ -11,7 +11,7 @@ import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 
 class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
                                            override val messagesApi: MessagesApi,
-                                           authenticate: CacheIdentifierAction,
+                                           authenticate: IdentifierAction,
                                            getData: DataRetrievalAction,
                                            requireData: DataRequiredAction) extends FrontendController with I18nSupport {
 
