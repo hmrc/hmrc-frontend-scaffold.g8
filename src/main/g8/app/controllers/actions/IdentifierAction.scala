@@ -7,22 +7,22 @@ import uk.gov.hmrc.auth.core._
 import uk.gov.hmrc.auth.core.retrieve.Retrievals
 import config.FrontendAppConfig
 import controllers.routes
-import models.requests.CacheIdentifierRequest
+import models.requests.IdentifierRequest
 import uk.gov.hmrc.http.UnauthorizedException
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.HeaderCarrierConverter
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class AuthActionImpl @Inject()(override val authConnector: AuthConnector, config: FrontendAppConfig)
-                              (implicit ec: ExecutionContext) extends CacheIdentifierAction with AuthorisedFunctions {
+class AuthenticatedIdentifierAction @Inject()(override val authConnector: AuthConnector, config: FrontendAppConfig)
+                              (implicit ec: ExecutionContext) extends IdentifierAction with AuthorisedFunctions {
 
-  override def invokeBlock[A](request: Request[A], block: (CacheIdentifierRequest[A]) => Future[Result]): Future[Result] = {
+  override def invokeBlock[A](request: Request[A], block: (IdentifierRequest[A]) => Future[Result]): Future[Result] = {
     implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromHeadersAndSession(request.headers, Some(request.session))
 
     authorised().retrieve(Retrievals.internalId) {
       _.map {
-        internalId => block(CacheIdentifierRequest(request, internalId))
+        internalId => block(IdentifierRequest(request, internalId))
       }.getOrElse(throw new UnauthorizedException("Unable to retrieve internal Id"))
     } recover {
       case ex: NoActiveSession =>
@@ -41,16 +41,16 @@ class AuthActionImpl @Inject()(override val authConnector: AuthConnector, config
   }
 }
 
-trait CacheIdentifierAction extends ActionBuilder[CacheIdentifierRequest] with ActionFunction[Request, CacheIdentifierRequest]
+trait IdentifierAction extends ActionBuilder[IdentifierRequest] with ActionFunction[Request, IdentifierRequest]
 
-class SessionActionImpl @Inject()(config: FrontendAppConfig)
-                                 (implicit ec: ExecutionContext) extends CacheIdentifierAction {
+class SessionIdentifierAction @Inject()(config: FrontendAppConfig)
+                                 (implicit ec: ExecutionContext) extends IdentifierAction {
 
-  override def invokeBlock[A](request: Request[A], block: (CacheIdentifierRequest[A]) => Future[Result]): Future[Result] = {
+  override def invokeBlock[A](request: Request[A], block: (IdentifierRequest[A]) => Future[Result]): Future[Result] = {
     implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromHeadersAndSession(request.headers, Some(request.session))
 
     hc.sessionId match {
-      case Some(session) => block(CacheIdentifierRequest(request, session.value))
+      case Some(session) => block(IdentifierRequest(request, session.value))
       case None => Future.successful(Redirect(routes.SessionExpiredController.onPageLoad()))
     }
   }

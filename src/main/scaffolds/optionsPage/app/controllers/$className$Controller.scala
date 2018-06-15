@@ -22,7 +22,7 @@ class $className$Controller @Inject()(
                                         override val messagesApi: MessagesApi,
                                         dataCacheConnector: DataCacheConnector,
                                         navigator: Navigator,
-                                        identify: CacheIdentifierAction,
+                                        identify: IdentifierAction,
                                         getData: DataRetrievalAction,
                                         requireData: DataRequiredAction,
                                         formProvider: $className$FormProvider) extends FrontendController with I18nSupport with Enumerable.Implicits {
