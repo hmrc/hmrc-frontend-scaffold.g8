@@ -39,8 +39,4 @@ awk '/class/ {\
      print "  }";\
      next }1' ../app/utils/CheckYourAnswersHelper.scala > tmp && mv tmp ../app/utils/CheckYourAnswersHelper.scala
 
-echo "Moving test files from generated-test/ to test/"
-rsync -avm --include='*.scala' -f 'hide,! */' ../generated-test/ ../test/
-rm -rf ../generated-test/
-
 echo "Migration $className;format="snake"$ completed"
