@@ -1,0 +1,12 @@
+leakDetectionExemptions:
+ - ruleId: 'play_crypto_secret'
+   filePaths:
+      - '/src/main/g8/conf/application.conf'
+    
+ - ruleId: 'sso_encryption_key'
+   filePaths:
+      - '/src/main/g8/conf/application.conf'
+
+ - ruleId: 'cookie_deviceId_secret'
+   filePaths:
+      - '/src/main/g8/conf/application.conf'
