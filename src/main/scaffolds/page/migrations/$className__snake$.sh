@@ -11,8 +11,4 @@ echo "" >> ../conf/messages.en
 echo "$className;format="decap"$.title = $className;format="decap"$" >> ../conf/messages.en
 echo "$className;format="decap"$.heading = $className;format="decap"$" >> ../conf/messages.en
 
-echo "Moving test files from generated-test/ to test/"
-rsync -avm --include='*.scala' -f 'hide,! */' ../generated-test/ ../test/
-rm -rf ../generated-test/
-
 echo "Migration $className;format="snake"$ completed"
