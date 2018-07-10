@@ -3,6 +3,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## v0.7.0 - 2018-07-10
+
+### Changed
+* Added support for session-based storage (for non-auth services)
+* Updated bootstrap-play-25 to v1.7.0
+* Updated play-ui to v7.17.0
+* Updated play-reactivemongo to v6.2.0
+* Updated http-caching-client to v7.1.0
+* Updated sbt-aut-build to v1.8.0
+
 ## v0.6.0 - 2018-03-01
 
 ### Changed
