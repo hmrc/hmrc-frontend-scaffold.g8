@@ -3,6 +3,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## v0.8.0 - 2018-07-10
+
+### Changed
+* Turn off HMRC logo by default
+* Add whitelist filter
+
+### Fixed
+* Bug in migration scripts that led to (harmless) errors when multiple scaffolds were migrated in one go
+* Add config to prevent leak detection being triggered incorrectly
+
 ## v0.7.0 - 2018-07-10
 
 ### Changed
