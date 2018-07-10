@@ -10,3 +10,6 @@ do
     mv \$file ./applied_migrations
 done
 
+echo "Moving test files from generated-test/ to test/"
+rsync -avm --include='*.scala' -f 'hide,! */' ../generated-test/ ../test/
+rm -rf ../generated-test/
