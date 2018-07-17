@@ -94,6 +94,10 @@ Error styling to bring in line with GDS
     margin-top: 15px;
     margin-bottom: 15px;
     padding: 15px 10px;
+
+    ul {
+        margin: 0;
+    }
 }
 @media (min-width: 641px){
     .error-summary {

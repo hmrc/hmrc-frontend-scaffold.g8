@@ -10,7 +10,7 @@
 )(implicit messages: Messages)
 
 
-<div class="form-field @if(field.hasErrors){form-field--error}">
+<div class="form-group @if(field.hasErrors){form-group-error}">
     <fieldset class="inline" id="@{field.id}">
 
         <legend>
@@ -19,7 +19,7 @@
                 <span class="form-hint">@hint</span>
             }
             @field.errors.map { error =>
-                <span class="error-notification" id="error-message-@{field.id}-input">@messages(error.message, error.args: _*)</span>
+                <span class="error-message" id="error-message-@{field.id}-input">@messages(error.message, error.args: _*)</span>
             }
         </legend>
         <div class="multiple-choice">

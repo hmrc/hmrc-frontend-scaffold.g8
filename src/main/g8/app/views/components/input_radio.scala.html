@@ -9,15 +9,15 @@
         inputs: Seq[RadioOption]
 )(implicit messages: Messages)
 
-<div class="form-field @if(field.hasErrors){form-field--error}">
-    <fieldset class="form-group" id="@{field.id}">
+<div class="form-group @if(field.hasErrors){form-group-error}">
+    <fieldset id="@{field.id}">
         <legend>
             <span class="bold-small @if(legendClass.nonEmpty){@{legendClass.get}}">@legend</span>
             @if(hint.nonEmpty){
                 <span class="form-hint">@{hint.get}</span>
             }
             @field.errors.map { error =>
-                <span class="error-notification" id="error-message-@{field.id}-input">@messages(error.message, error.args: _*)</span>
+                <span class="error-message" id="error-message-@{field.id}-input">@messages(error.message, error.args: _*)</span>
             }
         </legend>
         @for(input <- inputs) {
