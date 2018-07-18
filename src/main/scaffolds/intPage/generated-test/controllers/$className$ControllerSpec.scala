@@ -3,24 +3,31 @@ package controllers
 import play.api.data.Form
 import play.api.libs.json.JsNumber
 import uk.gov.hmrc.http.cache.client.CacheMap
-import utils.FakeNavigator
+import utils.Navigator
 import connectors.FakeDataCacheConnector
 import controllers.actions._
 import play.api.test.Helpers._
 import forms.$className$FormProvider
-import identifiers.$className$Id
+import pages.$className$Page
 import models.NormalMode
+import org.scalatest.mockito.MockitoSugar
+import org.mockito.Mockito._
+import org.mockito.Matchers._
+import play.api.mvc.Call
 import views.html.$className;format="decap"$
 
-class $className$ControllerSpec extends ControllerSpecBase {
+class $className$ControllerSpec extends ControllerSpecBase with MockitoSugar {
 
-  def onwardRoute = routes.IndexController.onPageLoad()
+  def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new $className$FormProvider()
   val form = formProvider()
 
+  val mockNavigator = mock[Navigator]
+  when(mockNavigator.nextPage(any(), any(), any(), any())) thenReturn onwardRoute
+
   def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new $className$Controller(frontendAppConfig, messagesApi, FakeDataCacheConnector, new FakeNavigator(desiredRoute = onwardRoute), FakeIdentifierAction,
+    new $className$Controller(frontendAppConfig, messagesApi, FakeDataCacheConnector, mockNavigator, FakeIdentifierAction,
       dataRetrievalAction, new DataRequiredActionImpl, formProvider)
 
   def viewAsString(form: Form[_] = form) = $className;format="decap"$(frontendAppConfig, form, NormalMode)(fakeRequest, messages).toString
@@ -37,7 +44,7 @@ class $className$ControllerSpec extends ControllerSpecBase {
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
-      val validData = Map($className$Id.toString -> JsNumber(testNumber))
+      val validData = Map($className$Page.toString -> JsNumber(testNumber))
       val getRelevantData = new FakeDataRetrievalAction(Some(CacheMap(cacheMapId, validData)))
 
       val result = controller(getRelevantData).onPageLoad(NormalMode)(fakeRequest)

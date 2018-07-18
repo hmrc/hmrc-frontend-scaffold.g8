@@ -11,10 +11,11 @@ import views.html.$className;format="decap"$
 import scala.concurrent.Future
 
 class $className;format="cap"$Controller @Inject()(appConfig: FrontendAppConfig,
-                                         override val messagesApi: MessagesApi,
-                                         identify: IdentifierAction,
-                                         getData: DataRetrievalAction,
-                                         requireData: DataRequiredAction) extends FrontendController with I18nSupport {
+                                                    override val messagesApi: MessagesApi,
+                                                    identify: IdentifierAction,
+                                                    getData: DataRetrievalAction,
+                                                    requireData: DataRequiredAction
+                                                  ) extends FrontendController with I18nSupport {
 
   def onPageLoad = (identify andThen getData andThen requireData) {
     implicit request =>

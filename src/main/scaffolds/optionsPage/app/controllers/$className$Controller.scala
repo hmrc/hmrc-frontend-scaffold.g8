@@ -9,10 +9,9 @@ import connectors.DataCacheConnector
 import controllers.actions._
 import config.FrontendAppConfig
 import forms.$className$FormProvider
-import identifiers.$className$Id
+import pages.$className$Page
 import models.Mode
-import models.$className$
-import utils.{Enumerable, Navigator, UserAnswers}
+import utils.{Enumerable, Navigator}
 import views.html.$className;format="decap"$
 
 import scala.concurrent.Future
@@ -25,27 +24,36 @@ class $className$Controller @Inject()(
                                         identify: IdentifierAction,
                                         getData: DataRetrievalAction,
                                         requireData: DataRequiredAction,
-                                        formProvider: $className$FormProvider) extends FrontendController with I18nSupport with Enumerable.Implicits {
+                                        formProvider: $className$FormProvider
+                                      ) extends FrontendController with I18nSupport with Enumerable.Implicits {
 
   val form = formProvider()
 
   def onPageLoad(mode: Mode) = (identify andThen getData andThen requireData) {
     implicit request =>
-      val preparedForm = request.userAnswers.$className;format="decap"$ match {
+
+      val preparedForm = request.userAnswers.get($className$Page) match {
         case None => form
         case Some(value) => form.fill(value)
       }
+
       Ok($className;format="decap"$(appConfig, preparedForm, mode))
   }
 
   def onSubmit(mode: Mode) = (identify andThen getData andThen requireData).async {
     implicit request =>
+
       form.bindFromRequest().fold(
         (formWithErrors: Form[_]) =>
           Future.successful(BadRequest($className;format="decap"$(appConfig, formWithErrors, mode))),
-        (value) =>
-          dataCacheConnector.save[$className$](request.internalId, $className$Id.toString, value).map(cacheMap =>
-            Redirect(navigator.nextPage($className$Id, mode)(new UserAnswers(cacheMap))))
+        (value) => {
+          val updatedAnswers = request.userAnswers.set($className$Page, value)
+
+          dataCacheConnector.save(updatedAnswers.cacheMap).map(
+            _ =>
+              Redirect(navigator.nextPage($className$Page, mode, updatedAnswers, request.userAnswers.get($className$Page)))
+          )
+        }
       )
   }
 }
