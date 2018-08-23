@@ -1,3 +1,0 @@
-package identifiers
-
-trait Identifier
