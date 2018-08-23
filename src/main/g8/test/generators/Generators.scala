@@ -3,8 +3,10 @@ package generators
 import org.scalacheck.{Arbitrary, Gen, Shrink}
 import Gen._
 import Arbitrary._
+import play.api.libs.json.{JsBoolean, JsNumber, JsString}
+import uk.gov.hmrc.http.cache.client.CacheMap
 
-trait Generators {
+trait Generators extends CacheMapGenerator with PageGenerators with ModelGenerators with UserAnswersEntryGenerators {
 
   implicit val dontShrink: Shrink[String] = Shrink.shrinkAny
 
@@ -77,4 +79,12 @@ trait Generators {
 
   def stringsExceptSpecificValues(excluded: Set[String]): Gen[String] =
     nonEmptyString suchThat (!excluded.contains(_))
+
+  def oneOf[T](xs: Seq[Gen[T]]): Gen[T] =
+    if (xs.isEmpty) {
+      throw new IllegalArgumentException("oneOf called on empty collection")
+    } else {
+      val vector = xs.toVector
+      choose(0, vector.size - 1).flatMap(vector(_))
+    }
 }
