@@ -1,5 +1,6 @@
 package models
 
+import play.api.libs.json._
 import utils.{Enumerable, RadioOption, WithName}
 
 sealed trait $className$
@@ -20,4 +21,16 @@ object $className$ {
 
   implicit val enumerable: Enumerable[$className$] =
     Enumerable(values.toSeq.map(v => v.toString -> v): _*)
+
+  implicit object $className$Writes extends Writes[$className$] {
+    def writes($className;format="decap"$: $className$) = Json.toJson($className;format="decap"$.toString)
+  }
+  
+  implicit object $className$Reads extends Reads[$className$] {
+    override def reads(json: JsValue): JsResult[$className$] = json match {
+      case JsString($option1key;format="Camel"$.toString) => JsSuccess($option1key;format="Camel"$)
+      case JsString($option2key;format="Camel"$.toString) => JsSuccess($option2key;format="Camel"$)
+      case _                          => JsError("Unknown $className;format="decap"$")
+    }
+  }
 }
