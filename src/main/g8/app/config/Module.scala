@@ -17,6 +17,7 @@
 package config
 
 import com.google.inject.AbstractModule
+import connectors._
 import controllers.actions._
 
 class Module extends AbstractModule {
@@ -29,5 +30,7 @@ class Module extends AbstractModule {
 
     // For session based storage instead of cred based, change to SessionIdentifierAction
     bind(classOf[IdentifierAction]).to(classOf[AuthenticatedIdentifierAction]).asEagerSingleton()
+
+    bind(classOf[DataCacheConnector]).to(classOf[MongoCacheConnector]).asEagerSingleton()
   }
 }

@@ -18,7 +18,7 @@ class DataRetrievalActionImpl @Inject()(val dataCacheConnector: DataCacheConnect
 
     dataCacheConnector.fetch(request.identifier).map {
       case None => OptionalDataRequest(request.request, request.identifier, None)
-      case Some(data) => OptionalDataRequest(request.request, request.identifier, Some(new UserAnswers(data)))
+      case Some(data) => OptionalDataRequest(request.request, request.identifier, Some(UserAnswers(data)))
     }
   }
 }
