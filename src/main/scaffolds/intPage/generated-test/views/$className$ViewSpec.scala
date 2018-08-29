@@ -20,6 +20,8 @@ class $className$ViewSpec extends IntViewBehaviours {
   "$className$ view" must {
     behave like normalPage(createView, messageKeyPrefix)
 
+    behave like pageWithBackLink(createView)
+
     behave like intPage(createViewUsingForm, messageKeyPrefix, routes.$className$Controller.onSubmit(NormalMode).url)
   }
 }
