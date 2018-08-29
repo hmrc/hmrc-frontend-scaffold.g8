@@ -13,6 +13,8 @@
 
     @helpers.form(action = $className;format="cap"$Controller.onSubmit(mode), 'autoComplete -> "off") {
 
+        @components.back_link()
+        
         @components.error_summary(form.errors)
 
         @components.heading("$className;format="decap"$.heading")
