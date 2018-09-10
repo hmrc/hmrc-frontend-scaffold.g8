@@ -1,4 +1,4 @@
-package utils
+package navigation
 
 import javax.inject.{Inject, Singleton}
 
@@ -6,6 +6,7 @@ import play.api.mvc.Call
 import controllers.routes
 import pages._
 import models.{CheckMode, Mode, NormalMode}
+import utils.UserAnswers
 
 @Singleton
 class Navigator @Inject()() {
