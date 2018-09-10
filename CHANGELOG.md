@@ -3,6 +3,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## v0.10.0 - 2018-09-10
+
+### Changed
+* Change where data cleanup is managed
+* Allow port to be specified when creating a new project
+* Removed some redundant code
+
+### Fixed
+* Add back link to pages which were missing it
+
 ## v0.9.0 - 2018-07-17
 
 ### Changed
