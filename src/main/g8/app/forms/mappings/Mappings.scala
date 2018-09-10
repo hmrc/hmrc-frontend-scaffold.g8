@@ -2,7 +2,7 @@ package forms.mappings
 
 import play.api.data.FieldMapping
 import play.api.data.Forms.of
-import utils.Enumerable
+import models.Enumerable
 
 trait Mappings extends Formatters with Constraints {
 

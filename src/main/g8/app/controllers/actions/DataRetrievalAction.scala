@@ -3,7 +3,7 @@ package controllers.actions
 import com.google.inject.Inject
 import play.api.mvc.ActionTransformer
 import connectors.DataCacheConnector
-import utils.UserAnswers
+import models.UserAnswers
 import models.requests.{IdentifierRequest, OptionalDataRequest}
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.HeaderCarrierConverter

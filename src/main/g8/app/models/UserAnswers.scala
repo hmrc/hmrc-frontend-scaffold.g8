@@ -1,4 +1,4 @@
-package utils
+package models
 
 import uk.gov.hmrc.http.cache.client.CacheMap
 import pages._

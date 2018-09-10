@@ -8,7 +8,7 @@ import org.scalatest.{MustMatchers, OptionValues, WordSpec}
 import pages.QuestionPage
 import play.api.libs.json._
 import uk.gov.hmrc.http.cache.client.CacheMap
-import utils.UserAnswers
+import models.UserAnswers
 
 trait PageBehaviours extends WordSpec with MustMatchers with PropertyChecks with Generators with OptionValues {
 
