@@ -11,7 +11,8 @@ import config.FrontendAppConfig
 import forms.$className$FormProvider
 import models.Mode
 import pages.$className$Page
-import utils.{Enumerable, Navigator}
+import navigation.Navigator
+import utils.Enumerable
 import views.html.$className;format="decap"$
 
 import scala.concurrent.Future
