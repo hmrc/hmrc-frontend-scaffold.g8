@@ -1,4 +1,4 @@
-package utils
+package models
 
 import org.scalatest.{EitherValues, OptionValues, MustMatchers, WordSpec}
 import play.api.data.validation.ValidationError
