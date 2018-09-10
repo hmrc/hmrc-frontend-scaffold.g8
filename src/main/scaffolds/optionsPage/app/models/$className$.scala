@@ -1,7 +1,7 @@
 package models
 
 import play.api.libs.json._
-import utils.{Enumerable, RadioOption, WithName}
+import utils.RadioOption
 
 sealed trait $className$
 

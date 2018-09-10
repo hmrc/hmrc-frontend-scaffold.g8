@@ -9,10 +9,9 @@ import connectors.DataCacheConnector
 import controllers.actions._
 import config.FrontendAppConfig
 import forms.$className$FormProvider
-import models.Mode
+import models.{Enumerable, Mode}
 import pages.$className$Page
 import navigation.Navigator
-import utils.Enumerable
 import views.html.$className;format="decap"$
 
 import scala.concurrent.Future

@@ -1,6 +1,6 @@
 package pages
 
-import utils.UserAnswers
+import models.UserAnswers
 
 trait QuestionPage[A] extends Page {
 

@@ -4,7 +4,7 @@ import com.google.inject.Inject
 import play.api.mvc.{ActionRefiner, Result}
 import play.api.mvc.Results.Redirect
 import controllers.routes
-import utils.UserAnswers
+import models.UserAnswers
 import models.requests.{DataRequest, OptionalDataRequest}
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.HeaderCarrierConverter

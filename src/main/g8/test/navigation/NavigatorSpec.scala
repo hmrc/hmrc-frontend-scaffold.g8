@@ -6,7 +6,6 @@ import org.scalatest.mockito.MockitoSugar
 import controllers.routes
 import pages._
 import models._
-import utils.UserAnswers
 
 class NavigatorSpec extends SpecBase with MockitoSugar {
 
