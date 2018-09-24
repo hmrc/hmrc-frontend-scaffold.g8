@@ -19,8 +19,7 @@ error.integer = Give an answer in whole numbers
 error.non_numeric = Give a value using only numbers
 error.number = Please enter a valid number
 error.required = Please enter a value
-error.summary.title = There’s been a problem
-error.summary.text = Check the following
+error.summary.title = There is a problem
 
 index.title = $name$
 index.heading = $name$
@@ -28,7 +27,7 @@ index.guidance = Welcome to your new frontend. Please see the README file for a 
 
 session_expired.title = For your security, this service has been reset
 session_expired.heading = For your security, this service has been reset
-session_expired.guidance = The details you have given have been deleted because you did not continue the service for 1 hour.
+session_expired.guidance = The details you have given have been deleted because you did not continue the service for 15 minutes.
 
 site.back = Back
 site.delete = Remove
@@ -37,7 +36,7 @@ site.hidden-delete = Delete {0}
 site.hidden-edit = Change {0}
 site.no = No
 site.yes = Yes
-site.save_and_continue = Save and continue
+site.continue = Continue
 site.service_name = $name$
 site.textarea.char_limit = (Limit is {0} characters)
 
