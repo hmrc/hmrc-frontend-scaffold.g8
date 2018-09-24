@@ -1,4 +1,4 @@
-package utils
+package viewmodels
 
 case class RadioOption(id: String, value: String, messageKey: String)
 
