@@ -74,8 +74,11 @@ trait Generators extends CacheMapGenerator with PageGenerators with ModelGenerat
       chars <- listOfN(length, arbitrary[Char])
     } yield chars.mkString
 
-  def stringsLongerThan(minLength: Int): Gen[String] =
-    arbitrary[String] suchThat (_.length > minLength)
+  def stringsLongerThan(minLength: Int): Gen[String] = for {
+    maxLength <- (minLength * 2).max(100)
+    length    <- Gen.chooseNum(minLength + 1, maxLength)
+    chars     <- listOfN(length, arbitrary[Char])
+  } yield chars.mkString
 
   def stringsExceptSpecificValues(excluded: Set[String]): Gen[String] =
     nonEmptyString suchThat (!excluded.contains(_))
