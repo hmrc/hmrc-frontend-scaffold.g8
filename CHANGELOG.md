@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## v0.11.0 - 2018-09-25
+
+### Changed
+* Change plugins to work on New Build
+* Migrate to build.sbt
+* Moved utility code to better homes
+* Improved the textarea component
+
 ## v0.10.0 - 2018-09-10
 
 ### Changed
