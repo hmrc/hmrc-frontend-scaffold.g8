@@ -1,7 +1,13 @@
 @import config.FrontendAppConfig
 
+@this(
+    appConfig: FrontendAppConfig,
+    govuk_wrapper: GovukWrapper,
+    article: Article,
+    sidebar: Sidebar
+)
+
 @(title: String,
-  appConfig: FrontendAppConfig,
   sidebarLinks: Option[Html] = None,
   contentHeader: Option[Html] = None,
   bodyClasses: Option[String] = None,
@@ -12,9 +18,9 @@
 
 @serviceInfoContent = {}
 
-@sidebar = {
+@sidebarContent = {
     @if(sidebarLinks.isDefined) {
-        @layouts.sidebar(sidebarLinks.get, Some("sidebar"))
+        @sidebar(sidebarLinks.get, Some("sidebar"))
     }
 }
 
@@ -22,9 +28,9 @@
                title = title,
                mainClass = mainClass,
                bodyClasses = bodyClasses,
-               sidebar = sidebar,
+               sidebar = sidebarContent,
                contentHeader = contentHeader,
-               mainContent = layouts.article(mainContent),
+               mainContent = article(mainContent),
                serviceInfoContent = serviceInfoContent,
                scriptElem = scriptElem
 )

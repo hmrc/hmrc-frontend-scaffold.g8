@@ -1,11 +1,12 @@
 package views
 
-import play.api.data.Form
 import controllers.routes
 import forms.$className$FormProvider
 import models.NormalMode
+import play.api.data.Form
+import play.twirl.api.HtmlFormat
 import views.behaviours.StringViewBehaviours
-import views.html.$className;format="decap"$
+import views.html.$className$View
 
 class $className$ViewSpec extends StringViewBehaviours {
 
@@ -13,15 +14,19 @@ class $className$ViewSpec extends StringViewBehaviours {
 
   val form = new $className$FormProvider()()
 
-  def createView = () => $className;format="decap"$(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  "$className$View view" must {
 
-  def createViewUsingForm = (form: Form[String]) => $className;format="decap"$(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+    val application = applicationBuilder(userData = Some(emptyUserData)).build()
 
-  "$className$ view" must {
-    behave like normalPage(createView, messageKeyPrefix)
+    val view = application.injector.instanceOf[$className$View]
 
-    behave like pageWithBackLink(createView)
+    def applyView(form: Form[_]): HtmlFormat.Appendable =
+      view.apply(form, NormalMode)(fakeRequest, messages)
 
-    behave like stringPage(createViewUsingForm, messageKeyPrefix, routes.$className$Controller.onSubmit(NormalMode).url)
+    behave like normalPage(applyView(form), messageKeyPrefix)
+
+    behave like pageWithBackLink(applyView(form))
+
+    behave like stringPage(form, applyView, messageKeyPrefix, routes.$className$Controller.onSubmit(NormalMode).url)
   }
 }

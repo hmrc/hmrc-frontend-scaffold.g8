@@ -1,27 +1,42 @@
 package controllers
 
+import base.SpecBase
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import controllers.actions.{DataRequiredActionImpl, DataRetrievalAction, FakeIdentifierAction}
 import viewmodels.AnswerSection
-import views.html.check_your_answers
+import views.html.CheckYourAnswersView
 
-class CheckYourAnswersControllerSpec extends ControllerSpecBase {
-
-  def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new CheckYourAnswersController(frontendAppConfig, messagesApi, FakeIdentifierAction, dataRetrievalAction, new DataRequiredActionImpl)
+class CheckYourAnswersControllerSpec extends SpecBase {
 
   "Check Your Answers Controller" must {
-    "return 200 and the correct view for a GET" in {
-      val result = controller().onPageLoad()(fakeRequest)
-      status(result) mustBe OK
-      contentAsString(result) mustBe check_your_answers(frontendAppConfig, Seq(AnswerSection(None, Seq())))(fakeRequest, messages).toString
+
+    "return OK and the correct view for a GET" in {
+
+      val application = applicationBuilder(userData = Some(emptyUserData)).build()
+
+      val request = FakeRequest(GET, routes.CheckYourAnswersController.onPageLoad().url)
+
+      val result = route(application, request).value
+
+      val view = application.injector.instanceOf[CheckYourAnswersView]
+
+      status(result) mustEqual OK
+
+      contentAsString(result) mustEqual
+        view(Seq(AnswerSection(None, Seq())))(fakeRequest, messages).toString
     }
 
     "redirect to Session Expired for a GET if no existing data is found" in {
-      val result = controller(dontGetAnyData).onPageLoad()(fakeRequest)
 
-      status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(routes.SessionExpiredController.onPageLoad().url)
+      val application = applicationBuilder(userData = None).build()
+
+      val request = FakeRequest(GET, routes.CheckYourAnswersController.onPageLoad().url)
+
+      val result = route(application, request).value
+
+      status(result) mustEqual SEE_OTHER
+
+      redirectLocation(result).value mustEqual routes.SessionExpiredController.onPageLoad().url
     }
   }
 }

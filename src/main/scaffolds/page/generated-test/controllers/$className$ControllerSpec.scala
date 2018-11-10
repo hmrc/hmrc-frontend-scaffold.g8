@@ -1,28 +1,28 @@
 package controllers
 
-import controllers.actions._
+import base.SpecBase
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import views.html.$className;format="decap"$
+import views.html.$className$View
 
-class $className$ControllerSpec extends ControllerSpecBase {
-
-  def controller(dataRetrievalAction: DataRetrievalAction = getEmptyCacheMap) =
-    new $className$Controller(frontendAppConfig, messagesApi, FakeIdentifierAction,
-      dataRetrievalAction, new DataRequiredActionImpl)
-
-  def viewAsString() = $className;format="decap"$(frontendAppConfig)(fakeRequest, messages).toString
+class $className$ControllerSpec extends SpecBase {
 
   "$className$ Controller" must {
 
     "return OK and the correct view for a GET" in {
-      val result = controller().onPageLoad(fakeRequest)
 
-      status(result) mustBe OK
-      contentAsString(result) mustBe viewAsString()
+      val application = applicationBuilder(userData = Some(emptyUserData)).build()
+
+      val request = FakeRequest(GET, routes.$className$Controller.onPageLoad().url)
+
+      val result = route(application, request).value
+
+      val view = application.injector.instanceOf[$className$View]
+
+      status(result) mustEqual OK
+
+      contentAsString(result) mustEqual
+        view()(fakeRequest, messages).toString
     }
   }
 }
-
-
-
-

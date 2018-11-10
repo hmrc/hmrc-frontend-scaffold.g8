@@ -1,0 +1,12 @@
+@this(
+    main_template: MainTemplate
+)
+
+@()(implicit request: Request[_], messages: Messages)
+
+@main_template(
+    title = messages("unauthorised.title")
+    ) {
+
+    @components.heading("unauthorised.heading")
+}

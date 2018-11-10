@@ -5,7 +5,7 @@ import pages.behaviours.PageBehaviours
 
 class $className$Spec extends PageBehaviours {
 
-  "YourLocation" must {
+  "$className$Page" must {
 
     beRetrievable[$className$]($className$Page)
 

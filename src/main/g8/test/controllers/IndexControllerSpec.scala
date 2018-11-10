@@ -1,19 +1,28 @@
 package controllers
 
+import base.SpecBase
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import views.html.index
+import views.html.IndexView
 
-class IndexControllerSpec extends ControllerSpecBase {
+class IndexControllerSpec extends SpecBase {
 
   "Index Controller" must {
-    "return 200 for a GET" in {
-      val result = new IndexController(frontendAppConfig, messagesApi).onPageLoad()(fakeRequest)
-      status(result) mustBe OK
-    }
 
-    "return the correct view for a GET" in {
-      val result = new IndexController(frontendAppConfig, messagesApi).onPageLoad()(fakeRequest)
-      contentAsString(result) mustBe index(frontendAppConfig)(fakeRequest, messages).toString
+    "return OK and the correct view for a GET" in {
+
+      val application = applicationBuilder(userData = None).build()
+
+      val request = FakeRequest(GET, routes.IndexController.onPageLoad().url)
+
+      val result = route(application, request).value
+
+      val view = application.injector.instanceOf[IndexView]
+
+      status(result) mustEqual OK
+
+      contentAsString(result) mustEqual
+        view()(fakeRequest, messages).toString
     }
   }
 }

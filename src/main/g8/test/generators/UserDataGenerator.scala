@@ -1,18 +1,18 @@
 package generators
 
+import models.UserData
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.{Arbitrary, Gen}
 import pages._
-import play.api.libs.json.JsValue
-import uk.gov.hmrc.http.cache.client.CacheMap
+import play.api.libs.json.{JsValue, Json}
 
-trait CacheMapGenerator {
+trait UserDataGenerator {
   self: Generators =>
 
   val generators: Seq[Gen[(Page, JsValue)]] =
     Nil
 
-  implicit lazy val arbitraryCacheMap: Arbitrary[CacheMap] =
+  implicit lazy val arbitraryUserData: Arbitrary[UserData] =
     Arbitrary {
       for {
         cacheId <- nonEmptyString
@@ -20,11 +20,11 @@ trait CacheMapGenerator {
           case Nil => Gen.const(Map[Page, JsValue]())
           case _   => Gen.mapOf(oneOf(generators))
         }
-      } yield CacheMap(
+      } yield UserData(
         cacheId,
         data.map {
-          case (k, v) => ( k.toString, v )
-        }
+          case (k, v) => Json.obj(k.toString -> v)
+        }.foldLeft(Json.obj())(_ ++ _)
       )
     }
 }

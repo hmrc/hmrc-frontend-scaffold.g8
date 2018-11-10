@@ -1,6 +1,11 @@
 @import config.FrontendAppConfig
 
-@(pageTitle: String, heading: String, message: String, appConfig: FrontendAppConfig)(implicit request: Request[_], messages: Messages)
+@this(
+    govuk_wrapper: GovukWrapper,
+    appConfig: FrontendAppConfig
+)
+
+@(pageTitle: String, heading: String, message: String)(implicit request: Request[_], messages: Messages)
 
 @contentHeader = {
   <h1>@heading</h1>

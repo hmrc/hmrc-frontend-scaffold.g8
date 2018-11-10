@@ -1,19 +1,28 @@
 package controllers
 
+import base.SpecBase
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import views.html.unauthorised
+import views.html.UnauthorisedView
 
-class UnauthorisedControllerSpec extends ControllerSpecBase {
+class UnauthorisedControllerSpec extends SpecBase {
 
   "Unauthorised Controller" must {
-    "return 200 for a GET" in {
-      val result = new UnauthorisedController(frontendAppConfig, messagesApi).onPageLoad()(fakeRequest)
-      status(result) mustBe OK
-    }
 
-    "return the correct view for a GET" in {
-      val result = new UnauthorisedController(frontendAppConfig, messagesApi).onPageLoad()(fakeRequest)
-      contentAsString(result) mustBe unauthorised(frontendAppConfig)(fakeRequest, messages).toString
+    "return OK and the correct view for a GET" in {
+
+      val application = applicationBuilder(userData = Some(emptyUserData)).build()
+
+      val request = FakeRequest(GET, routes.UnauthorisedController.onPageLoad().url)
+
+      val result = route(application, request).value
+
+      val view = application.injector.instanceOf[UnauthorisedView]
+
+      status(result) mustEqual OK
+
+      contentAsString(result) mustEqual
+        view()(fakeRequest, messages).toString
     }
   }
 }

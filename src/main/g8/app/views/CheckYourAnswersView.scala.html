@@ -1,12 +1,14 @@
-@import config.FrontendAppConfig
-@import viewmodels.{Section, AnswerSection, RepeaterAnswerSection}
+@import viewmodels.{AnswerSection, RepeaterAnswerSection, Section}
 
-@(appConfig: FrontendAppConfig, answerSections: Seq[Section])(implicit request: Request[_], messages: Messages)
+@this(
+    main_template: MainTemplate
+)
+
+@(answerSections: Seq[Section])(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("checkYourAnswers.title"),
-    appConfig = appConfig,
-    bodyClasses = None) {
+    title = messages("checkYourAnswers.title")
+    ) {
 
     @components.heading("checkYourAnswers.heading")</h1>
 

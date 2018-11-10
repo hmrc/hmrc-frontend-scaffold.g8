@@ -1,11 +1,12 @@
 package views
 
-import play.api.data.Form
 import controllers.routes
 import forms.$className$FormProvider
-import views.behaviours.YesNoViewBehaviours
 import models.NormalMode
-import views.html.$className;format="decap"$
+import play.api.data.Form
+import play.twirl.api.HtmlFormat
+import views.behaviours.YesNoViewBehaviours
+import views.html.$className$View
 
 class $className$ViewSpec extends YesNoViewBehaviours {
 
@@ -13,16 +14,19 @@ class $className$ViewSpec extends YesNoViewBehaviours {
 
   val form = new $className$FormProvider()()
 
-  def createView = () => $className;format="decap"$(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
-
-  def createViewUsingForm = (form: Form[_]) => $className;format="decap"$(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
-
   "$className$ view" must {
 
-    behave like normalPage(createView, messageKeyPrefix)
+    val application = applicationBuilder(userData = Some(emptyUserData)).build()
 
-    behave like pageWithBackLink(createView)
+    val view = application.injector.instanceOf[$className$View]
 
-    behave like yesNoPage(createViewUsingForm, messageKeyPrefix, routes.$className$Controller.onSubmit(NormalMode).url)
+    def applyView(form: Form[_]): HtmlFormat.Appendable =
+      view.apply(form, NormalMode)(fakeRequest, messages)
+
+    behave like normalPage(applyView(form), messageKeyPrefix)
+
+    behave like pageWithBackLink(applyView(form))
+
+    behave like yesNoPage(form, applyView, messageKeyPrefix, routes.$className$Controller.onSubmit(NormalMode).url)
   }
 }

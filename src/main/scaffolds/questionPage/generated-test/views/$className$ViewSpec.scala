@@ -1,11 +1,12 @@
 package views
 
-import play.api.data.Form
 import controllers.routes
 import forms.$className$FormProvider
 import models.{NormalMode, $className$}
+import play.api.data.Form
+import play.twirl.api.HtmlFormat
 import views.behaviours.QuestionViewBehaviours
-import views.html.$className;format="decap"$
+import views.html.$className$View
 
 class $className$ViewSpec extends QuestionViewBehaviours[$className$] {
 
@@ -13,19 +14,23 @@ class $className$ViewSpec extends QuestionViewBehaviours[$className$] {
 
   override val form = new $className$FormProvider()()
 
-  def createView = () => $className;format="decap"$(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  "$className$View" must {
 
-  def createViewUsingForm = (form: Form[_]) => $className;format="decap"$(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+    val application = applicationBuilder(userData = Some(emptyUserData)).build()
+
+    val view = application.injector.instanceOf[$className$View]
+
+    def applyView(form: Form[_]): HtmlFormat.Appendable =
+      view.apply(form, NormalMode)(fakeRequest, messages)
 
 
-  "$className$ view" must {
+    behave like normalPage(applyView(form), messageKeyPrefix)
 
-    behave like normalPage(createView, messageKeyPrefix)
-
-    behave like pageWithBackLink(createView)
+    behave like pageWithBackLink(applyView(form))
 
     behave like pageWithTextFields(
-      createViewUsingForm,
+      form,
+      applyView,
       messageKeyPrefix,
       routes.$className$Controller.onSubmit(NormalMode).url,
       "field1", "field2"

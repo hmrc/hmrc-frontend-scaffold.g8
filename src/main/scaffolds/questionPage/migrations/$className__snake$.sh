@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo ""
 echo "Applying migration $className;format="snake"$"
 
 echo "Adding routes to conf/app.routes"
@@ -57,11 +58,11 @@ awk '/trait ModelGenerators/ {\
     print "    }";\
     next }1' ../test/generators/ModelGenerators.scala > tmp && mv tmp ../test/generators/ModelGenerators.scala
 
-echo "Adding to CacheMapGenerator"
+echo "Adding to UserDataGenerator"
 awk '/val generators/ {\
     print;\
     print "    arbitrary[($className$Page.type, JsValue)] ::";\
-    next }1' ../test/generators/CacheMapGenerator.scala > tmp && mv tmp ../test/generators/CacheMapGenerator.scala
+    next }1' ../test/generators/UserDataGenerator.scala > tmp && mv tmp ../test/generators/UserDataGenerator.scala
 
 echo "Adding helper method to CheckYourAnswersHelper"
 awk '/class/ {\
