@@ -13,7 +13,7 @@ class $className$ViewSpec extends ViewBehaviours {
 
   val form = new $className$FormProvider()()
 
-  val application = applicationBuilder(userData = Some(emptyUserData)).build()
+  val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
   val view = application.injector.instanceOf[$className$View]
 

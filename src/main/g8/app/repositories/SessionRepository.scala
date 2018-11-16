@@ -4,7 +4,7 @@ import java.time.LocalDateTime
 
 import akka.stream.Materializer
 import javax.inject.Inject
-import models.UserData
+import models.UserAnswers
 import play.api.Configuration
 import play.api.libs.json._
 import play.modules.reactivemongo.ReactiveMongoApi
@@ -39,17 +39,17 @@ class DefaultSessionRepository @Inject()(
       _.indexesManager.ensure(lastUpdatedIndex)
     }.map(_ => ())
 
-  override def get(id: String): Future[Option[UserData]] =
-    collection.flatMap(_.find(Json.obj("_id" -> id), None).one[UserData])
+  override def get(id: String): Future[Option[UserAnswers]] =
+    collection.flatMap(_.find(Json.obj("_id" -> id), None).one[UserAnswers])
 
-  override def set(userData: UserData): Future[Boolean] = {
+  override def set(userAnswers: UserAnswers): Future[Boolean] = {
 
     val selector = Json.obj(
-      "_id" -> userData.id
+      "_id" -> userAnswers.id
     )
 
     val modifier = Json.obj(
-      "\$set" -> (userData copy (lastUpdated = LocalDateTime.now))
+      "\$set" -> (userAnswers copy (lastUpdated = LocalDateTime.now))
     )
 
     collection.flatMap {
@@ -65,7 +65,7 @@ trait SessionRepository {
 
   val started: Future[Unit]
 
-  def get(id: String): Future[Option[UserData]]
+  def get(id: String): Future[Option[UserAnswers]]
 
-  def set(userData: UserData): Future[Boolean]
+  def set(userAnswers: UserAnswers): Future[Boolean]
 }

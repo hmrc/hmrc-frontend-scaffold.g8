@@ -11,7 +11,7 @@ class $className$ControllerSpec extends SpecBase {
 
     "return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userData = Some(emptyUserData)).build()
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       val request = FakeRequest(GET, routes.$className$Controller.onPageLoad().url)
 

@@ -2,7 +2,7 @@ package controllers
 
 import base.SpecBase
 import forms.$className$FormProvider
-import models.{NormalMode, $className$, UserData}
+import models.{NormalMode, $className$, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import pages.$className$Page
 import play.api.inject.bind
@@ -21,8 +21,8 @@ class $className$ControllerSpec extends SpecBase {
 
   lazy val $className;format="decap"$Route = routes.$className$Controller.onPageLoad(NormalMode).url
 
-  val userData = UserData(
-    userDataId,
+  val userAnswers = UserAnswers(
+    userAnswersId,
     Json.obj(
       $className$Page.toString -> Json.obj(
         "field1" -> "value 1",
@@ -35,7 +35,7 @@ class $className$ControllerSpec extends SpecBase {
 
     "return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userData = Some(emptyUserData)).build()
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       val request = FakeRequest(GET, $className;format="decap"$Route)
 
@@ -51,7 +51,7 @@ class $className$ControllerSpec extends SpecBase {
 
     "populate the view correctly on a GET when the question has previously been answered" in {
 
-      val application = applicationBuilder(userData = Some(userData)).build()
+      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       val request = FakeRequest(GET, $className;format="decap"$Route)
 
@@ -68,7 +68,7 @@ class $className$ControllerSpec extends SpecBase {
     "redirect to the next page when valid data is submitted" in {
 
       val application =
-        applicationBuilder(userData = Some(emptyUserData))
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(bind[Navigator].toInstance(new FakeNavigator(onwardRoute)))
           .build()
 
@@ -85,7 +85,7 @@ class $className$ControllerSpec extends SpecBase {
 
     "return a Bad Request and errors when invalid data is submitted" in {
 
-      val application = applicationBuilder(userData = Some(emptyUserData)).build()
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       val request =
         FakeRequest(POST, $className;format="decap"$Route)
@@ -105,7 +105,7 @@ class $className$ControllerSpec extends SpecBase {
 
     "redirect to Session Expired for a GET if no existing data is found" in {
 
-      val application = applicationBuilder(userData = None).build()
+      val application = applicationBuilder(userAnswers = None).build()
 
       val request = FakeRequest(GET, $className;format="decap"$Route)
 
@@ -117,7 +117,7 @@ class $className$ControllerSpec extends SpecBase {
 
     "redirect to Session Expired for a POST if no existing data is found" in {
 
-      val application = applicationBuilder(userData = None).build()
+      val application = applicationBuilder(userAnswers = None).build()
 
       val request =
         FakeRequest(POST, $className;format="decap"$Route)

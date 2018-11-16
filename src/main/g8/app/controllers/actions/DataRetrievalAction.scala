@@ -20,8 +20,8 @@ class DataRetrievalActionImpl @Inject()(
     sessionRepository.get(request.identifier).map {
       case None =>
         OptionalDataRequest(request.request, request.identifier, None)
-      case Some(data) =>
-        OptionalDataRequest(request.request, request.identifier, Some(UserAnswers(data)))
+      case Some(userAnswers) =>
+        OptionalDataRequest(request.request, request.identifier, Some(userAnswers))
     }
   }
 }

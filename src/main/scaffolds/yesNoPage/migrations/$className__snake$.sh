@@ -40,11 +40,11 @@ awk '/trait PageGenerators/ {\
     print "    Arbitrary($className$Page)";\
     next }1' ../test/generators/PageGenerators.scala > tmp && mv tmp ../test/generators/PageGenerators.scala
 
-echo "Adding to UserDataGenerator"
+echo "Adding to UserAnswersGenerator"
 awk '/val generators/ {\
     print;\
     print "    arbitrary[($className$Page.type, JsValue)] ::";\
-    next }1' ../test/generators/UserDataGenerator.scala > tmp && mv tmp ../test/generators/UserDataGenerator.scala
+    next }1' ../test/generators/UserAnswersGenerator.scala > tmp && mv tmp ../test/generators/UserAnswersGenerator.scala
 
 echo "Adding helper method to CheckYourAnswersHelper"
 awk '/class/ {\

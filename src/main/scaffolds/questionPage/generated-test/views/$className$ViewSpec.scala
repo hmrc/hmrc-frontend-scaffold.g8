@@ -16,7 +16,7 @@ class $className$ViewSpec extends QuestionViewBehaviours[$className$] {
 
   "$className$View" must {
 
-    val application = applicationBuilder(userData = Some(emptyUserData)).build()
+    val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
     val view = application.injector.instanceOf[$className$View]
 

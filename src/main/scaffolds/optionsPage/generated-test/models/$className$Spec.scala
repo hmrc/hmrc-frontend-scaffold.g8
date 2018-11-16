@@ -28,7 +28,7 @@ class $className$Spec extends WordSpec with MustMatchers with PropertyChecks wit
       forAll(gen) {
         invalidValue =>
 
-          JsString(invalidValue).validate[$className$] mustEqual JsError("Unknown $className;format="decap"$")
+          JsString(invalidValue).validate[$className$] mustEqual JsError("error.invalid")
       }
     }
 

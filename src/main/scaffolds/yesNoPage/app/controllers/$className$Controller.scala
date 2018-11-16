@@ -48,12 +48,10 @@ class $className;format="cap"$Controller @Inject()(
           Future.successful(BadRequest(view(formWithErrors, mode))),
 
         value => {
-          val updatedAnswers = request.userAnswers.set($className$Page, value)
-
-          sessionRepository.set(updatedAnswers.userData).map(
-            _ =>
-              Redirect(navigator.nextPage($className$Page, mode)(updatedAnswers))
-          )
+          for {
+            updatedAnswers <- Future.fromTry(request.userAnswers.set($className$Page, value))
+            _              <- sessionRepository.set(updatedAnswers)
+          } yield Redirect(navigator.nextPage($className$Page, mode)(updatedAnswers))
         }
       )
   }

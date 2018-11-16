@@ -1,7 +1,7 @@
 package controllers.actions
 
 import base.SpecBase
-import models.UserData
+import models.UserAnswers
 import models.requests.{IdentifierRequest, OptionalDataRequest}
 import org.mockito.Mockito._
 import org.scalatest.concurrent.ScalaFutures
@@ -41,7 +41,7 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar with ScalaFutur
       "build a userAnswers object and add it to the request" in {
 
         val sessionRepository = mock[SessionRepository]
-        when(sessionRepository.get("id")) thenReturn Future(Some(new UserData("id", Json.obj())))
+        when(sessionRepository.get("id")) thenReturn Future(Some(new UserAnswers("id")))
         val action = new Harness(sessionRepository)
 
         val futureResult = action.callTransform(new IdentifierRequest(fakeRequest, "id"))

@@ -1,13 +1,11 @@
 package navigation
 
 import base.SpecBase
-import org.mockito.Mockito._
-import org.scalatest.mockito.MockitoSugar
 import controllers.routes
 import pages._
 import models._
 
-class NavigatorSpec extends SpecBase with MockitoSugar {
+class NavigatorSpec extends SpecBase {
 
   val navigator = new Navigator
 
@@ -18,7 +16,7 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
       "go to Index from a page that doesn't exist in the route map" in {
 
         case object UnknownPage extends Page
-        navigator.nextPage(UnknownPage, NormalMode)(mock[UserAnswers]) mustBe routes.IndexController.onPageLoad()
+        navigator.nextPage(UnknownPage, NormalMode)(UserAnswers("id")) mustBe routes.IndexController.onPageLoad()
       }
     }
 
@@ -27,7 +25,7 @@ class NavigatorSpec extends SpecBase with MockitoSugar {
       "go to CheckYourAnswers from a page that doesn't exist in the edit route map" in {
 
         case object UnknownPage extends Page
-        navigator.nextPage(UnknownPage, CheckMode)(mock[UserAnswers]) mustBe routes.CheckYourAnswersController.onPageLoad()
+        navigator.nextPage(UnknownPage, CheckMode)(UserAnswers("id")) mustBe routes.CheckYourAnswersController.onPageLoad()
       }
     }
   }
