@@ -53,7 +53,7 @@ trait ViewSpecBase extends SpecBase {
     val labels = doc.getElementsByAttributeValue("for", forElement)
     assert(labels.size == 1, s"\n\nLabel for \$forElement was not rendered on the page.")
     val label = labels.first
-    assert(label.text() == expectedText, s"\n\nLabel for \$forElement was not \$expectedText")
+    assert(label.text().contains(expectedText), s"\n\nLabel for \$forElement was not \$expectedText")
 
     if (expectedHintText.isDefined) {
       assert(label.getElementsByClass("form-hint").first.text == expectedHintText.get,
