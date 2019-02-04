@@ -67,4 +67,11 @@ trait Constraints {
       case _ =>
         Invalid(errorKey, maximum)
     }
+
+  protected def nonEmptySet(errorKey: String): Constraint[Set[_]] = Constraint {
+    case set: Set[_] =>
+      if (set.nonEmpty) Valid else Invalid(errorKey)
+    case _ =>
+      Invalid("error.invalid")
+  }
 }
