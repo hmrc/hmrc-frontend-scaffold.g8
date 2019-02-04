@@ -1,4 +1,4 @@
-@import viewmodels.RadioOption
+@import viewmodels.RadioCheckboxOption
 
 @(
         field: Field,
@@ -6,7 +6,7 @@
         legendClass: Option[String] = None,
         hint: Option[String] = None,
         trackGa: Boolean = false,
-        inputs: Seq[RadioOption]
+        inputs: Seq[RadioCheckboxOption]
 )(implicit messages: Messages)
 
 <div class="form-group @if(field.hasErrors){form-group-error}">
