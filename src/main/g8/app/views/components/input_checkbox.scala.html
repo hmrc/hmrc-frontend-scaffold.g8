@@ -32,7 +32,7 @@
 
 @lgndClass = @{
     legendClass match {
-        case Some(str) => s"bold-small $str"
+        case Some(str) => s"bold-small \$str"
         case None      => "bold-small"
     }
 }
@@ -45,19 +45,19 @@
         @for((RadioCheckboxOption(id, value, messageKey), index) <- inputs.zipWithIndex) {
             @defining(
                 inputs.toSeq.indices.flatMap { i =>
-                    field(s"[$i]").value
+                    field(s"[\$i]").value
                 }
             ) { answers =>
                 <div class="multiple-choice">
                     <input
-                    id="@field(s"[$index]").id"
+                    id="@field(s"[\$index]").id"
                     type="checkbox"
-                    name="@field(s"[$index]").name"
+                    name="@field(s"[\$index]").name"
                     value="@value"
                         @if(answers.contains(value)) {checked="checked"}
-                        @if(trackGa) {data-journey-click="$name$:click:@field(s"[$index]").id"}
+                        @if(trackGa) {data-journey-click="$name$:click:@field(s"[\$index]").id"}
                     />
-                    <label for="@field(s"[$index]").id">
+                    <label for="@field(s"[\$index]").id">
                     @messages(messageKey)
                     </label>
                 </div>

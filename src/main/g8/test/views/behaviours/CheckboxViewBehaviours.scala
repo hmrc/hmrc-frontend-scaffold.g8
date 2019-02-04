@@ -34,7 +34,7 @@ trait CheckboxViewBehaviours[A] extends ViewBehaviours {
         val doc = asDocument(createView(form))
         val legends = doc.getElementsByTag("legend")
         legends.size mustBe 1
-        legends.first.text mustBe legend.getOrElse(messages(s"$messageKeyPrefix.heading"))
+        legends.first.text mustBe legend.getOrElse(messages(s"\$messageKeyPrefix.heading"))
       }
 
       "contain an input for the value" in {
@@ -42,7 +42,7 @@ trait CheckboxViewBehaviours[A] extends ViewBehaviours {
         for {
           (_, i) <- options.zipWithIndex
         } yield {
-          assertRenderedById(doc, form(fieldKey)(s"[$i]").id)
+          assertRenderedById(doc, form(fieldKey)(s"[\$i]").id)
         }
       }
 
@@ -51,8 +51,8 @@ trait CheckboxViewBehaviours[A] extends ViewBehaviours {
         for {
           (option, i) <- options.zipWithIndex
         } yield {
-          val id = form(fieldKey)(s"[$i]").id
-          doc.select(s"label[for=$id]").text mustEqual messages(option.messageKey)
+          val id = form(fieldKey)(s"[\$i]").id
+          doc.select(s"label[for=\$id]").text mustEqual messages(option.messageKey)
         }
       }
 
@@ -61,26 +61,26 @@ trait CheckboxViewBehaviours[A] extends ViewBehaviours {
         for {
           (_, i) <- options.zipWithIndex
         } yield {
-          assert(!doc.getElementById(form(fieldKey)(s"[$i]").id).hasAttr("checked"))
+          assert(!doc.getElementById(form(fieldKey)(s"[\$i]").id).hasAttr("checked"))
         }
       }
 
       options.zipWithIndex.foreach {
         case (checkboxOption, i) =>
-          s"have correct value checked when value `${checkboxOption.value}` is given" in {
+          s"have correct value checked when value `\${checkboxOption.value}` is given" in {
             val data: Map[String, String] =
-              Map(s"$fieldKey[$i]" -> checkboxOption.value)
+              Map(s"\$fieldKey[\$i]" -> checkboxOption.value)
 
             val doc = asDocument(createView(form.bind(data)))
-            val field = form(fieldKey)(s"[$i]")
+            val field = form(fieldKey)(s"[\$i]")
 
-            assert(doc.getElementById(field.id).hasAttr("checked"), s"${field.id} is not checked")
+            assert(doc.getElementById(field.id).hasAttr("checked"), s"\${field.id} is not checked")
 
             options.zipWithIndex.foreach {
               case (option, j) =>
                 if (option != checkboxOption) {
-                  val field = form(fieldKey)(s"[$j]")
-                  assert(!doc.getElementById(field.id).hasAttr("checked"), s"${field.id} is checked")
+                  val field = form(fieldKey)(s"[\$j]")
+                  assert(!doc.getElementById(field.id).hasAttr("checked"), s"\${field.id} is checked")
                 }
             }
           }
