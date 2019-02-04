@@ -55,7 +55,7 @@
                     name="@field(s"[$index]").name"
                     value="@value"
                         @if(answers.contains(value)) {checked="checked"}
-                        @if(true) {data-journey-click="employee-expenses-frontend:click:@field(s"[$index]").id"}
+                        @if(trackGa) {data-journey-click="$name$:click:@field(s"[$index]").id"}
                     />
                     <label for="@field(s"[$index]").id">
                     @messages(messageKey)
