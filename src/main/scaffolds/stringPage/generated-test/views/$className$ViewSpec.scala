@@ -16,9 +16,7 @@ class $className$ViewSpec extends StringViewBehaviours {
 
   "$className$View view" must {
 
-    val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
-
-    val view = application.injector.instanceOf[$className$View]
+    val view = viewFor[$className$View](Some(emptyUserAnswers))
 
     def applyView(form: Form[_]): HtmlFormat.Appendable =
       view.apply(form, NormalMode)(fakeRequest, messages)

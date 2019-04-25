@@ -1,11 +1,21 @@
 package views
 
+import models.UserAnswers
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import play.twirl.api.Html
 import base.SpecBase
 
+import scala.reflect.ClassTag
+
 trait ViewSpecBase extends SpecBase {
+
+  def viewFor[A](data: Option[UserAnswers] = None)(implicit tag: ClassTag[A]): A = {
+    val application = applicationBuilder(data).build()
+    val view = application.injector.instanceOf[A]
+    application.stop()
+    view
+  }
 
   def asDocument(html: Html): Document = Jsoup.parse(html.toString())
 
