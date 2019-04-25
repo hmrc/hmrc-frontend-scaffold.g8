@@ -31,8 +31,8 @@ class $className$ControllerSpec extends SpecBase with MockitoSugar {
     userAnswersId,
     Json.obj(
       $className$Page.toString -> Json.obj(
-        "field1" -> "value 1",
-        "field2" -> "value 2"
+        "$field1Name$" -> "value 1",
+        "$field2Name$" -> "value 2"
       )
     )
   )
@@ -92,7 +92,7 @@ class $className$ControllerSpec extends SpecBase with MockitoSugar {
 
       val request =
         FakeRequest(POST, $className;format="decap"$Route)
-          .withFormUrlEncodedBody(("field1", "value 1"), ("field2", "value 2"))
+          .withFormUrlEncodedBody(("$field1Name$", "value 1"), ("$field2Name$", "value 2"))
 
       val result = route(application, request).value
 
@@ -145,7 +145,7 @@ class $className$ControllerSpec extends SpecBase with MockitoSugar {
 
       val request =
         FakeRequest(POST, $className;format="decap"$Route)
-          .withFormUrlEncodedBody(("field1", "value 1"), ("field2", "value 2"))
+          .withFormUrlEncodedBody(("$field1Name$", "value 1"), ("$field2Name$", "value 2"))
 
       val result = route(application, request).value
 

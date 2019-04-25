@@ -7,11 +7,11 @@ class $className$FormProviderSpec extends StringFieldBehaviours {
 
   val form = new $className$FormProvider()()
 
-  ".field1" must {
+  ".$field1Name$" must {
 
-    val fieldName = "field1"
-    val requiredKey = "$className;format="decap"$.error.field1.required"
-    val lengthKey = "$className;format="decap"$.error.field1.length"
+    val fieldName = "$field1Name$"
+    val requiredKey = "$className;format="decap"$.error.$field1Name$.required"
+    val lengthKey = "$className;format="decap"$.error.$field1Name$.length"
     val maxLength = $field1MaxLength$
 
     behave like fieldThatBindsValidData(
@@ -34,11 +34,11 @@ class $className$FormProviderSpec extends StringFieldBehaviours {
     )
   }
 
-  ".field2" must {
+  ".$field2Name$" must {
 
-    val fieldName = "field2"
-    val requiredKey = "$className;format="decap"$.error.field2.required"
-    val lengthKey = "$className;format="decap"$.error.field2.length"
+    val fieldName = "$field2Name$"
+    val requiredKey = "$className;format="decap"$.error.$field2Name$.required"
+    val lengthKey = "$className;format="decap"$.error.$field2Name$.length"
     val maxLength = $field2MaxLength$
 
     behave like fieldThatBindsValidData(

@@ -21,13 +21,13 @@
         @components.heading("$className;format="decap"$.heading")
 
         @components.input_text(
-            field = form("field1"),
-            label = messages("$className;format="decap"$.field1")
+            field = form("$field1Name$"),
+            label = messages("$className;format="decap"$.$field1Name$")
         )
 
         @components.input_text(
-            field = form("field2"),
-            label = messages("$className;format="decap"$.field2")
+            field = form("$field2Name$"),
+            label = messages("$className;format="decap"$.$field2Name$")
         )
 
         @components.submit_button()
