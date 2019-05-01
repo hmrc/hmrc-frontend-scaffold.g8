@@ -2,11 +2,11 @@ package models
 
 import generators.ModelGenerators
 import org.scalacheck.{Gen, Shrink}
-import org.scalatest.prop.PropertyChecks
+import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import org.scalatest.{FreeSpec, MustMatchers, OptionValues}
 import play.api.libs.json._
 
-class RichJsValueSpec extends FreeSpec with MustMatchers with PropertyChecks with OptionValues with ModelGenerators {
+class RichJsValueSpec extends FreeSpec with MustMatchers with ScalaCheckPropertyChecks with OptionValues with ModelGenerators {
 
   implicit def dontShrink[A]: Shrink[A] = Shrink.shrinkAny
 
