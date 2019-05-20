@@ -3,10 +3,9 @@ package controllers
 import controllers.actions._
 import forms.$className$FormProvider
 import javax.inject.Inject
-import models.{Enumerable, Mode}
+import models.Mode
 import navigation.Navigator
 import pages.$className$Page
-import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
@@ -25,7 +24,7 @@ class $className$Controller @Inject()(
                                        formProvider: $className$FormProvider,
                                        val controllerComponents: MessagesControllerComponents,
                                        view: $className$View
-                                     )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport with Enumerable.Implicits {
+                                     )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
   val form = formProvider()
 
@@ -44,15 +43,14 @@ class $className$Controller @Inject()(
     implicit request =>
 
       form.bindFromRequest().fold(
-        (formWithErrors: Form[_]) =>
+        formWithErrors =>
           Future.successful(BadRequest(view(formWithErrors, mode))),
 
-        value => {
+        value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set($className$Page, value))
             _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage($className$Page, mode)(updatedAnswers))
-        }
+          } yield Redirect(navigator.nextPage($className$Page, mode, updatedAnswers))
       )
   }
 }
