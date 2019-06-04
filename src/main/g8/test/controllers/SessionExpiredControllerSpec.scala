@@ -23,6 +23,8 @@ class SessionExpiredControllerSpec extends SpecBase {
 
       contentAsString(result) mustEqual
         view()(fakeRequest, messages).toString
+
+      application.stop()
     }
   }
 }
