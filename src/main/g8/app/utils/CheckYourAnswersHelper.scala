@@ -1,11 +1,14 @@
 package utils
 
+import java.time.format.DateTimeFormatter
+
 import controllers.routes
 import models.{CheckMode, UserAnswers}
 import pages._
 import play.api.i18n.Messages
 import play.twirl.api.{Html, HtmlFormat}
 import viewmodels.AnswerRow
+import CheckYourAnswersHelper._
 
 class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messages) {
 
@@ -15,4 +18,9 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
     } else {
       HtmlFormat.escape(messages("site.no"))
     }
+}
+
+object CheckYourAnswersHelper {
+
+  private val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
 }
