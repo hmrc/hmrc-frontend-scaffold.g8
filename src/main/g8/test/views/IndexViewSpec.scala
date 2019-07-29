@@ -1,14 +1,18 @@
 package views
 
 import views.behaviours.ViewBehaviours
-import views.html.index
+import views.html.IndexView
 
 class IndexViewSpec extends ViewBehaviours {
 
-  def view = () => index(frontendAppConfig)(fakeRequest, messages)
-
   "Index view" must {
 
-    behave like normalPage(view, "index", "guidance")
+    val application = applicationBuilder().build()
+
+    val view = application.injector.instanceOf[IndexView]
+
+    val applyView = view.apply()(fakeRequest, messages)
+
+    behave like normalPage(applyView, "index", "guidance")
   }
 }

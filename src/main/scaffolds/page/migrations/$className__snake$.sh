@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo ""
 echo "Applying migration $className;format="snake"$"
 
 echo "Adding routes to conf/app.routes"

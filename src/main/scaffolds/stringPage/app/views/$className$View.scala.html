@@ -1,17 +1,18 @@
-@import config.FrontendAppConfig
-@import uk.gov.hmrc.play.views.html._
 @import controllers.routes._
 @import models.Mode
-@import views.ViewUtils._
 
-@(appConfig: FrontendAppConfig, form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@this(
+    main_template: MainTemplate,
+    formHelper: FormWithCSRF
+)
+
+@(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = s"\${errorPrefix(form)} \${messages("$className;format="decap"$.title")}",
-    appConfig = appConfig,
-    bodyClasses = None) {
+    title = s"\${errorPrefix(form)} \${messages("$className;format="decap"$.title")}"
+    ) {
 
-    @helpers.form(action = $className$Controller.onSubmit(mode), 'autoComplete -> "off") {
+    @formHelper(action = $className$Controller.onSubmit(mode), 'autoComplete -> "off") {
 
         @components.back_link()
 

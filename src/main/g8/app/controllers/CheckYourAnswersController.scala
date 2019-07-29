@@ -1,24 +1,30 @@
 package controllers
 
 import com.google.inject.Inject
+import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
 import play.api.i18n.{I18nSupport, MessagesApi}
-import controllers.actions.{IdentifierAction, DataRequiredAction, DataRetrievalAction}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import uk.gov.hmrc.play.bootstrap.controller.FrontendBaseController
 import utils.CheckYourAnswersHelper
 import viewmodels.AnswerSection
-import views.html.check_your_answers
-import config.FrontendAppConfig
-import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import views.html.CheckYourAnswersView
 
-class CheckYourAnswersController @Inject()(appConfig: FrontendAppConfig,
-                                           override val messagesApi: MessagesApi,
-                                           authenticate: IdentifierAction,
-                                           getData: DataRetrievalAction,
-                                           requireData: DataRequiredAction) extends FrontendController with I18nSupport {
+class CheckYourAnswersController @Inject()(
+                                            override val messagesApi: MessagesApi,
+                                            identify: IdentifierAction,
+                                            getData: DataRetrievalAction,
+                                            requireData: DataRequiredAction,
+                                            val controllerComponents: MessagesControllerComponents,
+                                            view: CheckYourAnswersView
+                                          ) extends FrontendBaseController with I18nSupport {
 
-  def onPageLoad() = (authenticate andThen getData andThen requireData) {
+  def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
+
       val checkYourAnswersHelper = new CheckYourAnswersHelper(request.userAnswers)
+
       val sections = Seq(AnswerSection(None, Seq()))
-      Ok(check_your_answers(appConfig, sections))
+      
+      Ok(view(sections))
   }
 }

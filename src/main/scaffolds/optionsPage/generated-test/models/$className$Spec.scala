@@ -2,11 +2,11 @@ package models
 
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.Gen
-import org.scalatest.prop.PropertyChecks
+import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import org.scalatest.{MustMatchers, OptionValues, WordSpec}
 import play.api.libs.json.{JsError, JsString, Json}
 
-class $className$Spec extends WordSpec with MustMatchers with PropertyChecks with OptionValues {
+class $className$Spec extends WordSpec with MustMatchers with ScalaCheckPropertyChecks with OptionValues {
 
   "$className$" must {
 
@@ -28,7 +28,7 @@ class $className$Spec extends WordSpec with MustMatchers with PropertyChecks wit
       forAll(gen) {
         invalidValue =>
 
-          JsString(invalidValue).validate[$className$] mustEqual JsError("Unknown $className;format="decap"$")
+          JsString(invalidValue).validate[$className$] mustEqual JsError("error.invalid")
       }
     }
 

@@ -1,16 +1,15 @@
 package pages.behaviours
 
 import generators.Generators
+import models.UserAnswers
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.{Arbitrary, Gen}
-import org.scalatest.prop.PropertyChecks
-import org.scalatest.{MustMatchers, OptionValues, WordSpec}
+import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
+import org.scalatest.{MustMatchers, OptionValues, TryValues, WordSpec}
 import pages.QuestionPage
 import play.api.libs.json._
-import uk.gov.hmrc.http.cache.client.CacheMap
-import models.UserAnswers
 
-trait PageBehaviours extends WordSpec with MustMatchers with PropertyChecks with Generators with OptionValues {
+trait PageBehaviours extends WordSpec with MustMatchers with ScalaCheckPropertyChecks with Generators with OptionValues with TryValues {
 
   class BeRetrievable[A] {
     def apply[P <: QuestionPage[A]](genP: Gen[P])(implicit ev1: Arbitrary[A], ev2: Format[A]): Unit = {
@@ -22,18 +21,14 @@ trait PageBehaviours extends WordSpec with MustMatchers with PropertyChecks with
           "the question has not been answered" in {
 
             val gen = for {
-              page     <- genP
-              cacheMap <- arbitrary[CacheMap]
-            } yield (page, cacheMap copy (data = cacheMap.data - page.toString))
+              page        <- genP
+              userAnswers <- arbitrary[UserAnswers]
+            } yield (page, userAnswers.remove(page).success.value)
 
             forAll(gen) {
-              case (page, cacheMap) =>
+              case (page, userAnswers) =>
 
-                whenever(!cacheMap.data.keySet.contains(page.toString)) {
-
-                  val userAnswers = UserAnswers(cacheMap)
-                  userAnswers.get(page) must be(empty)
-                }
+                userAnswers.get(page) must be(empty)
             }
           }
         }
@@ -46,15 +41,14 @@ trait PageBehaviours extends WordSpec with MustMatchers with PropertyChecks with
           "the question has been answered" in {
 
             val gen = for {
-              page       <- genP
-              savedValue <- arbitrary[A]
-              cacheMap   <- arbitrary[CacheMap]
-            } yield (page, savedValue, cacheMap copy (data = cacheMap.data + (page.toString -> Json.toJson(savedValue))))
+              page        <- genP
+              savedValue  <- arbitrary[A]
+              userAnswers <- arbitrary[UserAnswers]
+            } yield (page, savedValue, userAnswers.set(page, savedValue).success.value)
 
             forAll(gen) {
-              case (page, savedValue, cacheMap) =>
+              case (page, savedValue, userAnswers) =>
 
-                val userAnswers = UserAnswers(cacheMap)
                 userAnswers.get(page).value mustEqual savedValue
             }
           }
@@ -69,16 +63,15 @@ trait PageBehaviours extends WordSpec with MustMatchers with PropertyChecks with
       "be able to be set on UserAnswers" in {
 
         val gen = for {
-          page     <- genP
-          newValue <- arbitrary[A]
-          cacheMap <- arbitrary[CacheMap]
-        } yield (page, newValue, cacheMap)
+          page        <- genP
+          newValue    <- arbitrary[A]
+          userAnswers <- arbitrary[UserAnswers]
+        } yield (page, newValue, userAnswers)
 
         forAll(gen) {
-          case (page, newValue, cacheMap) =>
+          case (page, newValue, userAnswers) =>
 
-            val userAnswers = UserAnswers(cacheMap)
-            val updatedAnswers = userAnswers.set(page, newValue)
+            val updatedAnswers = userAnswers.set(page, newValue).success.value
             updatedAnswers.get(page).value mustEqual newValue
         }
       }
@@ -91,16 +84,15 @@ trait PageBehaviours extends WordSpec with MustMatchers with PropertyChecks with
       "be able to be removed from UserAnswers" in {
 
         val gen = for {
-          page       <- genP
-          savedValue <- arbitrary[A]
-          cacheMap   <- arbitrary[CacheMap]
-        } yield (page, cacheMap copy (data = cacheMap.data + (page.toString -> Json.toJson(savedValue))))
+          page        <- genP
+          savedValue  <- arbitrary[A]
+          userAnswers <- arbitrary[UserAnswers]
+        } yield (page, userAnswers.set(page, savedValue).success.value)
 
         forAll(gen) {
-          case (page, cacheMap)=>
+          case (page, userAnswers) =>
 
-            val userAnswers = UserAnswers(cacheMap)
-            val updatedAnswers = userAnswers.remove(page)
+            val updatedAnswers = userAnswers.remove(page).success.value
             updatedAnswers.get(page) must be(empty)
         }
       }
