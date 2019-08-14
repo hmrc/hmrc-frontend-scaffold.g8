@@ -1,6 +1,6 @@
 @(errors: Seq[FormError])(implicit messages: Messages)
 @if(errors.nonEmpty) {
-    <div class="error-summary error-summary--show" role="group" aria-labelledby="error-summary-heading" tabindex="-1">
+    <div class="error-summary error-summary--show" role="alert" aria-labelledby="error-summary-heading" tabindex="-1">
 
         <h2 class="heading-medium error-summary-heading" id="error-summary-heading">
         @messages("error.summary.title")
