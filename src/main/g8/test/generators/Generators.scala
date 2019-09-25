@@ -1,12 +1,12 @@
 package generators
 
-import org.scalacheck.{Arbitrary, Gen, Shrink}
-import Gen._
-import Arbitrary._
-import play.api.libs.json.{JsBoolean, JsNumber, JsString}
-import uk.gov.hmrc.http.cache.client.CacheMap
+import java.time.{Instant, LocalDate, ZoneOffset}
 
-trait Generators extends CacheMapGenerator with PageGenerators with ModelGenerators with UserAnswersEntryGenerators {
+import org.scalacheck.Arbitrary._
+import org.scalacheck.Gen._
+import org.scalacheck.{Gen, Shrink}
+
+trait Generators extends UserAnswersGenerator with PageGenerators with ModelGenerators with UserAnswersEntryGenerators {
 
   implicit val dontShrink: Shrink[String] = Shrink.shrinkAny
 
@@ -80,7 +80,7 @@ trait Generators extends CacheMapGenerator with PageGenerators with ModelGenerat
     chars     <- listOfN(length, arbitrary[Char])
   } yield chars.mkString
 
-  def stringsExceptSpecificValues(excluded: Set[String]): Gen[String] =
+  def stringsExceptSpecificValues(excluded: Seq[String]): Gen[String] =
     nonEmptyString suchThat (!excluded.contains(_))
 
   def oneOf[T](xs: Seq[Gen[T]]): Gen[T] =
@@ -90,4 +90,15 @@ trait Generators extends CacheMapGenerator with PageGenerators with ModelGenerat
       val vector = xs.toVector
       choose(0, vector.size - 1).flatMap(vector(_))
     }
+
+  def datesBetween(min: LocalDate, max: LocalDate): Gen[LocalDate] = {
+
+    def toMillis(date: LocalDate): Long =
+      date.atStartOfDay.atZone(ZoneOffset.UTC).toInstant.toEpochMilli
+
+    Gen.choose(toMillis(min), toMillis(max)).map {
+      millis =>
+        Instant.ofEpochMilli(millis).atOffset(ZoneOffset.UTC).toLocalDate
+    }
+  }
 }

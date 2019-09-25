@@ -1,17 +1,18 @@
 package views
 
 import views.behaviours.ViewBehaviours
-import views.html.$className;format="decap"$
+import views.html.$className$View
 
 class $className$ViewSpec extends ViewBehaviours {
 
-  val messageKeyPrefix = "$className;format="decap"$"
-
-  def createView = () => $className;format="decap"$(frontendAppConfig)(fakeRequest, messages)
-
   "$className$ view" must {
-    behave like normalPage(createView, messageKeyPrefix)
 
-    behave like pageWithBackLink(createView)
+    val view = viewFor[$className$View](Some(emptyUserAnswers))
+
+    val applyView = view.apply()(fakeRequest, messages)
+
+    behave like normalPage(applyView, "$className;format="decap"$")
+
+    behave like pageWithBackLink(applyView)
   }
 }

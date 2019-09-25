@@ -1,5 +1,7 @@
 package forms.mappings
 
+import java.time.LocalDate
+
 import play.api.data.validation.{Constraint, Invalid, Valid}
 
 trait Constraints {
@@ -66,5 +68,29 @@ trait Constraints {
         Valid
       case _ =>
         Invalid(errorKey, maximum)
+    }
+
+  protected def maxDate(maximum: LocalDate, errorKey: String, args: Any*): Constraint[LocalDate] =
+    Constraint {
+      case date if date.isAfter(maximum) =>
+        Invalid(errorKey, args: _*)
+      case _ =>
+        Valid
+    }
+
+  protected def minDate(minimum: LocalDate, errorKey: String, args: Any*): Constraint[LocalDate] =
+    Constraint {
+      case date if date.isBefore(minimum) =>
+        Invalid(errorKey, args: _*)
+      case _ =>
+        Valid
+    }
+
+  protected def nonEmptySet(errorKey: String): Constraint[Set[_]] =
+    Constraint {
+      case set if set.nonEmpty =>
+        Valid
+      case _ =>
+        Invalid(errorKey)
     }
 }

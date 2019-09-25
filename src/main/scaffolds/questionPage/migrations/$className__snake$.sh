@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo ""
 echo "Applying migration $className;format="snake"$"
 
 echo "Adding routes to conf/app.routes"
@@ -15,13 +16,13 @@ echo "Adding messages to conf.messages"
 echo "" >> ../conf/messages.en
 echo "$className;format="decap"$.title = $className;format="decap"$" >> ../conf/messages.en
 echo "$className;format="decap"$.heading = $className;format="decap"$" >> ../conf/messages.en
-echo "$className;format="decap"$.field1 = Field 1" >> ../conf/messages.en
-echo "$className;format="decap"$.field2 = Field 2" >> ../conf/messages.en
+echo "$className;format="decap"$.$field1Name$ = $field1Name$" >> ../conf/messages.en
+echo "$className;format="decap"$.$field2Name$ = $field2Name$" >> ../conf/messages.en
 echo "$className;format="decap"$.checkYourAnswersLabel = $className;format="decap"$" >> ../conf/messages.en
-echo "$className;format="decap"$.error.field1.required = Enter field1" >> ../conf/messages.en
-echo "$className;format="decap"$.error.field2.required = Enter field2" >> ../conf/messages.en
-echo "$className;format="decap"$.error.field1.length = field1 must be $field1MaxLength$ characters or less" >> ../conf/messages.en
-echo "$className;format="decap"$.error.field2.length = field2 must be $field2MaxLength$ characters or less" >> ../conf/messages.en
+echo "$className;format="decap"$.error.$field1Name$.required = Enter $field1Name$" >> ../conf/messages.en
+echo "$className;format="decap"$.error.$field2Name$.required = Enter $field2Name$" >> ../conf/messages.en
+echo "$className;format="decap"$.error.$field1Name$.length = $field1Name$ must be $field1MaxLength$ characters or less" >> ../conf/messages.en
+echo "$className;format="decap"$.error.$field2Name$.length = $field2Name$ must be $field2MaxLength$ characters or less" >> ../conf/messages.en
 
 echo "Adding to UserAnswersEntryGenerators"
 awk '/trait UserAnswersEntryGenerators/ {\
@@ -51,24 +52,29 @@ awk '/trait ModelGenerators/ {\
     print "  implicit lazy val arbitrary$className$: Arbitrary[$className$] =";\
     print "    Arbitrary {";\
     print "      for {";\
-    print "        field1 <- arbitrary[String]";\
-    print "        field2 <- arbitrary[String]";\
-    print "      } yield $className$(field1, field2)";\
+    print "        $field1Name$ <- arbitrary[String]";\
+    print "        $field2Name$ <- arbitrary[String]";\
+    print "      } yield $className$($field1Name$, $field2Name$)";\
     print "    }";\
     next }1' ../test/generators/ModelGenerators.scala > tmp && mv tmp ../test/generators/ModelGenerators.scala
 
-echo "Adding to CacheMapGenerator"
+echo "Adding to UserAnswersGenerator"
 awk '/val generators/ {\
     print;\
     print "    arbitrary[($className$Page.type, JsValue)] ::";\
-    next }1' ../test/generators/CacheMapGenerator.scala > tmp && mv tmp ../test/generators/CacheMapGenerator.scala
+    next }1' ../test/generators/UserAnswersGenerator.scala > tmp && mv tmp ../test/generators/UserAnswersGenerator.scala
 
 echo "Adding helper method to CheckYourAnswersHelper"
 awk '/class/ {\
      print;\
      print "";\
      print "  def $className;format="decap"$: Option[AnswerRow] = userAnswers.get($className$Page) map {";\
-     print "    x => AnswerRow(\"$className;format="decap"$.checkYourAnswersLabel\", s\"\${x.field1} \${x.field2}\", false, routes.$className$Controller.onPageLoad(CheckMode).url)";\
+     print "    x =>";\
+     print "      AnswerRow(";\
+     print "        HtmlFormat.escape(messages(\"$className;format="decap"$.checkYourAnswersLabel\")),";\
+     print "        HtmlFormat.escape(s\"\${x.$field1Name$} \${x.$field2Name$}\"),";\
+     print "        routes.$className$Controller.onPageLoad(CheckMode).url";\
+     print "      )"
      print "  }";\
      next }1' ../app/utils/CheckYourAnswersHelper.scala > tmp && mv tmp ../app/utils/CheckYourAnswersHelper.scala
 

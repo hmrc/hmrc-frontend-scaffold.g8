@@ -1,21 +1,22 @@
 #!/bin/bash
 
+echo ""
 echo "Applying migration $className;format="snake"$"
 
 echo "Adding routes to conf/app.routes"
 
 echo "" >> ../conf/app.routes
-echo "GET        /$className;format="decap"$               controllers.$className$Controller.onPageLoad(mode: Mode = NormalMode)" >> ../conf/app.routes
-echo "POST       /$className;format="decap"$               controllers.$className$Controller.onSubmit(mode: Mode = NormalMode)" >> ../conf/app.routes
+echo "GET        /$className;format="decap"$                  controllers.$className$Controller.onPageLoad(mode: Mode = NormalMode)" >> ../conf/app.routes
+echo "POST       /$className;format="decap"$                  controllers.$className$Controller.onSubmit(mode: Mode = NormalMode)" >> ../conf/app.routes
 
 echo "GET        /change$className$                        controllers.$className$Controller.onPageLoad(mode: Mode = CheckMode)" >> ../conf/app.routes
 echo "POST       /change$className$                        controllers.$className$Controller.onSubmit(mode: Mode = CheckMode)" >> ../conf/app.routes
 
 echo "Adding messages to conf.messages"
 echo "" >> ../conf/messages.en
-echo "$className;format="decap"$.title = $className;format="decap"$" >> ../conf/messages.en
-echo "$className;format="decap"$.heading = $className;format="decap"$" >> ../conf/messages.en
-echo "$className;format="decap"$.checkYourAnswersLabel = $className;format="decap"$" >> ../conf/messages.en
+echo "$className;format="decap"$.title = $className$" >> ../conf/messages.en
+echo "$className;format="decap"$.heading = $className$" >> ../conf/messages.en
+echo "$className;format="decap"$.checkYourAnswersLabel = $className$" >> ../conf/messages.en
 echo "$className;format="decap"$.error.nonNumeric = Enter your $className;format="decap"$ using numbers" >> ../conf/messages.en
 echo "$className;format="decap"$.error.required = Enter your $className;format="decap"$" >> ../conf/messages.en
 echo "$className;format="decap"$.error.wholeNumber = Enter your $className;format="decap"$ using whole numbers" >> ../conf/messages.en
@@ -42,18 +43,23 @@ awk '/trait PageGenerators/ {\
     print "    Arbitrary($className$Page)";\
     next }1' ../test/generators/PageGenerators.scala > tmp && mv tmp ../test/generators/PageGenerators.scala
 
-echo "Adding to CacheMapGenerator"
+echo "Adding to UserAnswersGenerator"
 awk '/val generators/ {\
     print;\
     print "    arbitrary[($className$Page.type, JsValue)] ::";\
-    next }1' ../test/generators/CacheMapGenerator.scala > tmp && mv tmp ../test/generators/CacheMapGenerator.scala
+    next }1' ../test/generators/UserAnswersGenerator.scala > tmp && mv tmp ../test/generators/UserAnswersGenerator.scala
 
 echo "Adding helper method to CheckYourAnswersHelper"
 awk '/class/ {\
      print;\
      print "";\
      print "  def $className;format="decap"$: Option[AnswerRow] = userAnswers.get($className$Page) map {";\
-     print "    x => AnswerRow(\"$className;format="decap"$.checkYourAnswersLabel\", s\"\$x\", false, routes.$className$Controller.onPageLoad(CheckMode).url)";\
+     print "    x =>";\
+     print "      AnswerRow(";\
+     print "        HtmlFormat.escape(messages(\"$className;format="decap"$.checkYourAnswersLabel\")),";\
+     print "        HtmlFormat.escape(x.toString),";\
+     print "        routes.$className$Controller.onPageLoad(CheckMode).url";\
+     print "      )"
      print "  }";\
      next }1' ../app/utils/CheckYourAnswersHelper.scala > tmp && mv tmp ../app/utils/CheckYourAnswersHelper.scala
 

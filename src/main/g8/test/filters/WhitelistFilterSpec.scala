@@ -5,13 +5,13 @@ import com.typesafe.config.ConfigException
 import generators.Generators
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.Gen
-import org.scalatest.mockito.MockitoSugar
-import org.scalatest.prop.PropertyChecks
+import org.scalatestplus.mockito.MockitoSugar
+import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import org.scalatest.{FreeSpec, MustMatchers}
 import play.api.Configuration
 import play.api.mvc.Call
 
-class WhitelistFilterSpec extends FreeSpec with MustMatchers with PropertyChecks with MockitoSugar with Generators {
+class WhitelistFilterSpec extends FreeSpec with MustMatchers with ScalaCheckPropertyChecks with MockitoSugar with Generators {
 
   val mockMaterializer = mock[Materializer]
 
