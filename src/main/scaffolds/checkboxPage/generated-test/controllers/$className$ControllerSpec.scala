@@ -49,7 +49,7 @@ class $className$ControllerSpec extends SpecBase with MockitoSugar {
 
     "populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set($className$Page, $className$.values).success.value
+      val userAnswers = UserAnswers(userAnswersId).set($className$Page, $className$.values.toSet).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -62,7 +62,7 @@ class $className$ControllerSpec extends SpecBase with MockitoSugar {
       status(result) mustEqual OK
 
       contentAsString(result) mustEqual
-        view(form.fill($className$.values), NormalMode)(fakeRequest, messages).toString
+        view(form.fill($className$.values.toSet), NormalMode)(fakeRequest, messages).toString
 
       application.stop()
     }

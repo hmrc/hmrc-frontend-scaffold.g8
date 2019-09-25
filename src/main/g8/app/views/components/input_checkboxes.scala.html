@@ -6,7 +6,7 @@
         legendClass: Option[String] = None,
         hint: Option[String] = None,
         trackGa: Boolean = false,
-        inputs: Set[RadioOption]
+        inputs: Seq[RadioOption]
 )(implicit messages: Messages)
 
 @hintBlock = {
@@ -43,7 +43,7 @@
         @errorBlock
         @for((RadioOption(id, value, messageKey), index) <- inputs.zipWithIndex) {
             @defining(
-                inputs.toSeq.indices.flatMap { i =>
+                inputs.indices.flatMap { i =>
                     field(s"[\$i]").value
                 }
             ) { answers =>

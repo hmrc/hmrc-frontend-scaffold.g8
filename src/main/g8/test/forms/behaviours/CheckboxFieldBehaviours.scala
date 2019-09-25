@@ -7,7 +7,7 @@ trait CheckboxFieldBehaviours extends FormSpec {
 
   def checkboxField[T](form: Form[_],
                        fieldName: String,
-                       validValues: Set[T],
+                       validValues: Seq[T],
                        invalidError: FormError): Unit = {
     for {
       (value, i) <- validValues.zipWithIndex
