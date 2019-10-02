@@ -20,6 +20,16 @@
     numberInputs();
 
   // =====================================================
+  // Introduce direct skip link control, to work around voiceover failing of hash links
+  // https://bugs.webkit.org/show_bug.cgi?id=179011
+  // https://axesslab.com/skip-links/
+  // =====================================================
+  $('.skiplink').click(function(e) {
+    e.preventDefault();
+    $(':header:first').attr('tabindex', '-1').focus();
+  });
+
+  // =====================================================
   // Back link mimics browser back functionality
   // =====================================================
   // store referrer value to cater for IE - https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/10474810/  */
@@ -59,6 +69,10 @@
       }
       assignFocus();
 
+    // =====================================================
+    // Print functionality
+    // Opens any details components so they are printed
+    // =====================================================
       function beforePrintCall(){
           if(\$('.no-details').length > 0){
               // store current focussed element to return focus to later
