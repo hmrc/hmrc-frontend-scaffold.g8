@@ -9,6 +9,12 @@
   showHideContent.init()
 
   // =====================================================
+  // Use GOV.UK shim-links-with-button-role.js to trigger
+  // links with role="button" when space key is pressed
+  // =====================================================
+  GOVUK.shimLinksWithButtonRole.init();
+
+  // =====================================================
   // Handle number inputs
   // =====================================================
     numberInputs();
