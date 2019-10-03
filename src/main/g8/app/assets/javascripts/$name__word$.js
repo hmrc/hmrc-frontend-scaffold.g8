@@ -24,9 +24,9 @@
   // https://bugs.webkit.org/show_bug.cgi?id=179011
   // https://axesslab.com/skip-links/
   // =====================================================
-  $('.skiplink').click(function(e) {
+  \$('.skiplink').click(function(e) {
     e.preventDefault();
-    $(':header:first').attr('tabindex', '-1').focus();
+    \$(':header:first').attr('tabindex', '-1').focus();
   });
 
   // =====================================================

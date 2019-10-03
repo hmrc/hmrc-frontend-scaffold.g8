@@ -6,41 +6,30 @@
         legendClass: Option[String] = None,
         hint: Option[String] = None,
         trackGa: Boolean = false,
+        headingIsLegend: Boolean = false,
         inputs: Seq[RadioOption]
 )(implicit messages: Messages)
 
-@hintBlock = {
-  @hint.map { hint =>
-      <span class="form-hint">
-          @hint
-      </span>
-  }
-}
+<div class="form-group @if(field.hasErrors){form-group-error}">
+    <fieldset id="@{field.id}" @if(field.hasErrors || hint.nonEmpty){aria-describedby="@if(field.hasErrors){error-message-@{field.id}-input} @if(hint.nonEmpty){@{field.id}-hint}"}>
+        @if(headingIsLegend){
+            <legend>
+                <h1 @if(legendClass.nonEmpty){class="@legendClass" }else{class="heading-xlarge"}>@legend</h1>
+            </legend>
+        } else {
+            <legend @if(legendClass.nonEmpty){class="@legendClass" }>
+                @legend
+            </legend>
+        }
 
-@errorBlock = {
-  @field.errors.map { error =>
-      <span class="error-notification" id="error-message-@field.id-input">
-      @messages(error.message, error.args: _*)
-      </span>
-  }
-}
-
-@divClass = @{
-    if(field.hasErrors) "form-group form-field--error" else "form-group"
-}
-
-@lgndClass = @{
-    legendClass match {
-        case Some(str) => s"bold-small \$str"
-        case None      => "bold-small"
-    }
-}
-
-<div class="@divClass">
-    <fieldset id="@{field.id}">
-        <legend class="@lgndClass">@legend</legend>
-        @hintBlock
-        @errorBlock
+        @if(hint.nonEmpty){
+            <div class="form-hint" id="hint-@{field.id}">@hint</div>
+        }
+        @field.errors.map { error =>
+            <div class="error-message" id="error-message-@field.id-input">
+                <span class="visually-hidden">@messages("error.browser.title.prefix") </span>@messages(error.message, error.args: _*)
+            </div>
+        }
         @for((RadioOption(id, value, messageKey), index) <- inputs.zipWithIndex) {
             @defining(
                 inputs.indices.flatMap { i =>
