@@ -1,5 +1,5 @@
 // =========================
-// updated 27 Aug 2019, 12:05 BST
+// updated 3 Oct 2019, 18:52 BST
 // Palette change
 // https://designnotes.blog.gov.uk/2019/07/29/weve-updated-the-gov-uk-colours-and-font/
 // =========================
@@ -10,8 +10,6 @@
 .button--secondary.disabled:hover,
 .button--secondary[disabled="disabled"]:hover,
 .button--secondary[disabled]:hover,
-.block-label,
-.block-label--stacked,
 .footer,
 .box--shaded,
 .side-nav__link:hover,
@@ -31,17 +29,12 @@
 .tabs-nav .tabs-nav__tab.button--link-style:active,
 .annual-summaries--group .statement__summary--parent[aria-expanded=true],
 .payments .table-label.selected,
-.payments .table-label:hover,
-html {
+.payments .table-label:hover {
   background-color: #f3f2f1;
 }
 .button--secondary:active {
   -webkit-box-shadow: 0 0 0 #f3f2f1;
   box-shadow: 0 0 0 #f3f2f1
-}
-.block-label,
-.block-label--stacked {
-  border-color: #f3f2f1;
 }
 .dynamically-displayed {
   border-left: 5px solid #f3f2f1;
