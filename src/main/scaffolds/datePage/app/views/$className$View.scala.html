@@ -20,7 +20,7 @@
         @components.input_date(
             field = form("value"),
             legend = messages("$className;format="decap"$.heading"),
-            legendClass = "visually-hidden"
+            legendClass = Some("visually-hidden")
         )
 
         @components.submit_button()
