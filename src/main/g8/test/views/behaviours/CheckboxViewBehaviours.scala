@@ -18,7 +18,7 @@ trait CheckboxViewBehaviours[A] extends ViewBehaviours {
         val doc = asDocument(createView(form))
         val legends = doc.getElementsByTag("legend")
         legends.size mustBe 1
-        legends.first.text mustBe legend.getOrElse(messages(s"\$messageKeyPrefix.heading"))
+        legends.text contains legend.getOrElse(messages(s"\$messageKeyPrefix.heading"))
       }
 
       "contain an input for the value" in {
@@ -88,8 +88,8 @@ trait CheckboxViewBehaviours[A] extends ViewBehaviours {
 
       "show an error in the value field's label" in {
         val doc = asDocument(createView(form.withError(FormError(fieldKey, "error.invalid"))))
-        val errorSpan = doc.getElementsByClass("error-notification").first
-        errorSpan.text mustBe messages("error.invalid")
+        val errorSpan = doc.getElementsByClass("error-message").first
+        errorSpan.text mustBe (messages("error.browser.title.prefix") + " " + messages("error.invalid"))
       }
     }
   }
