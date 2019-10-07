@@ -35,3 +35,12 @@ p.font-xsmall{
 .hero__heading-small {
   display: block;
 }
+
+
+/* CYA padding in line with current GDS */
+@media screen and (min-width: 769px) {
+  .govuk-check-your-answers > * > * {
+    padding-top: 0.53em;
+    padding-bottom: 0.53em;
+  }
+}
