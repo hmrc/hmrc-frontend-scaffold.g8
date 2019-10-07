@@ -24,7 +24,9 @@
         <div class="form-hint" id="hint-@{field.id}">@hint</div>
     }
     @field.errors.map { error =>
-        <div class="error-message" id="error-message-@{field.id}-input">@messages(error.message, error.args: _*)</div>
+        <div class="error-message" id="error-message-@{field.id}-input">
+            <span class="visually-hidden">@messages("error.browser.title.prefix") </span>@messages(error.message, error.args: _*)
+        </div>
     }
     <div class="form-control-wrapper">
         <input
