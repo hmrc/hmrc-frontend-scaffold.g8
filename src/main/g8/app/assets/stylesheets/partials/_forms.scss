@@ -1,15 +1,14 @@
 @import '_forms__mixin';
 
-/*
-====================================
-Makes relationship between legend and inputs/hint tighter
-Legend in Assets Frontend implements a margin bottom
-====================================
- */
-fieldset legend {
-  margin-bottom: 0;
+legend .heading-xlarge,
+legend .heading-large,
+legend .heading-medium,
+label.heading-xlarge,
+label.heading-large,
+label.heading-medium {
+    margin-bottom: 0.25em;
+    margin-top: 0;
 }
-
 
 
 /*
@@ -62,9 +61,10 @@ Taken from GDS Elements
     @include form-control-sizes;
 }
 
-
+.error-message,
 .form-hint {
     display: block;
+    margin-bottom: 0.5em;
 }
 
 /*

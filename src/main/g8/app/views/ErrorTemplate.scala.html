@@ -8,7 +8,7 @@
 @(pageTitle: String, heading: String, message: String)(implicit request: Request[_], messages: Messages)
 
 @contentHeader = {
-  <h1>@heading</h1>
+  @components.heading(heading)
 }
 
 @mainContent = {
