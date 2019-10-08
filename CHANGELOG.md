@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## v 0.14.0 - 2019-10-08
+
+### Changed
+* Updated to use Assets Frontend 4.11
+
+### Fixed
+*  Updated palette and markup for better WCAG 2.1 compliance
+
 ## v0.13.0 - 2019-09-25
 
 ### Changed
