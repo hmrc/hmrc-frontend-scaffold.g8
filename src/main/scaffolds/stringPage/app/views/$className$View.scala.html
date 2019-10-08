@@ -18,12 +18,10 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading("$className;format="decap"$.heading")
-
         @components.input_text(
           field = form("value"),
           label = messages("$className;format="decap"$.heading"),
-          labelClass=Some("visually-hidden")
+          headingIsLabel = true
         )
 
         @components.submit_button()

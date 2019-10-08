@@ -12,15 +12,13 @@
     @formHelper(action = $className$Controller.onSubmit(mode), 'autoComplete -> "off") {
 
         @components.back_link()
-        
-        @components.error_summary(form.errors)
 
-        @components.heading("$className;format="decap"$.heading")
+        @components.error_summary(form.errors)
 
         @components.input_text(
             field = form("value"),
             label = messages("$className;format="decap"$.heading"),
-            labelClass=Some("visually-hidden")
+            headingIsLabel = true
         )
 
         @components.submit_button()

@@ -15,12 +15,10 @@
 
         @components.error_summary(form.errors)
 
-        @components.heading("$className;format="decap"$.heading")
-
         @components.input_date(
             field = form("value"),
             legend = messages("$className;format="decap"$.heading"),
-            legendClass = "visually-hidden"
+            headingIsLegend = true
         )
 
         @components.submit_button()
