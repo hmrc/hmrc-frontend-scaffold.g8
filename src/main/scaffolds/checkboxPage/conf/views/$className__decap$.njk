@@ -1,0 +1,58 @@
+{% extends "includes/layout.njk" %}
+
+{% from "govuk/components/back-link/macro.njk"     import govukBackLink %}
+{% from "govuk/components/checkboxes/macro.njk"    import govukCheckboxes %}
+{% from "govuk/components/button/macro.njk"        import govukButton %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+{% block pageTitle %}
+  {% set titlePrefix = messages("error.title.prefix") if form.errors.length > 0 else "" %}
+  {% set title = titlePrefix + ' ' + messages("address.title") %}
+  {% include "includes/title.njk" %}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: messages("site.back")
+  }) }}
+
+  <div class="govuk-main-wrapper">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+
+        {% if form.errors.length > 0 %}
+          {{ govukErrorSummary({
+            "titleText": messages("error.summary.title"),
+            "errorList": form.errors
+          }) }}
+        {% endif %}
+
+        <form action="{{ routes.controllers.$className$Controller.onSubmit(mode).url }}" method="post">
+
+          {{ csrf() | safe }}
+
+          {{ govukCheckboxes({
+            name: 'value',
+            fieldset: {
+              legend: {
+                text: messages('$className;format="decap"$.title'),
+                isPageHeading: true,
+                classes: "govuk-fieldset__legend--xl"
+              }
+            },
+            items: checkboxes,
+            errorMessage: form.value.error
+          }) }}
+
+          {{ govukButton({
+            text: messages("site.continue")
+          }) }}
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

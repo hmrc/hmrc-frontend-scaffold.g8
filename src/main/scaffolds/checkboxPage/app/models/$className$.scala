@@ -1,6 +1,8 @@
 package models
 
-import viewmodels.RadioOption
+import play.api.data.Form
+import play.api.i18n.Messages
+import uk.gov.hmrc.viewmodels._
 
 sealed trait $className$
 
@@ -14,9 +16,15 @@ object $className$ extends Enumerable.Implicits {
     $option2key;format="Camel"$
   )
 
-  val options: Seq[RadioOption] = values.map {
-    value =>
-      RadioOption("$className;format="decap"$", value.toString)
+  def checkboxes(form: Form[_])(implicit messages: Messages): Seq[Checkboxes.Item] = {
+
+    val field = form("value")
+    val items = Seq(
+      Checkboxes.Checkbox(msg"$className;format="decap"$.$option1key;format="decap"$", $option1key;format="Camel"$.toString),
+      Checkboxes.Checkbox(msg"$className;format="decap"$.$option2key;format="decap"$", $option2key;format="Camel"$.toString)
+    )
+
+    Checkboxes.set(field, items)
   }
 
   implicit val enumerable: Enumerable[$className$] =

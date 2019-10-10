@@ -62,13 +62,19 @@ echo "Adding helper method to CheckYourAnswersHelper"
 awk '/class/ {\
      print;\
      print "";\
-     print "  def $className;format="decap"$: Option[AnswerRow] = userAnswers.get($className$Page) map {";\
-     print "    x =>";\
-     print "      AnswerRow(";\
-     print "        HtmlFormat.escape(messages(\"$className;format="decap"$.checkYourAnswersLabel\")),";\
-     print "        Html(x.map(value => HtmlFormat.escape(messages(s\"$className;format="decap"$.\$value\")).toString).mkString(\",<br>\")),";\
-     print "        routes.$className$Controller.onPageLoad(CheckMode).url";\
-     print "      )"
+     print "  def $className;format="decap"$: Option[Row] = userAnswers.get($className$Page) map {";\
+     print "    answer =>";\
+     print "      Row(";\
+     print "        key     = Key(msg\"$className;format="decap"$.checkYourAnswersLabel\", classes = Seq(\"govuk-!-width-one-half\")),";\
+     print "        value   = Value(Html(answer.map(a => msg\"$className;format="decap"$.\$a\".resolve).mkString(\",<br>\"))),";\
+     print "        actions = List(";\
+     print "          Action(";\
+     print "            content            = msg\"site.edit\",";\
+     print "            href               = routes.$className$Controller.onPageLoad(CheckMode).url,";\
+     print "            visuallyHiddenText = Some(msg\"site.edit.hidden\".withArgs(msg\"$className;format="decap"$.checkYourAnswersLabel\"))";\
+     print "          )";\
+     print "        )";\
+     print "      )";\
      print "  }";\
      next }1' ../app/utils/CheckYourAnswersHelper.scala > tmp && mv tmp ../app/utils/CheckYourAnswersHelper.scala
 

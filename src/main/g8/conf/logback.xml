@@ -75,6 +75,9 @@
         <appender-ref ref="STDOUT"/>
     </logger>
 
+    <logger name="io.apigee.trireme" level="INFO"/>
+    <logger name="org.webjars" level="INFO"/>
+
     <root level="DEBUG">
         <appender-ref ref="FILE"/>
         <appender-ref ref="STDOUT"/>

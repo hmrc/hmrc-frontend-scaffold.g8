@@ -4,21 +4,23 @@ import base.SpecBase
 import forms.$className$FormProvider
 import models.{NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
+import org.mockito.ArgumentCaptor
 import org.mockito.Matchers.any
-import org.mockito.Mockito.when
+import org.mockito.Mockito.{times, verify, when}
 import org.scalatestplus.mockito.MockitoSugar
 import pages.$className$Page
 import play.api.inject.bind
-import play.api.libs.json.{JsNumber, Json}
+import play.api.libs.json.{JsNumber, JsObject, Json}
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import play.twirl.api.Html
 import repositories.SessionRepository
-import views.html.$className$View
+import uk.gov.hmrc.nunjucks.NunjucksSupport
 
 import scala.concurrent.Future
 
-class $className$ControllerSpec extends SpecBase with MockitoSugar {
+class $className$ControllerSpec extends SpecBase with MockitoSugar with NunjucksSupport {
 
   val formProvider = new $className$FormProvider()
   val form = formProvider()
@@ -33,38 +35,57 @@ class $className$ControllerSpec extends SpecBase with MockitoSugar {
 
     "return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      when(mockRenderer.render(any(), any())(any()))
+        .thenReturn(Future.successful(Html("")))
 
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
       val request = FakeRequest(GET, $className;format="decap"$Route)
+      val templateCaptor = ArgumentCaptor.forClass(classOf[String])
+      val jsonCaptor = ArgumentCaptor.forClass(classOf[JsObject])
 
       val result = route(application, request).value
 
-      val view = application.injector.instanceOf[$className$View]
-
       status(result) mustEqual OK
 
-      contentAsString(result) mustEqual
-        view(form, NormalMode)(fakeRequest, messages).toString
+      verify(mockRenderer, times(1)).render(templateCaptor.capture(), jsonCaptor.capture())(any())
+
+      val expectedJson = Json.obj(
+        "form" -> form,
+        "mode" -> NormalMode
+      )
+
+      templateCaptor.getValue mustEqual "$className;format="decap"$.njk"
+      jsonCaptor.getValue mustEqual expectedJson
 
       application.stop()
     }
 
     "populate the view correctly on a GET when the question has previously been answered" in {
 
+      when(mockRenderer.render(any(), any())(any()))
+        .thenReturn(Future.successful(Html("")))
+
       val userAnswers = UserAnswers(userAnswersId).set($className$Page, validAnswer).success.value
-
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
-
       val request = FakeRequest(GET, $className;format="decap"$Route)
-
-      val view = application.injector.instanceOf[$className$View]
+      val templateCaptor = ArgumentCaptor.forClass(classOf[String])
+      val jsonCaptor = ArgumentCaptor.forClass(classOf[JsObject])
 
       val result = route(application, request).value
 
       status(result) mustEqual OK
 
-      contentAsString(result) mustEqual
-        view(form.fill(validAnswer), NormalMode)(fakeRequest, messages).toString
+      verify(mockRenderer, times(1)).render(templateCaptor.capture(), jsonCaptor.capture())(any())
+
+      val filledForm = form.bind(Map("value" -> validAnswer.toString))
+
+      val expectedJson = Json.obj(
+        "form" -> filledForm,
+        "mode" -> NormalMode
+      )
+
+      templateCaptor.getValue mustEqual "$className;format="decap"$.njk"
+      jsonCaptor.getValue mustEqual expectedJson
 
       application.stop()
     }
@@ -98,22 +119,28 @@ class $className$ControllerSpec extends SpecBase with MockitoSugar {
 
     "return a Bad Request and errors when invalid data is submitted" in {
 
+      when(mockRenderer.render(any(), any())(any()))
+        .thenReturn(Future.successful(Html("")))
+
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
-
-      val request =
-        FakeRequest(POST, $className;format="decap"$Route)
-          .withFormUrlEncodedBody(("value", "invalid value"))
-
+      val request = FakeRequest(POST, $className;format="decap"$Route).withFormUrlEncodedBody(("value", "invalid value"))
       val boundForm = form.bind(Map("value" -> "invalid value"))
-
-      val view = application.injector.instanceOf[$className$View]
+      val templateCaptor = ArgumentCaptor.forClass(classOf[String])
+      val jsonCaptor = ArgumentCaptor.forClass(classOf[JsObject])
 
       val result = route(application, request).value
 
       status(result) mustEqual BAD_REQUEST
 
-      contentAsString(result) mustEqual
-        view(boundForm, NormalMode)(fakeRequest, messages).toString
+      verify(mockRenderer, times(1)).render(templateCaptor.capture(), jsonCaptor.capture())(any())
+
+      val expectedJson = Json.obj(
+        "form" -> boundForm,
+        "mode" -> NormalMode
+      )
+
+      templateCaptor.getValue mustEqual "$className;format="decap"$.njk"
+      jsonCaptor.getValue mustEqual expectedJson
 
       application.stop()
     }

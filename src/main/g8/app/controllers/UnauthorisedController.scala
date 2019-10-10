@@ -3,15 +3,19 @@ package controllers
 import javax.inject.Inject
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import uk.gov.hmrc.nunjucks.{NunjucksRenderer, NunjucksSupport}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendBaseController
-import views.html.UnauthorisedView
+
+import scala.concurrent.ExecutionContext
 
 class UnauthorisedController @Inject()(
-                                        val controllerComponents: MessagesControllerComponents,
-                                        view: UnauthorisedView
-                                      ) extends FrontendBaseController with I18nSupport {
+    val controllerComponents: MessagesControllerComponents,
+    renderer: NunjucksRenderer
+)(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport with NunjucksSupport {
 
-  def onPageLoad: Action[AnyContent] = Action { implicit request =>
-    Ok(view())
+  def onPageLoad: Action[AnyContent] = Action.async {
+    implicit request =>
+    
+      renderer.render("unauthorised.njk").map(Ok(_))
   }
 }

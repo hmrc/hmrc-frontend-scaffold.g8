@@ -1,0 +1,22 @@
+{% extends "includes/layout.njk" %}
+
+{% block pageTitle %}
+  {% set title = messages("checkYourAnswers.title") %}
+  {% include "includes/title.njk" %}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-main-wrapper">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+
+        <h1 class="govuk-heading-xl">
+          {{ messages("checkYourAnswers.heading") }}
+        </h1>
+
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

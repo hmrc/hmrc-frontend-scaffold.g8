@@ -1,0 +1,26 @@
+{% extends "govuk/template.njk" %}
+{%- set assetPath = "/assets/lib/govuk-frontend/govuk/assets" -%}
+
+{% block head %}
+  {% include "includes/head.njk" %}
+{% endblock %}
+
+{% block header %}
+  {{ govukHeader({
+    homepageUrl: "/",
+    serviceName: messages("site.service_name"),
+    serviceUrl: "/",
+    containerClasses: "govuk-width-container",
+    assetsPath: "/assets"
+  }) }}
+{% endblock %}
+
+{% block bodyEnd %}
+  {% block scripts %}
+    {% include "includes/scripts.njk" %}
+  {% endblock %}
+{% endblock %}
+
+{% block footer %}
+  {% include "includes/footer.njk" %}
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "includes/layout.njk" %}
+
+{% block pageTitle %}
+  {% set title = messages(page + ".title") %}
+  {% include "includes/title.njk" %}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">{{ messages(page + '.heading') }}</h1>
+      
+      {% if message %}
+        <p class="govuk-body">
+          {{ messages(message) }}
+        </p>
+      {% endif %}
+
+  </div>
+{% endblock %}

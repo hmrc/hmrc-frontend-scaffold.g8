@@ -1,0 +1,29 @@
+{% from "govuk/components/footer/macro.njk" import govukFooter %}
+
+{{ govukFooter({
+  meta: {
+    visuallyHiddenTitle: messages("footer.links.support_links"),
+    items: [
+      {
+        href: messages("footer.links.cookies.url"),
+        text: messages("footer.links.cookies")
+      },
+      {
+        href: routes.controllers.AccessibilityController.onPageLoad().url,
+        text: messages("footer.links.accessibility")
+      },
+      {
+        href: messages("footer.links.privacy.url"),
+        text: messages("footer.links.privacy")
+      },
+      {
+        href: messages("footer.links.terms.url"),
+        text: messages("footer.links.terms")
+      },
+       {
+         href: messages("footer.links.help.url"),
+         text: messages("footer.links.help")
+       }
+    ]
+  }
+}) }}
