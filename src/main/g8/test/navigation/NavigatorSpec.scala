@@ -2,30 +2,45 @@ package navigation
 
 import base.SpecBase
 import controllers.routes
+import generators.Generators
 import pages._
 import models._
+import org.scalacheck.Arbitrary.arbitrary
+import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 
-class NavigatorSpec extends SpecBase {
+class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks with Generators {
 
   val navigator = new Navigator
 
-  "Navigator" when {
+  "Navigator" - {
 
-    "in Normal mode" must {
+    "in Normal mode" - {
 
-      "go to Index from a page that doesn't exist in the route map" in {
+      "must go from a page that doesn't exist in the route map to Index" in {
 
         case object UnknownPage extends Page
-        navigator.nextPage(UnknownPage, NormalMode, UserAnswers("id")) mustBe routes.IndexController.onPageLoad()
+
+        forAll(arbitrary[UserAnswers]) {
+          answers =>
+
+            navigator.nextPage(UnknownPage, NormalMode, answers)
+              .mustBe(routes.IndexController.onPageLoad())
+        }
       }
     }
 
-    "in Check mode" must {
+    "in Check mode" - {
 
-      "go to CheckYourAnswers from a page that doesn't exist in the edit route map" in {
+      "must go from a page that doesn't exist in the edit route map  to Check Your Answers" in {
 
         case object UnknownPage extends Page
-        navigator.nextPage(UnknownPage, CheckMode, UserAnswers("id")) mustBe routes.CheckYourAnswersController.onPageLoad()
+
+        forAll(arbitrary[UserAnswers]) {
+          answers =>
+
+            navigator.nextPage(UnknownPage, CheckMode, answers)
+              .mustBe(routes.CheckYourAnswersController.onPageLoad())
+        }
       }
     }
   }

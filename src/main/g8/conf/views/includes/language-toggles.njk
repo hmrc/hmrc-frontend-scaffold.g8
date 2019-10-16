@@ -1,0 +1,28 @@
+<nav class="lang" aria-label="{{ messages("language.switcher") }}">
+  <ul>
+    {% if request.language == 'en' %}
+      <li>
+        <span aria-current="true">{{ messages("language.english") }}</span>
+      </li>
+    {% else %}
+      <li>
+        <a href="{{ routes.controllers.LanguageSwitchController.switchToLanguage("english").url }}" hreflang="en" lang="en" rel="alternate" class="govuk-link">
+          <span class="govuk-visually-hidden">{{ messages("language.change.english") }}</span>
+          <span aria-hidden="true">{{ messages("language.english") }}</span>
+        </a>
+      </li>
+    {% endif %}
+    {% if request.language == 'cy' %}
+      <li>
+        <span aria-current="true">{{ messages("language.cymraeg") }}</span>
+      </li>
+    {% else %}
+      <li>
+        <a href="{{ routes.controllers.LanguageSwitchController.switchToLanguage("cymraeg").url }}" hreflang="cy" lang="cy" rel="alternate" class="govuk-link">
+          <span class="govuk-visually-hidden">{{ messages("language.change.cymraeg") }}</span>
+          <span aria-hidden="true">{{ messages("language.cymraeg") }}</span>
+        </a>
+      </li>
+    {% endif %}
+  </ul>
+</nav>

@@ -18,11 +18,11 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar with ScalaFutur
     def callTransform[A](request: IdentifierRequest[A]): Future[OptionalDataRequest[A]] = transform(request)
   }
 
-  "Data Retrieval Action" when {
+  "Data Retrieval Action" - {
 
-    "there is no data in the cache" must {
+    "when there is no data in the cache" - {
 
-      "set userAnswers to 'None' in the request" in {
+      "must set userAnswers to 'None' in the request" in {
 
         val sessionRepository = mock[SessionRepository]
         when(sessionRepository.get("id")) thenReturn Future(None)
@@ -36,9 +36,9 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar with ScalaFutur
       }
     }
 
-    "there is data in the cache" must {
+    "when there is data in the cache" - {
 
-      "build a userAnswers object and add it to the request" in {
+      "must build a userAnswers object and add it to the request" in {
 
         val sessionRepository = mock[SessionRepository]
         when(sessionRepository.get("id")) thenReturn Future(Some(new UserAnswers("id")))

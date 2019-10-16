@@ -4,14 +4,13 @@
 {% from "govuk/components/input/macro.njk"         import govukInput %}
 {% from "govuk/components/button/macro.njk"        import govukButton %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "macros/title.njk"                         import title %}
 
 {% block pageTitle %}
-  {% set titlePrefix = messages("error.title.prefix") if form.errors.length > 0 else "" %}
-  {% set title = titlePrefix + ' ' + messages("address.title") %}
-  {% include "includes/title.njk" %}
+  {{ title(messages("$className;format="decap"$.title"), form.errors) }}
 {% endblock %}
 
-{% block content %}
+{% block mainContent %}
 
   {{ govukBackLink({
     text: messages("site.back")
@@ -42,6 +41,7 @@
             },
             id: "$field1Name$",
             name: "$field1Name$",
+            value: form.$field1Name$.value,
             errorMessage: form.$field1Name$.error
           }) }}
 
@@ -51,6 +51,7 @@
             },
             id: "$field2Name$",
             name: "$field2Name$",
+            value: form.$field2Name$.value,
             errorMessage: form.$field2Name$.error
           }) }}
 

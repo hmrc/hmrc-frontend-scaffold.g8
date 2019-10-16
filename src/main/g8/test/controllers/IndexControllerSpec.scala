@@ -12,11 +12,11 @@ import scala.concurrent.Future
 
 class IndexControllerSpec extends SpecBase {
 
-  "Index Controller" must {
+  "Index Controller" - {
 
-    "return OK and the correct view for a GET" in {
+    "must return OK and the correct view for a GET" in {
       
-      when(mockRenderer.render(any())(any()))
+      when(mockRenderer.render(any(), any())(any()))
         .thenReturn(Future.successful(Html("foo")))
 
       val application = applicationBuilder(userAnswers = None).build()
@@ -29,7 +29,7 @@ class IndexControllerSpec extends SpecBase {
 
       val templateCaptor = ArgumentCaptor.forClass(classOf[String])
 
-      verify(mockRenderer, times(1)).render(templateCaptor.capture())(any())
+      verify(mockRenderer, times(1)).render(templateCaptor.capture(), any())(any())
 
       templateCaptor.getValue mustEqual "index.njk"
 

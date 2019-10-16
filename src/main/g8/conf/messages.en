@@ -19,14 +19,20 @@ error.summary.title = There is a problem
 
 footer.links.support_links = Cysylltiadau cymorth
 footer.links.help = Help using GOV.UK
-footer.links.help.url = https://www.gov.uk/help
 footer.links.cookies = Cookies
-footer.links.cookies.url = /help/cookies
 footer.links.accessibility = Accessibility
 footer.links.privacy = Privacy policy
-footer.links.privacy.url = /help/privacy
 footer.links.terms = Terms and conditions
-footer.links.terms.url = /help/terms-and-conditions
+
+language.cymraeg = Cymraeg
+language.change.cymraeg = Newid yr iaith i'r Gymraeg
+language.english = English
+language.change.english = Change the language to English
+language.switcher = Language switcher
+
+phaseBanner.1 = This is a new service – your
+phaseBanner.2 = feedback
+phaseBanner.3 = will help us to improve it.
 
 checkYourAnswers.title = Check your answers
 checkYourAnswers.heading = Check your answers
@@ -45,81 +51,81 @@ unauthorised.heading = You can’t access this service with this account
 #### Compliance statement
 
 ## section one
-compliant__one__heading=Accessibility statement for [service name]
-compliant__one__lede=This accessibility statement explains how accessible this service is, what to do if you have difficulty using it, and how to report accessibility problems with the service.
-compliant__one__p1_1=This service is part of the wider GOV.UK website. There is a separate
-compliant__one__p1_2=accessibility statement
-compliant__one__p1_3=for the main GOV.UK website.
-compliant__one__p2=This page only contains information about the [insert service name] service, available at tax.service.gov.uk
+compliant.one.heading=Accessibility statement for [service name]
+compliant.one.lede=This accessibility statement explains how accessible this service is, what to do if you have difficulty using it, and how to report accessibility problems with the service.
+compliant.one.p1.1=This service is part of the wider GOV.UK website. There is a separate
+compliant.one.p1.2=accessibility statement
+compliant.one.p1.3=for the main GOV.UK website.
+compliant.one.p2=This page only contains information about the [insert service name] service, available at tax.service.gov.uk
 
 ## section two
-compliant__two__heading=Using this service
-compliant__two__p1=[insert a paragraph here to give details about what your service does]
-compliant__two__p2=This service is run by HM Revenue and Customs (HMRC). We want as many people as possible to be able to use this service. This means you should be able to:
-compliant__two__l1=change colours, contrast levels and fonts
-compliant__two__l2=zoom in up to 300% without the text spilling off the screen
-compliant__two__l3=get from the start of the service to the end using just a keyboard
-compliant__two__l4=get from the start of the service to the end using speech recognition software
-compliant__two__l5=listen to the service using a screen reader (including the most recent versions of JAWS, NVDA and VoiceOver)
-compliant__two__p3=We have also made the text in the service as simple as possible to understand.
-compliant__two__p4_0=
-compliant__two__p4_1=AbilityNet
-compliant__two__p4_2=has advice on making your device easier to use if you have a disability.
+compliant.two.heading=Using this service
+compliant.two.p1=[insert a paragraph here to give details about what your service does]
+compliant.two.p2=This service is run by HM Revenue and Customs (HMRC). We want as many people as possible to be able to use this service. This means you should be able to:
+compliant.two.l1=change colours, contrast levels and fonts
+compliant.two.l2=zoom in up to 300% without the text spilling off the screen
+compliant.two.l3=get from the start of the service to the end using just a keyboard
+compliant.two.l4=get from the start of the service to the end using speech recognition software
+compliant.two.l5=listen to the service using a screen reader (including the most recent versions of JAWS, NVDA and VoiceOver)
+compliant.two.p3=We have also made the text in the service as simple as possible to understand.
+compliant.two.p4.0=
+compliant.two.p4.1=AbilityNet
+compliant.two.p4.2=has advice on making your device easier to use if you have a disability.
 
 ## section three
-compliant_three__heading=How accessible this service is
-compliant_three__p1_1=This service is fully compliant with the
-compliant_three__p1_2=Web Content Accessibility Guidelines version 2.1 AA standard
-compliant_three__p2=[Note: Even if this service meets WCAG 2.1 AA, use this section to talk about any tasks in the service disabled users may find difficult to do. For example:
-compliant_three__l1=at one point we display location information on a map - however, there’s also a postcode lookup tool that’s accessible to visually impaired users using assistive technology
-compliant_three__l2=we may ask you to physically sign a document we send to you - however, there’s also an option that lets you confirm your agreement over the phone
-compliant_three__l3=there’s an instructional video inside the service that doesn’t have captions (it’s an old video, and we’ll add captions when we re-shoot it)
-compliant_three__p3=If there are no issues, then say:
-compliant_three__p4=There are no known accessibility issues within this service.]
+compliant.three.heading=How accessible this service is
+compliant.three.p1.1=This service is fully compliant with the
+compliant.three.p1.2=Web Content Accessibility Guidelines version 2.1 AA standard
+compliant.three.p2=[Note: Even if this service meets WCAG 2.1 AA, use this section to talk about any tasks in the service disabled users may find difficult to do. For example:
+compliant.three.l1=at one point we display location information on a map - however, there’s also a postcode lookup tool that’s accessible to visually impaired users using assistive technology
+compliant.three.l2=we may ask you to physically sign a document we send to you - however, there’s also an option that lets you confirm your agreement over the phone
+compliant.three.l3=there’s an instructional video inside the service that doesn’t have captions (it’s an old video, and we’ll add captions when we re-shoot it)
+compliant.three.p3=If there are no issues, then say:
+compliant.three.p4=There are no known accessibility issues within this service.]
 
 ## section four
-compliant_four__heading=What to do if you have difficulty using this service
-compliant_four__p1_1=[Note: this section is optional, you can remove it if your service doesn’t have a support helpline (for example,
-compliant_four__p1_2=tax credits
-compliant_four__p1_3=). You are not required to create a new phone number or email address for this purpose
-compliant_four__p2_1=If your service does provide support and you get requests for content in an alternative format, refer to the guidance on the Intranet for getting media in an
-compliant_four__p2_2=alternative format
-compliant_four__p3=If you have difficulty using this service, contact us by:
-compliant_four__l1=email [email address]
-compliant_four__l2=call [phone number]
-compliant_four__p4=[Only include if your service sends messages or asks for documents: As part of providing this service, we may need to send you messages or documents. We’ll ask you how you want us to send messages or documents to you, but contact us if you need them in a different format. For example large print, audio recording or braille.]
+compliant.four.heading=What to do if you have difficulty using this service
+compliant.four.p1.1=[Note: this section is optional, you can remove it if your service doesn’t have a support helpline (for example,
+compliant.four.p1.2=tax credits
+compliant.four.p1.3=). You are not required to create a new phone number or email address for this purpose
+compliant.four.p2.1=If your service does provide support and you get requests for content in an alternative format, refer to the guidance on the Intranet for getting media in an
+compliant.four.p2.2=alternative format
+compliant.four.p3=If you have difficulty using this service, contact us by:
+compliant.four.l1=email [email address]
+compliant.four.l2=call [phone number]
+compliant.four.p4=[Only include if your service sends messages or asks for documents: As part of providing this service, we may need to send you messages or documents. We’ll ask you how you want us to send messages or documents to you, but contact us if you need them in a different format. For example large print, audio recording or braille.]
 
 ## section five
-compliant_five__heading=Reporting accessibility problems with this service
-compliant_five__p_1=We are always looking to improve the accessibility of this service. If you find any problems that are not listed on this page or think we are not meeting accessibility requirements, report the
-compliant_five__p_2=accessibility problem
-compliant_five__p_3=[amend link so it points to the Deskpro accessibility problem form for your service]
+compliant.five.heading=Reporting accessibility problems with this service
+compliant.five.p.1=We are always looking to improve the accessibility of this service. If you find any problems that are not listed on this page or think we are not meeting accessibility requirements, report the
+compliant.five.p.2=accessibility problem
+compliant.five.p.3=[amend link so it points to the Deskpro accessibility problem form for your service]
 
 ## section six
-compliant_six__heading=What to do if you are not happy with how we respond to your complaint
-compliant_six__p_1=The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the ‘accessibility regulations’). If you are not happy with how we respond to your complaint,
-compliant_six__p_2=contact the Equality Advisory and Support Service
-compliant_six__p_3=(EASS), or the
-compliant_six__p_4=Equality Commission for Northern Ireland
-compliant_six__p_5=(ECNI) if you live in Northern Ireland.
+compliant.six.heading=What to do if you are not happy with how we respond to your complaint
+compliant.six.p.1=The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the ‘accessibility regulations’). If you are not happy with how we respond to your complaint,
+compliant.six.p.2=contact the Equality Advisory and Support Service
+compliant.six.p.3=(EASS), or the
+compliant.six.p.4=Equality Commission for Northern Ireland
+compliant.six.p.5=(ECNI) if you live in Northern Ireland.
 
 ## section seven
-compliant_seven__heading=Contacting us by phone or getting a visit from us in person
-compliant_seven__p1=We provide a text relay service if you are deaf, hearing impaired or have a speech impediment.
-compliant_seven__p2=We can provide a British Sign Language (BSL) interpreter, or you can arrange a visit from an HMRC advisor to help you complete the service.
-compliant_seven__p3_1=Find out how to
-compliant_seven__p3_2=contact us
+compliant.seven.heading=Contacting us by phone or getting a visit from us in person
+compliant.seven.p1=We provide a text relay service if you are deaf, hearing impaired or have a speech impediment.
+compliant.seven.p2=We can provide a British Sign Language (BSL) interpreter, or you can arrange a visit from an HMRC advisor to help you complete the service.
+compliant.seven.p3.1=Find out how to
+compliant.seven.p3.2=contact us
 
 ## section eight
-compliant__eight__heading=Technical information about this service’s accessibility
-compliant__eight__p1=HMRC is committed to making this service accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.
-compliant__eight__p2_1=This service is fully compliant with the
-compliant__eight__p2_2=Web Content Accessibility Guidelines version 2.1 AA standard
+compliant.eight.heading=Technical information about this service’s accessibility
+compliant.eight.p1=HMRC is committed to making this service accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.
+compliant.eight.p2.1=This service is fully compliant with the
+compliant.eight.p2.2=Web Content Accessibility Guidelines version 2.1 AA standard
 
 ## section nine
-compliant__nine__heading=How we tested this service
-compliant__nine__p1=The service was last tested on [date] and was checked for compliance with WCAG 2.1 AA.
-compliant__nine__p2_1=The service was built using parts that were tested by the
-compliant__nine__p2_2=Digital Accessibility Centre
-compliant__nine__p2_3=The full service was tested by HMRC and included disabled users.
-compliant__nine__p3=This page was prepared on [date when it was first published]. It was last updated on [date when it was last updated].
+compliant.nine.heading=How we tested this service
+compliant.nine.p1=The service was last tested on [date] and was checked for compliance with WCAG 2.1 AA.
+compliant.nine.p2.1=The service was built using parts that were tested by the
+compliant.nine.p2.2=Digital Accessibility Centre
+compliant.nine.p2.3=The full service was tested by HMRC and included disabled users.
+compliant.nine.p3=This page was prepared on [date when it was first published]. It was last updated on [date when it was last updated].

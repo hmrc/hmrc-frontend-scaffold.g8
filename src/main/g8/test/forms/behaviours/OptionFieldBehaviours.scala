@@ -10,7 +10,7 @@ class OptionFieldBehaviours extends FieldBehaviours {
                       invalidError: FormError): Unit = {
 
 
-    "bind all valid values" in {
+    "must bind all valid values" in {
 
       for(value <- validValues) {
 
@@ -19,7 +19,7 @@ class OptionFieldBehaviours extends FieldBehaviours {
       }
     }
 
-    "not bind invalid values" in {
+    "must not bind invalid values" in {
 
       val generator = stringsExceptSpecificValues(validValues.map(_.toString))
 

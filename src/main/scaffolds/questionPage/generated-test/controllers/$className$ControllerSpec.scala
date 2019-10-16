@@ -2,6 +2,7 @@ package controllers
 
 import base.SpecBase
 import forms.$className$FormProvider
+import matchers.JsonMatchers
 import models.{NormalMode, $className$, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentCaptor
@@ -16,11 +17,11 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.Html
 import repositories.SessionRepository
-import uk.gov.hmrc.nunjucks.NunjucksSupport
+import uk.gov.hmrc.viewmodels.NunjucksSupport
 
 import scala.concurrent.Future
 
-class $className$ControllerSpec extends SpecBase with MockitoSugar with NunjucksSupport {
+class $className$ControllerSpec extends SpecBase with MockitoSugar with NunjucksSupport with JsonMatchers {
 
   def onwardRoute = Call("GET", "/foo")
 
@@ -39,9 +40,9 @@ class $className$ControllerSpec extends SpecBase with MockitoSugar with Nunjucks
     )
   )
 
-  "$className$ Controller" must {
+  "$className$ Controller" - {
 
-    "return OK and the correct view for a GET" in {
+    "must return OK and the correct view for a GET" in {
 
       when(mockRenderer.render(any(), any())(any()))
         .thenReturn(Future.successful(Html("")))
@@ -63,13 +64,12 @@ class $className$ControllerSpec extends SpecBase with MockitoSugar with Nunjucks
       )
 
       templateCaptor.getValue mustEqual "$className;format="decap"$.njk"
-      jsonCaptor.getValue mustEqual expectedJson
-
+      jsonCaptor.getValue must containJson(expectedJson)
 
       application.stop()
     }
 
-    "populate the view correctly on a GET when the question has previously been answered" in {
+    "must populate the view correctly on a GET when the question has previously been answered" in {
 
       when(mockRenderer.render(any(), any())(any()))
         .thenReturn(Future.successful(Html("")))
@@ -98,12 +98,12 @@ class $className$ControllerSpec extends SpecBase with MockitoSugar with Nunjucks
       )
 
       templateCaptor.getValue mustEqual "$className;format="decap"$.njk"
-      jsonCaptor.getValue mustEqual expectedJson
+      jsonCaptor.getValue must containJson(expectedJson)
 
       application.stop()
     }
 
-    "redirect to the next page when valid data is submitted" in {
+    "must redirect to the next page when valid data is submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -131,7 +131,7 @@ class $className$ControllerSpec extends SpecBase with MockitoSugar with Nunjucks
       application.stop()
     }
 
-    "return a Bad Request and errors when invalid data is submitted" in {
+    "must return a Bad Request and errors when invalid data is submitted" in {
 
       when(mockRenderer.render(any(), any())(any()))
         .thenReturn(Future.successful(Html("")))
@@ -154,12 +154,12 @@ class $className$ControllerSpec extends SpecBase with MockitoSugar with Nunjucks
       )
 
       templateCaptor.getValue mustEqual "$className;format="decap"$.njk"
-      jsonCaptor.getValue mustEqual expectedJson
-
+      jsonCaptor.getValue must containJson(expectedJson)
+      
        application.stop()
     }
 
-    "redirect to Session Expired for a GET if no existing data is found" in {
+    "must redirect to Session Expired for a GET if no existing data is found" in {
 
       val application = applicationBuilder(userAnswers = None).build()
 
@@ -173,7 +173,7 @@ class $className$ControllerSpec extends SpecBase with MockitoSugar with Nunjucks
       application.stop()
     }
 
-    "redirect to Session Expired for a POST if no existing data is found" in {
+    "must redirect to Session Expired for a POST if no existing data is found" in {
 
       val application = applicationBuilder(userAnswers = None).build()
 

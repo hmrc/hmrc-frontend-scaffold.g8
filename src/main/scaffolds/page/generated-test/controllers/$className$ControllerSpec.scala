@@ -13,11 +13,11 @@ import scala.concurrent.Future
 
 class $className$ControllerSpec extends SpecBase with MockitoSugar {
 
-  "$className$ Controller" must {
+  "$className$ Controller" - {
 
     "return OK and the correct view for a GET" in {
 
-      when(mockRenderer.render(any())(any()))
+      when(mockRenderer.render(any(), any())(any()))
         .thenReturn(Future.successful(Html("")))
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
@@ -28,7 +28,7 @@ class $className$ControllerSpec extends SpecBase with MockitoSugar {
 
       status(result) mustEqual OK
 
-      verify(mockRenderer, times(1)).render(templateCaptor.capture())(any())
+      verify(mockRenderer, times(1)).render(templateCaptor.capture(), any())(any())
 
       templateCaptor.getValue mustEqual "$className;format="decap"$.njk"
 

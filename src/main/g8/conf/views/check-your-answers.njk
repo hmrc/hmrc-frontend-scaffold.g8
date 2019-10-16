@@ -1,11 +1,18 @@
 {% extends "includes/layout.njk" %}
 
+{% from "govuk/components/back-link/macro.njk"     import govukBackLink %}
+{% from "govuk/components/summary-list/macro.njk"  import govukSummaryList %}
+{% from "macros/title.njk"                         import title %}
+
 {% block pageTitle %}
-  {% set title = messages("checkYourAnswers.title") %}
-  {% include "includes/title.njk" %}
+  {{ title(messages("checkYourAnswers.title")) }}
 {% endblock %}
 
-{% block content %}
+{% block mainContent %}
+
+  {{ govukBackLink({
+    text: messages("site.back")
+  }) }}
 
   <div class="govuk-main-wrapper">
     <div class="govuk-grid-row">
@@ -14,6 +21,10 @@
         <h1 class="govuk-heading-xl">
           {{ messages("checkYourAnswers.heading") }}
         </h1>
+
+        {{ govukSummaryList({
+          rows: list
+        }) }}
 
       </div>
     </div>

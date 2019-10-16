@@ -20,7 +20,7 @@ import config.FrontendAppConfig
 import controllers.actions._
 import models.UserAnswers
 import org.mockito.Mockito
-import org.scalatest.{BeforeAndAfterEach, TryValues}
+import org.scalatest.{BeforeAndAfterEach, FreeSpec, MustMatchers, OptionValues, TryValues}
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.PlaySpec
@@ -33,7 +33,7 @@ import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
 import uk.gov.hmrc.nunjucks.NunjucksRenderer
 
-trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with TryValues
+trait SpecBase extends FreeSpec with MustMatchers with GuiceOneAppPerSuite with OptionValues with TryValues
   with ScalaFutures with IntegrationPatience with MockitoSugar with BeforeAndAfterEach {
 
   override def beforeEach {

@@ -14,9 +14,9 @@ import scala.concurrent.Future
 
 class CheckYourAnswersControllerSpec extends SpecBase {
 
-  "Check Your Answers Controller" must {
+  "Check Your Answers Controller" - {
 
-    "return OK and the correct view for a GET" in {
+    "must return OK and the correct view for a GET" in {
 
       when(mockRenderer.render(any(), any())(any()))
         .thenReturn(Future.successful(Html("")))
@@ -35,12 +35,11 @@ class CheckYourAnswersControllerSpec extends SpecBase {
       verify(mockRenderer, times(1)).render(templateCaptor.capture(), jsonCaptor.capture())(any())
 
       templateCaptor.getValue mustEqual "check-your-answers.njk"
-      jsonCaptor.getValue mustEqual Json.obj("list" -> Seq[SummaryList.Row]())
 
       application.stop()
     }
 
-    "redirect to Session Expired for a GET if no existing data is found" in {
+    "must redirect to Session Expired for a GET if no existing data is found" in {
 
       val application = applicationBuilder(userAnswers = None).build()
 

@@ -9,7 +9,7 @@ trait IntFieldBehaviours extends FieldBehaviours {
                nonNumericError: FormError,
                wholeNumberError: FormError): Unit = {
 
-    "not bind non-numeric numbers" in {
+    "must not bind non-numeric numbers" in {
 
       forAll(nonNumerics -> "nonNumeric") {
         nonNumeric =>
@@ -18,7 +18,7 @@ trait IntFieldBehaviours extends FieldBehaviours {
       }
     }
 
-    "not bind decimals" in {
+    "must not bind decimals" in {
 
       forAll(decimals -> "decimal") {
         decimal =>
@@ -27,7 +27,7 @@ trait IntFieldBehaviours extends FieldBehaviours {
       }
     }
 
-    "not bind integers larger than Int.MaxValue" in {
+    "must not bind integers larger than Int.MaxValue" in {
 
       forAll(intsLargerThanMaxValue -> "massiveInt") {
         num: BigInt =>
@@ -36,7 +36,7 @@ trait IntFieldBehaviours extends FieldBehaviours {
       }
     }
 
-    "not bind integers smaller than Int.MinValue" in {
+    "must not bind integers smaller than Int.MinValue" in {
 
       forAll(intsSmallerThanMinValue -> "massivelySmallInt") {
         num: BigInt =>
@@ -51,7 +51,7 @@ trait IntFieldBehaviours extends FieldBehaviours {
                           minimum: Int,
                           expectedError: FormError): Unit = {
 
-    s"not bind integers below \$minimum" in {
+    s"must not bind integers below \$minimum" in {
 
       forAll(intsBelowValue(minimum) -> "intBelowMin") {
         number: Int =>
@@ -66,7 +66,7 @@ trait IntFieldBehaviours extends FieldBehaviours {
                           maximum: Int,
                           expectedError: FormError): Unit = {
     
-    s"not bind integers above \$maximum" in {
+    s"must not bind integers above \$maximum" in {
       
       forAll(intsAboveValue(maximum) -> "intAboveMax") {
         number: Int =>
@@ -82,7 +82,7 @@ trait IntFieldBehaviours extends FieldBehaviours {
                         maximum: Int,
                         expectedError: FormError): Unit = {
     
-    s"not bind integers outside the range \$minimum to \$maximum" in {
+    s"must not bind integers outside the range \$minimum to \$maximum" in {
       
       forAll(intsOutsideRange(minimum, maximum) -> "intOutsideRange") {
         number =>

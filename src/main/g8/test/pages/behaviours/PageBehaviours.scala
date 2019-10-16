@@ -5,22 +5,22 @@ import models.UserAnswers
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.{Arbitrary, Gen}
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
-import org.scalatest.{MustMatchers, OptionValues, TryValues, WordSpec}
+import org.scalatest.{FreeSpec, MustMatchers, OptionValues, TryValues}
 import pages.QuestionPage
 import play.api.libs.json._
 
-trait PageBehaviours extends WordSpec with MustMatchers with ScalaCheckPropertyChecks with Generators with OptionValues with TryValues {
+trait PageBehaviours extends FreeSpec with MustMatchers with ScalaCheckPropertyChecks with Generators with OptionValues with TryValues {
 
   class BeRetrievable[A] {
     def apply[P <: QuestionPage[A]](genP: Gen[P])(implicit ev1: Arbitrary[A], ev2: Format[A]): Unit = {
 
       import models.RichJsObject
 
-      "return None" when {
+      "must return None" - {
 
-        "being retrieved from UserAnswers" when {
+        "when being retrieved from UserAnswers" - {
 
-          "the question has not been answered" in {
+          "and the question has not been answered" in {
 
             val gen: Gen[(P, UserAnswers)] = for {
               page        <- genP
@@ -37,11 +37,11 @@ trait PageBehaviours extends WordSpec with MustMatchers with ScalaCheckPropertyC
         }
       }
 
-      "return the saved value" when {
+      "must return the saved value" - {
 
-        "being retrieved from UserAnswers" when {
+        "when being retrieved from UserAnswers" - {
 
-          "the question has been answered" in {
+          "and the question has been answered" in {
 
             val gen = for {
               page        <- genP
@@ -64,7 +64,7 @@ trait PageBehaviours extends WordSpec with MustMatchers with ScalaCheckPropertyC
   class BeSettable[A] {
     def apply[P <: QuestionPage[A]](genP: Gen[P])(implicit ev1: Arbitrary[A], ev2: Format[A]): Unit = {
 
-      "be able to be set on UserAnswers" in {
+      "must be able to be set on UserAnswers" in {
 
         val gen = for {
           page        <- genP
@@ -85,7 +85,7 @@ trait PageBehaviours extends WordSpec with MustMatchers with ScalaCheckPropertyC
   class BeRemovable[A] {
     def apply[P <: QuestionPage[A]](genP: Gen[P])(implicit ev1: Arbitrary[A], ev2: Format[A]): Unit = {
 
-      "be able to be removed from UserAnswers" in {
+      "must be able to be removed from UserAnswers" in {
 
         val gen = for {
           page        <- genP

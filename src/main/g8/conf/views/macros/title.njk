@@ -1,0 +1,5 @@
+{% macro title(mainTitle, errors = []) %}
+  {% set titlePrefix = messages("error.title.prefix") if errors.length > 0 else "" %}
+
+  {{ titlePrefix + ' ' + mainTitle + ' ' + messages("site.title.suffix") }}
+{% endmacro %}

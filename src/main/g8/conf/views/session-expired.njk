@@ -1,11 +1,12 @@
 {% extends "includes/layout.njk" %}
 
+{% from "macros/title.njk"                         import title %}
+
 {% block pageTitle %}
-  {% set title = messages("session_expired.title") %}
-  {% include "includes/title.njk" %}
+  {{ title(messages("session_expired.title")) }}
 {% endblock %}
 
-{% block content %}
+{% block mainContent %}
 
   <div class="govuk-main-wrapper">
     <div class="govuk-grid-row">

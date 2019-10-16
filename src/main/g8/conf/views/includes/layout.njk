@@ -1,5 +1,6 @@
 {% extends "govuk/template.njk" %}
 {%- set assetPath = "/assets/lib/govuk-frontend/govuk/assets" -%}
+{%- set htmlLang = request.language -%}
 
 {% block head %}
   {% include "includes/head.njk" %}
@@ -7,12 +8,21 @@
 
 {% block header %}
   {{ govukHeader({
-    homepageUrl: "/",
+    homepageUrl: "/$name$",
     serviceName: messages("site.service_name"),
-    serviceUrl: "/",
+    serviceUrl: "/$name$",
     containerClasses: "govuk-width-container",
     assetsPath: "/assets"
   }) }}
+{% endblock %}
+
+{% block beforeContent %}
+  {% include "includes/phase-banner.njk" %}
+{% endblock %}
+
+{% block content %}
+  {% include "includes/language-toggles.njk" %}
+  {% block mainContent %}{% endblock %}
 {% endblock %}
 
 {% block bodyEnd %}

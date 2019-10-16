@@ -1,9 +1,9 @@
 package forms
 
-import org.scalatest.{Matchers, OptionValues, WordSpec}
+import org.scalatest.{FreeSpec, Matchers, OptionValues}
 import play.api.data.{Form, FormError}
 
-trait FormSpec extends WordSpec with OptionValues with Matchers {
+trait FormSpec extends FreeSpec with OptionValues with Matchers {
 
   def checkForError(form: Form[_], data: Map[String, String], expectedErrors: Seq[FormError]) = {
     

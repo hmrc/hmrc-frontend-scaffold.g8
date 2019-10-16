@@ -12,7 +12,7 @@ trait FieldBehaviours extends FormSpec with ScalaCheckPropertyChecks with Genera
                               fieldName: String,
                               validDataGenerator: Gen[String]): Unit = {
 
-    "bind valid data" in {
+    "must bind valid data" in {
 
       forAll(validDataGenerator -> "validDataItem") {
         dataItem: String =>
@@ -26,13 +26,13 @@ trait FieldBehaviours extends FormSpec with ScalaCheckPropertyChecks with Genera
                      fieldName: String,
                      requiredError: FormError): Unit = {
 
-    "not bind when key is not present at all" in {
+    "must not bind when key is not present at all" in {
 
       val result = form.bind(emptyForm).apply(fieldName)
       result.errors shouldEqual Seq(requiredError)
     }
 
-    "not bind blank values" in {
+    "must  not bind blank values" in {
 
       val result = form.bind(Map(fieldName -> "")).apply(fieldName)
       result.errors shouldEqual Seq(requiredError)

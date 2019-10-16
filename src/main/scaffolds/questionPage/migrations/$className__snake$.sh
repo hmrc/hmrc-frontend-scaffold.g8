@@ -65,7 +65,7 @@ awk '/val generators/ {\
     next }1' ../test/generators/UserAnswersGenerator.scala > tmp && mv tmp ../test/generators/UserAnswersGenerator.scala
 
 echo "Adding helper method to CheckYourAnswersHelper"
-awk '/class/ {\
+awk '/class CheckYourAnswersHelper/ {\
      print;\
      print "";\
      print "  def $className;format="decap"$: Option[Row] = userAnswers.get($className$Page) map {";\

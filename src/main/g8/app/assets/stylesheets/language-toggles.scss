@@ -1,0 +1,34 @@
+// Language switcher
+.lang {
+  margin-top: -50px;
+
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  ul {
+    display: inline-block;
+    float: right;
+    font-size: 0.8em;
+    margin-top: 1em;
+    text-align: right;
+
+    // seems we need to be specific with the fonts here
+    li {
+      display: inline-block;
+      font-family: "GDS Transport", Arial, sans-serif;
+      font-size: 16px;
+
+      &:first-child::after {
+        content: "|";
+      }
+    }
+
+    a,
+    [aria-current] {
+      padding: 0.25em;
+    }
+  }
+}
