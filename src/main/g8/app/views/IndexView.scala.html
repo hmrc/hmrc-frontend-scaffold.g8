@@ -1,0 +1,14 @@
+@this(
+    main_template: MainTemplate
+)
+
+@()(implicit request: Request[_], messages: Messages)
+
+@main_template(
+    title = messages("index.title")
+    ) {
+
+    @components.heading("index.heading")
+
+    <p>@messages("index.guidance")</p>
+}

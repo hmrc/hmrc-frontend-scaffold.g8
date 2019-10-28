@@ -6,7 +6,7 @@ class OptionFieldBehaviours extends FieldBehaviours {
 
   def optionsField[T](form: Form[_],
                       fieldName: String,
-                      validValues: Set[T],
+                      validValues: Seq[T],
                       invalidError: FormError): Unit = {
 
 

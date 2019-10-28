@@ -1,11 +1,21 @@
 package views
 
+import models.UserAnswers
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import play.twirl.api.Html
 import base.SpecBase
 
+import scala.reflect.ClassTag
+
 trait ViewSpecBase extends SpecBase {
+
+  def viewFor[A](data: Option[UserAnswers] = None)(implicit tag: ClassTag[A]): A = {
+    val application = applicationBuilder(data).build()
+    val view = application.injector.instanceOf[A]
+    application.stop()
+    view
+  }
 
   def asDocument(html: Html): Document = Jsoup.parse(html.toString())
 
@@ -53,7 +63,7 @@ trait ViewSpecBase extends SpecBase {
     val labels = doc.getElementsByAttributeValue("for", forElement)
     assert(labels.size == 1, s"\n\nLabel for \$forElement was not rendered on the page.")
     val label = labels.first
-    assert(label.text() == expectedText, s"\n\nLabel for \$forElement was not \$expectedText")
+    assert(label.text().contains(expectedText), s"\n\nLabel for \$forElement was not \$expectedText")
 
     if (expectedHintText.isDefined) {
       assert(label.getElementsByClass("form-hint").first.text == expectedHintText.get,

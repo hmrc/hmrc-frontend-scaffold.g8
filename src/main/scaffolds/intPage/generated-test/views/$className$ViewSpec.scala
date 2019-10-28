@@ -1,11 +1,12 @@
 package views
 
-import play.api.data.Form
 import controllers.routes
 import forms.$className$FormProvider
 import models.NormalMode
+import play.api.data.Form
+import play.twirl.api.HtmlFormat
 import views.behaviours.IntViewBehaviours
-import views.html.$className;format="decap"$
+import views.html.$className$View
 
 class $className$ViewSpec extends IntViewBehaviours {
 
@@ -13,15 +14,17 @@ class $className$ViewSpec extends IntViewBehaviours {
 
   val form = new $className$FormProvider()()
 
-  def createView = () => $className;format="decap"$(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+  "$className$View view" must {
 
-  def createViewUsingForm = (form: Form[_]) => $className;format="decap"$(frontendAppConfig, form, NormalMode)(fakeRequest, messages)
+    val view = viewFor[$className$View](Some(emptyUserAnswers))
 
-  "$className$ view" must {
-    behave like normalPage(createView, messageKeyPrefix)
+    def applyView(form: Form[_]): HtmlFormat.Appendable =
+      view.apply(form, NormalMode)(fakeRequest, messages)
 
-    behave like pageWithBackLink(createView)
+    behave like normalPage(applyView(form), messageKeyPrefix)
 
-    behave like intPage(createViewUsingForm, messageKeyPrefix, routes.$className$Controller.onSubmit(NormalMode).url)
+    behave like pageWithBackLink(applyView(form))
+
+    behave like intPage(form, applyView, messageKeyPrefix, routes.$className$Controller.onSubmit(NormalMode).url)
   }
 }

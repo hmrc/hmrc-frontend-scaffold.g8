@@ -37,7 +37,7 @@ trait Formatters {
       def unbind(key: String, value: Boolean) = Map(key -> value.toString)
     }
 
-  private[mappings] def intFormatter(requiredKey: String, wholeNumberKey: String, nonNumericKey: String): Formatter[Int] =
+  private[mappings] def intFormatter(requiredKey: String, wholeNumberKey: String, nonNumericKey: String, args: Seq[String] = Seq.empty): Formatter[Int] =
     new Formatter[Int] {
 
       val decimalRegexp = """^-?(\d*\.\d*)\$"""
@@ -50,16 +50,17 @@ trait Formatters {
           .right.map(_.replace(",", ""))
           .right.flatMap {
           case s if s.matches(decimalRegexp) =>
-            Left(Seq(FormError(key, wholeNumberKey)))
+            Left(Seq(FormError(key, wholeNumberKey, args)))
           case s =>
             nonFatalCatch
               .either(s.toInt)
-              .left.map(_ => Seq(FormError(key, nonNumericKey)))
+              .left.map(_ => Seq(FormError(key, nonNumericKey, args)))
         }
 
       override def unbind(key: String, value: Int) =
         baseFormatter.unbind(key, value.toString)
     }
+
 
   private[mappings] def enumerableFormatter[A](requiredKey: String, invalidKey: String)(implicit ev: Enumerable[A]): Formatter[A] =
     new Formatter[A] {

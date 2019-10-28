@@ -3,6 +3,42 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## v 0.14.0 - 2019-10-08
+
+### Changed
+* Updated to use Assets Frontend 4.11
+
+### Fixed
+*  Updated palette and markup for better WCAG 2.1 compliance
+
+## v0.13.0 - 2019-09-25
+
+### Changed
+* Updated libraries and plugins
+* Change repository to use newer update method
+
+## v0.12.0 - 2019-09-24
+
+### Changed
+* Upgraded to Play 2.6
+* Refactored user answers to use a Json object rather than CacheMap
+* Introduce paths on each page to allow pages to decide where in the Json object to store data
+* Introduce queries, which can be used to look at data in UserAnswers
+* Add a scaffold for a date page
+* Add a scaffold for a page of checkboxes
+* Updated navigator pattern
+* Html escape users' answers on CYA pages
+* Updated libraries and plugins
+* Update assets frontend version
+
+## Fixed
+* Stop application in unit tests
+* Mock repositories in controller unit tests
+* Remove unsafe-inline and data: from CSP
+* Fix textarea whitespace issue
+* Fix auth action recover block
+* Allow field names to be specified on quesitonPage
+
 ## v0.11.0 - 2018-09-25
 
 ### Changed

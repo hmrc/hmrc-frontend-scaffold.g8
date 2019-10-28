@@ -1,0 +1,17 @@
+@(langMap: Map[String, Lang], langToCall: String => Call, customClass: Option[String] = None, appName: Option[String] = None)(implicit messages: Messages)
+
+<p class="@if(customClass.isDefined) {@customClass.get}">
+
+@langMap.map { case (key: String, value: Lang) =>
+    @if(messages.lang.code != value.code) {
+        <a href="@langToCall(key)" id="@{key}-switch" data-journey-click="click : language : @value.code" >
+            @key.capitalize
+        </a>
+    } else {
+        @key.capitalize
+    }
+    @if(key != langMap.last._1) {
+        @Html(" | ")
+    }
+}
+</p>

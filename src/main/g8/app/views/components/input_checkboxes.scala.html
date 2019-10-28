@@ -1,0 +1,55 @@
+@import viewmodels.RadioOption
+
+@(
+        field: Field,
+        legend: String,
+        legendClass: Option[String] = None,
+        hint: Option[String] = None,
+        trackGa: Boolean = false,
+        headingIsLegend: Boolean = false,
+        inputs: Seq[RadioOption]
+)(implicit messages: Messages)
+
+<div class="form-group @if(field.hasErrors){form-group-error}">
+    <fieldset id="@{field.id}" @if(field.hasErrors || hint.nonEmpty){aria-describedby="@if(field.hasErrors){error-message-@{field.id}-input} @if(hint.nonEmpty){hint-@{field.id}}"}>
+        @if(headingIsLegend){
+            <legend>
+                <h1 @if(legendClass.nonEmpty){class="@legendClass" }else{class="heading-xlarge"}>@legend</h1>
+            </legend>
+        } else {
+            <legend @if(legendClass.nonEmpty){class="@legendClass" }>
+                @legend
+            </legend>
+        }
+
+        @if(hint.nonEmpty){
+            <div class="form-hint" id="hint-@{field.id}">@hint</div>
+        }
+        @field.errors.map { error =>
+            <div class="error-message" id="error-message-@field.id-input">
+                <span class="visually-hidden">@messages("error.browser.title.prefix") </span>@messages(error.message, error.args: _*)
+            </div>
+        }
+        @for((RadioOption(id, value, messageKey), index) <- inputs.zipWithIndex) {
+            @defining(
+                inputs.indices.flatMap { i =>
+                    field(s"[\$i]").value
+                }
+            ) { answers =>
+                <div class="multiple-choice">
+                    <input
+                    id="@field(s"[\$index]").id"
+                    type="checkbox"
+                    name="@field(s"[\$index]").name"
+                    value="@value"
+                        @if(answers.contains(value)) {checked="checked"}
+                        @if(trackGa) {data-journey-click="$name$:click:@field(s"[\$index]").id"}
+                    />
+                    <label for="@field(s"[\$index]").id">
+                    @messages(messageKey)
+                    </label>
+                </div>
+            }
+        }
+    </fieldset>
+</div>

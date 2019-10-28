@@ -19,13 +19,11 @@
     </label>
     <div class="form-control-wrapper char-counter" data-char-counter>
         <textarea
-        class="form-control form-control--full-width @inputClass"
-        id="@{field.id}"
-        name="@{field.id}"
-        value="@{field.value}"
-        aria-describedby="error-message-@{field.id}-input"
-        rows="5"
-        ></textarea>
+            class="form-control form-control--full-width @inputClass"
+            id="@{field.id}"
+            name="@{field.id}"
+            @if(field.hasErrors) { aria-describedby="error-message-@{field.id}-input" }
+            rows="5"
+        >@{field.value}</textarea>
     </div>
 </div>
-

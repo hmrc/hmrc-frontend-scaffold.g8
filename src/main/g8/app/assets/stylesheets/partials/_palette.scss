@@ -1,0 +1,251 @@
+// =========================
+// updated 3 Oct 2019, 19:27 BST
+// Palette change
+// https://designnotes.blog.gov.uk/2019/07/29/weve-updated-the-gov-uk-colours-and-font/
+// =========================
+
+// #DEE0E2 to #f3f2f1
+.button--secondary,
+.button--secondary:visited,
+.button--secondary.disabled:hover,
+.button--secondary[disabled="disabled"]:hover,
+.button--secondary[disabled]:hover,
+.footer,
+.box--shaded,
+.side-nav__link:hover,
+.dataTable tbody .status--unconfirmed,
+.tag,
+.tabs-nav .tabs-nav__tab:focus,
+.tabs-nav .tabs-nav__tab:hover,
+.tabs-nav .tabs-nav__tab:active,
+.tabs-nav a.tabs-nav__tab:focus,
+.tabs-nav .tabs-nav__tab.link-style:focus,
+.tabs-nav .tabs-nav__tab.button--link-style:focus,
+.tabs-nav a.tabs-nav__tab:hover,
+.tabs-nav .tabs-nav__tab.link-style:hover,
+.tabs-nav .tabs-nav__tab.button--link-style:hover,
+.tabs-nav a.tabs-nav__tab:active,
+.tabs-nav .tabs-nav__tab.link-style:active,
+.tabs-nav .tabs-nav__tab.button--link-style:active,
+.annual-summaries--group .statement__summary--parent[aria-expanded=true],
+.payments .table-label.selected,
+.payments .table-label:hover {
+  background-color: #f3f2f1;
+}
+.button--secondary:active {
+  -webkit-box-shadow: 0 0 0 #f3f2f1;
+  box-shadow: 0 0 0 #f3f2f1
+}
+.dynamically-displayed {
+  border-left: 5px solid #f3f2f1;
+}
+.explore a,
+.explore--inside-government a,
+.explore--inline a,
+.explore .link-style,
+.explore--inside-government .link-style,
+.explore--inline .link-style,
+.explore .button--link-style,
+.explore--inside-government .button--link-style,
+.explore--inline .button--link-style,
+.explore--inline__links {
+  color: #f3f2f1;
+}
+.indent {
+  border-left-color: #f3f2f1;
+}
+.services-dashboard .service-option--links:first-child .service-option--item,
+.account-menu__link:hover,
+.is-smaller .account-menu__link--back {
+  border-bottom-color: #f3f2f1;
+}
+
+
+// #005ea5 to #1d70b8
+.heading--underlined,
+.section--branded h2,
+.table--light-header thead,
+.table__header--highlight,
+.business-tax .section--branded h2,
+.is-smaller .account-menu__link--home.account-menu__link--active:hover,
+.account-menu__link--active,
+.account-menu__link--active:visited {
+  border-bottom-color: #1d70b8;
+}
+.heading-large--blue,
+.button.button--link,
+a.back-to-top-link:visited,
+.back-to-top-link.link-style:visited,
+.back-to-top-link.button--link-style:visited,
+.page-nav__link,
+.banner-links,
+.side-nav--child .side-nav__list--selected .side-nav__link,
+.dataTables_paginate a,
+.dataTables_paginate .link-style,
+.dataTables_paginate .button--link-style,
+.accordion__button:visited,
+.toggle__button,
+.tabs-nav .tabs-nav__tab:visited,
+.tabs-nav__tab,
+.payments .tab,
+.services-dashboard .service-option--links .service-option--link:link,
+.link,
+.link:active,
+details summary,
+a,
+.link-style,
+.button--link-style,
+.button--link-style,
+.subnav a:visited,
+.subnav .link-style:visited,
+.subnav .button--link-style:visited,
+.is-smaller .subnav__section a:hover,
+.is-smaller .subnav__section .link-style:hover,
+.is-smaller .subnav__section .button--link-style:hover {
+  color: #1d70b8
+}
+.brand-border--top,
+.section--blue-top,
+.footer,
+.service-info {
+  border-top-color: #1d70b8;
+}
+.button--notification,
+.button--notification:visited,
+.button--notification.disabled:hover,
+.button--notification[disabled="disabled"]:hover,
+.button--notification[disabled]:hover,
+.alpha-banner .phase-tag,
+.beta-banner .phase-tag,
+.phase-tag,
+.side-nav__list--selected .side-nav__link,
+.side-nav__list--selected:hover .side-nav__link,
+.highlight-message--dark,
+.hero,
+.paye-statements .sidebar-links__item.selected,
+option:active,
+option:checked,
+select:focus::-ms-value,
+.phase-banner .phase-tag,
+.phase-banner-alpha .phase-tag,
+.phase-banner-beta .phase-tag,
+.phase-tag,
+.full-width-banner,
+.hmrc-banner .phase-tag {
+  background-color: #1d70b8;
+}
+.button--notification:active {
+  -webkit-box-shadow: 0 0 0 #1d70b8;
+  box-shadow: 0 0 0 #1d70b8;
+}
+.attorneyBanner,
+.panel-indent--info,
+.delegation-banner {
+  border-left-color: #1d70b8;
+}
+
+// #ffbf47 to #ffdd00
+.page-nav__link:focus,
+.js-enabled .add-focus,
+.modal-dialog__content:focus,
+.button:focus,
+details summary:focus,
+.error-summary:focus {
+  outline-color: #ffdd00;
+}
+.multiple-choice [type=radio]:focus+label::before {
+  -webkit-box-shadow: 0 0 0 4px #ffdd00;
+  box-shadow: 0 0 0 4px #ffdd00;
+}
+.multiple-choice [type=checkbox]:focus+label::before {
+  -webkit-box-shadow: 0 0 0 3px #ffdd00;
+  box-shadow: 0 0 0 3px #ffdd00
+}
+.account-menu__link:focus,
+.is-smaller .account-menu__link--home:focus,
+.is-smaller .account-menu__link--menu:focus,
+.is-smaller .account-menu__link--home.account-menu__link--active:focus,
+.is-smaller .account-menu__link--menu.account-menu__link--active:focus {
+  border-bottom-color: #ffdd00;
+}
+
+
+// #00823b to #00703c
+button,
+.button,
+button:visited,
+.button:visited,
+button.disabled:hover,
+button[disabled="disabled"]:hover,
+button[disabled]:hover,
+.button.disabled:hover,
+.button[disabled="disabled"]:hover,
+.button[disabled]:hover,
+.button--small,
+.button--small:visited,
+.button--small.disabled:hover,
+.button--small[disabled="disabled"]:hover,
+.button--small[disabled]:hover,
+.toggle__button--active,
+.toggle__button--active:hover,
+.toggle__button--active:focus,
+.button[disabled="disabled"] {
+  background-color: #00703c;
+}
+button:active,
+.button:active,
+.button--small:active {
+  -webkit-box-shadow: 0 0 0 #00703c;
+  box-shadow: 0 0 0 #00703c;
+}
+.list--ticks li::before,
+.tick,
+.form-hint-list-item--valid {
+  color: #00703c;
+}
+
+// #b10e1e to #d4351c
+.button--alert,
+.button--alert:visited,
+.button--alert.disabled:hover,
+.button--alert[disabled="disabled"]:hover,
+.button--alert[disabled]:hover,
+.marker-column__marker,
+.reminder.urgent a,
+.reminder.urgent .link-style,
+.reminder.urgent .button--link-style,
+.alert-block,
+.alert--important,
+.tabs-nav .tabs-nav__tab .count,
+.flag.flag--urgent,
+.highlight-block--red,
+.main-nav .count,
+.badge {
+  background-color: #d4351c;
+}
+.button--alert:active {
+  -webkit-box-shadow: 0 0 0 #d4351c;
+  box-shadow: 0 0 0 #d4351c;
+}
+.email-form-errors .error-notification,
+.annual-summaries--group .alert--text,
+.sent-in-error,
+.business-tax .content__body .flag.flag--urgent,
+.error-message,
+.error-summary .error-summary-list a,
+.error-summary .error-summary-list .link-style,
+.error-summary .error-summary-list .button--link-style {
+  color: #d4351c;
+}
+.email-form-errors .error-notification,
+.attorneyBanner--client-request-rejected,
+.business-tax .content__body .flag.flag--urgent,
+.form-group-error {
+  border-left-color: #d4351c;
+}
+.business-tax .alert--failure,
+.form-control-error,
+textarea.form-control-error,
+.error-summary {
+  border-color: #d4351c;
+}

@@ -4,7 +4,7 @@
 @(answerSection: AnswerSection)(implicit messages: Messages)
 
 @if(answerSection.headingKey.isDefined){
-    <h2>@messages(answerSection.headingKey.get)</h2>
+    <h2 class="heading-large">@messages(answerSection.headingKey.get)</h2>
 }
 
 <ul role="list" class="govuk-check-your-answers cya-questions-long section">
