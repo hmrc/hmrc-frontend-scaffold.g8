@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## v0.15.0-nunjucks - 2020-02-28
+
+### Changed
+* Use nunjucks views rather than Twirl
+* Updated libraries and plugins
+* Moved to SBT 1.3.6
+
 ## v 0.14.0 - 2019-10-08
 
 ### Changed
