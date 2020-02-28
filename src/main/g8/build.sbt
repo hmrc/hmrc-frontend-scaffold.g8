@@ -55,3 +55,5 @@ lazy val testSettings: Seq[Def.Setting[_]] = Seq(
     "-Dconfig.resource=test.application.conf"
   )
 )
+
+dependencyOverrides ++= AppDependencies.overrides
