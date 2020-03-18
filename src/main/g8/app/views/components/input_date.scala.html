@@ -1,38 +1,45 @@
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+
+@this(govukDateInput: GovukDateInput)
+
 @(
-  field: Field,
+  form: Form[_],
   legend: String,
   legendClass: Option[String] = None,
   hint: Option[String] = None,
   headingIsLegend: Boolean = false
 )(implicit messages: Messages)
 
-<div class="form-group @if(field.hasErrors){form-group-error}">
-    <fieldset id="@{field.id}" @if(field.hasErrors || hint.nonEmpty){aria-describedby="@if(field.hasErrors){error-message-@{field.id}-input} @if(hint.nonEmpty){hint-@{field.id}}"}>
-        @if(headingIsLegend){
-            <legend>
-                <h1 @if(legendClass.nonEmpty){class="@legendClass" }else{class="heading-xlarge"}>@legend</h1>
-            </legend>
-        } else {
-            <legend @if(legendClass.nonEmpty){class="@legendClass" }>
-                @legend
-            </legend>
-        }
-        @if(hint.nonEmpty){
-            <div class="form-hint" id="hint-@{field.id}">@hint</div>
-        }
-        @field.errors.map { error =>
-            <div class="error-message" id="error-message-@field.id-input">
-                <span class="visually-hidden">@messages("error.browser.title.prefix") </span>@messages(error.message, error.args: _*)
-            </div>
-        }
-
-        <div id="@field.id" class="form-date">
-            @List("day", "month", "year").map { part =>
-              <div class="form-control-wrapper form-group form-group-@part">
-                <label class="form-label" for="@field(part).id">@messages(s"date.\$part")</label>
-                <input class="form-control @if(field.hasErrors){form-control-error}" id="@field(part).id" name="@field(part).name" type="tel" value="@field(part).value" />
-              </div>
-            }
-        </div>
-    </fieldset>
-</div>
+@govukDateInput(DateInput(
+    id = form("value").id,
+    namePrefix = Some(form("value").name),
+    errorMessage = form.errors.asTextErrorMessageForField(fieldKey = "value"),
+    hint = if(hint.isDefined) Some(Hint(content = Text(hint.get))) else None,
+    fieldset = Some(Fieldset(
+        legend = Some(Legend(
+            content = Text(legend),
+            isPageHeading = headingIsLegend,
+            classes = legendClass.getOrElse("govuk-fieldset__legend--xl")
+        ))
+    )),
+    items = Seq(
+        InputItem(
+            name = form("day").name,
+            label = Some(messages("date.day")),
+            value = form("value-day").value,
+            classes = "govuk-input--width-2"
+        ),
+        InputItem(
+            name = form("month").name,
+            label = Some(messages("date.month")),
+            value = form("value-month").value,
+            classes = "govuk-input--width-2"
+        ),
+        InputItem(
+            name = form("year").name,
+            label = Some(messages("date.year")),
+            value = form("value-year").value,
+            classes = "govuk-input--width-4"
+        )
+    )
+))

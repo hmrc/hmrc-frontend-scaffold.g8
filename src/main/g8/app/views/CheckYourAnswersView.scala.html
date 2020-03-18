@@ -1,25 +1,26 @@
-@import viewmodels.{AnswerSection, RepeaterAnswerSection, Section}
+@import viewmodels.Section
+@import views.ViewUtils
 
 @this(
-    main_template: MainTemplate
+        layout: Layout,
+        govukBackLink: GovukBackLink,
+        govukSummaryList: GovukSummaryList,
+        button: GovukButton
 )
 
 @(answerSections: Seq[Section])(implicit request: Request[_], messages: Messages)
 
-@main_template(
-    title = messages("checkYourAnswers.title")
-    ) {
+@layout(
+    pageTitle = messages("checkYourAnswers.title")
+) {
 
-    @components.heading("checkYourAnswers.heading")</h1>
+    @components.heading("checkYourAnswers.heading")
 
-    <p>@messages("checkYourAnswers.guidance")</p>
+    @govukSummaryList(
+        SummaryList(
+            mapAnswerSectionsToSummary(answerSections)
+        )
+    )
 
-    @for(section <- answerSections){
-        @{
-            section match {
-                case a: AnswerSection => components.answer_section(a)
-                case r: RepeaterAnswerSection => components.repeater_answer_section(r)
-            }
-        }
-    }
+    @button(Button(content = Text(messages("checkYourAnswers.submit"))))
 }

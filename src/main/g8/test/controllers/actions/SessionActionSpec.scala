@@ -2,6 +2,7 @@ package controllers.actions
 
 import base.SpecBase
 import play.api.mvc.{BodyParsers, Results}
+import play.api.test.{CSRFTokenHelper, FakeRequest}
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.SessionKeys
 
@@ -46,7 +47,8 @@ class SessionActionSpec extends SpecBase {
 
         val controller = new Harness(sessionAction)
 
-        val request = fakeRequest.withSession(SessionKeys.sessionId -> "foo")
+        def fakeRequest = FakeRequest("", "").withSession(SessionKeys.sessionId -> "foo")
+        val request = CSRFTokenHelper.addCSRFToken(fakeRequest)
 
         val result = controller.onPageLoad()(request)
 

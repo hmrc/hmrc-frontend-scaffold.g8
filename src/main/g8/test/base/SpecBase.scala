@@ -11,7 +11,7 @@ import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.inject.{Injector, bind}
 import play.api.libs.json.Json
-import play.api.test.FakeRequest
+import play.api.test.{CSRFTokenHelper, FakeRequest}
 
 trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with TryValues with ScalaFutures with IntegrationPatience {
 
@@ -25,7 +25,7 @@ trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with TryValues with Sca
 
   def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
 
-  def fakeRequest = FakeRequest("", "")
+  def fakeRequest = CSRFTokenHelper.addCSRFToken(FakeRequest("", ""))
 
   implicit def messages: Messages = messagesApi.preferred(fakeRequest)
 

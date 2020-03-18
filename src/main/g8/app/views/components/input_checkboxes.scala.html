@@ -1,4 +1,4 @@
-@import viewmodels.RadioOption
+@this(govukCheckboxes: GovukCheckboxes)
 
 @(
         field: Field,
@@ -7,49 +7,20 @@
         hint: Option[String] = None,
         trackGa: Boolean = false,
         headingIsLegend: Boolean = false,
-        inputs: Seq[RadioOption]
+        inputs: Seq[CheckboxItem]
 )(implicit messages: Messages)
 
-<div class="form-group @if(field.hasErrors){form-group-error}">
-    <fieldset id="@{field.id}" @if(field.hasErrors || hint.nonEmpty){aria-describedby="@if(field.hasErrors){error-message-@{field.id}-input} @if(hint.nonEmpty){hint-@{field.id}}"}>
-        @if(headingIsLegend){
-            <legend>
-                <h1 @if(legendClass.nonEmpty){class="@legendClass" }else{class="heading-xlarge"}>@legend</h1>
-            </legend>
-        } else {
-            <legend @if(legendClass.nonEmpty){class="@legendClass" }>
-                @legend
-            </legend>
-        }
-
-        @if(hint.nonEmpty){
-            <div class="form-hint" id="hint-@{field.id}">@hint</div>
-        }
-        @field.errors.map { error =>
-            <div class="error-message" id="error-message-@field.id-input">
-                <span class="visually-hidden">@messages("error.browser.title.prefix") </span>@messages(error.message, error.args: _*)
-            </div>
-        }
-        @for((RadioOption(id, value, messageKey), index) <- inputs.zipWithIndex) {
-            @defining(
-                inputs.indices.flatMap { i =>
-                    field(s"[\$i]").value
-                }
-            ) { answers =>
-                <div class="multiple-choice">
-                    <input
-                    id="@field(s"[\$index]").id"
-                    type="checkbox"
-                    name="@field(s"[\$index]").name"
-                    value="@value"
-                        @if(answers.contains(value)) {checked="checked"}
-                        @if(trackGa) {data-journey-click="$name$:click:@field(s"[\$index]").id"}
-                    />
-                    <label for="@field(s"[\$index]").id">
-                    @messages(messageKey)
-                    </label>
-                </div>
-            }
-        }
-    </fieldset>
-</div>
+@govukCheckboxes(Checkboxes(
+    idPrefix = Some(field.id),
+    name = field.name,
+    errorMessage = if(field.hasErrors) Some(ErrorMessage(content = Text(messages(field.errors.map(e => e.message))))) else None,
+    hint = if(hint.isDefined) Some(Hint(content = Text(hint.get))) else None,
+    fieldset = Some(Fieldset(
+        legend = Some(Legend(
+            content = Text(legend),
+            isPageHeading = headingIsLegend,
+            classes = legendClass.getOrElse("govuk-fieldset__legend--xl")
+        ))
+    )),
+    items = inputs
+))

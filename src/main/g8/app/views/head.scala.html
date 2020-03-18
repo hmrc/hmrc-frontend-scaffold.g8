@@ -1,0 +1,5 @@
+@this()
+
+@()
+<!--[if lte IE 8]><link href='@controllers.routes.Assets.versioned("stylesheets/$name;format="word"$-app-ie-8.css")' rel="stylesheet" type="text/css" /><![endif]-->
+<!--[if gt IE 8]><!--><link href='@controllers.routes.Assets.versioned("stylesheets/$name;format="word"$-app.css")' media="screen" rel="stylesheet" type="text/css" /><!--<![endif]-->

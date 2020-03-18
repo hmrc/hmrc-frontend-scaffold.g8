@@ -2,7 +2,6 @@ package controllers
 
 import java.time.{LocalDate, ZoneOffset}
 
-import base.SpecBase
 import forms.$className$FormProvider
 import models.{NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
@@ -12,7 +11,7 @@ import org.scalatest.mockito.MockitoSugar
 import pages.$className$Page
 import play.api.inject.bind
 import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Call}
-import play.api.test.FakeRequest
+import play.api.test.{CSRFTokenHelper, FakeRequest}
 import play.api.test.Helpers._
 import repositories.SessionRepository
 import views.html.$className$View
@@ -36,12 +35,14 @@ class $className$ControllerSpec extends SpecBase with MockitoSugar {
     FakeRequest(GET, $className;format="decap"$Route)
 
   def postRequest(): FakeRequest[AnyContentAsFormUrlEncoded] =
-    FakeRequest(POST, $className;format="decap"$Route)
-      .withFormUrlEncodedBody(
-        "value.day"   -> validAnswer.getDayOfMonth.toString,
-        "value.month" -> validAnswer.getMonthValue.toString,
-        "value.year"  -> validAnswer.getYear.toString
-      )
+    CSRFTokenHelper.addCSRFToken(
+      FakeRequest(POST, $className;format="decap"$Route)
+        .withFormUrlEncodedBody(
+          "value-day"   -> validAnswer.getDayOfMonth.toString,
+          "value-month" -> validAnswer.getMonthValue.toString,
+          "value-year"  -> validAnswer.getYear.toString
+        )
+    )
 
   "$className$ Controller" must {
 
@@ -55,8 +56,7 @@ class $className$ControllerSpec extends SpecBase with MockitoSugar {
 
       status(result) mustEqual OK
 
-      contentAsString(result) mustEqual
-        view(form, NormalMode)(fakeRequest, messages).toString
+      contentAsString(result) must include(messages("$className;format="decap"$.title"))
 
       application.stop()
     }
@@ -67,14 +67,11 @@ class $className$ControllerSpec extends SpecBase with MockitoSugar {
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
-      val view = application.injector.instanceOf[$className$View]
-
       val result = route(application, getRequest).value
 
       status(result) mustEqual OK
 
-      contentAsString(result) mustEqual
-        view(form.fill(validAnswer), NormalMode)(getRequest, messages).toString
+      contentAsString(result) must include(messages("$className;format="decap"$.title"))
 
       application.stop()
     }
@@ -106,20 +103,13 @@ class $className$ControllerSpec extends SpecBase with MockitoSugar {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
-      val request =
-        FakeRequest(POST, $className;format="decap"$Route)
-          .withFormUrlEncodedBody(("value", "invalid value"))
-
-      val boundForm = form.bind(Map("value" -> "invalid value"))
-
-      val view = application.injector.instanceOf[$className$View]
+      val request = CSRFTokenHelper.addCSRFToken(
+        FakeRequest(POST, $className;format="decap"$Route).withFormUrlEncodedBody(("value", "invalid value"))
+      )
 
       val result = route(application, request).value
 
       status(result) mustEqual BAD_REQUEST
-
-      contentAsString(result) mustEqual
-        view(boundForm, NormalMode)(fakeRequest, messages).toString
 
       application.stop()
     }

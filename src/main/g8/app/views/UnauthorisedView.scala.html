@@ -1,12 +1,13 @@
 @this(
-    main_template: MainTemplate
+        layout: Layout
 )
 
 @()(implicit request: Request[_], messages: Messages)
 
-@main_template(
-    title = messages("unauthorised.title")
-    ) {
+@layout(
+    pageTitle = messages("unauthorised.title")
+) {
+
 
     @components.heading("unauthorised.heading")
 }

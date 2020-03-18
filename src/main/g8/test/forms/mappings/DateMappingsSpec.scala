@@ -35,9 +35,9 @@ class DateMappingsSpec extends FreeSpec with MustMatchers with ScalaCheckPropert
       date =>
 
         val data = Map(
-          "value.day" -> date.getDayOfMonth.toString,
-          "value.month" -> date.getMonthValue.toString,
-          "value.year" -> date.getYear.toString
+          "value-day" -> date.getDayOfMonth.toString,
+          "value-month" -> date.getMonthValue.toString,
+          "value-year" -> date.getYear.toString
         )
 
         val result = form.bind(data)
@@ -59,13 +59,13 @@ class DateMappingsSpec extends FreeSpec with MustMatchers with ScalaCheckPropert
       (date, field) =>
 
         val initialData = Map(
-          "value.month" -> date.getMonthValue.toString,
-          "value.year" -> date.getYear.toString
+          "value-month" -> date.getMonthValue.toString,
+          "value-year" -> date.getYear.toString
         )
 
         val data = field.fold(initialData) {
           value =>
-            initialData + ("value.day" -> value)
+            initialData + ("value-day" -> value)
         }
 
         val result = form.bind(data)
@@ -80,9 +80,9 @@ class DateMappingsSpec extends FreeSpec with MustMatchers with ScalaCheckPropert
       (date, field) =>
 
         val data = Map(
-          "value.day" -> field,
-          "value.month" -> date.getMonthValue.toString,
-          "value.year" -> date.getYear.toString
+          "value-day" -> field,
+          "value-month" -> date.getMonthValue.toString,
+          "value-year" -> date.getYear.toString
         )
 
         val result = form.bind(data)
@@ -99,13 +99,13 @@ class DateMappingsSpec extends FreeSpec with MustMatchers with ScalaCheckPropert
       (date, field) =>
 
         val initialData = Map(
-          "value.day" -> date.getDayOfMonth.toString,
-          "value.year" -> date.getYear.toString
+          "value-day" -> date.getDayOfMonth.toString,
+          "value-year" -> date.getYear.toString
         )
 
         val data = field.fold(initialData) {
           value =>
-            initialData + ("value.month" -> value)
+            initialData + ("value-month" -> value)
         }
 
         val result = form.bind(data)
@@ -120,9 +120,9 @@ class DateMappingsSpec extends FreeSpec with MustMatchers with ScalaCheckPropert
       (date, field) =>
 
         val data = Map(
-          "value.day" -> date.getDayOfMonth.toString,
-          "value.month" -> field,
-          "value.year" -> date.getYear.toString
+          "value-day" -> date.getDayOfMonth.toString,
+          "value-month" -> field,
+          "value-year" -> date.getYear.toString
         )
 
         val result = form.bind(data)
@@ -139,13 +139,13 @@ class DateMappingsSpec extends FreeSpec with MustMatchers with ScalaCheckPropert
       (date, field) =>
 
         val initialData = Map(
-          "value.day" -> date.getDayOfMonth.toString,
-          "value.month" -> date.getMonthValue.toString
+          "value-day" -> date.getDayOfMonth.toString,
+          "value-month" -> date.getMonthValue.toString
         )
 
         val data = field.fold(initialData) {
           value =>
-            initialData + ("value.year" -> value)
+            initialData + ("value-year" -> value)
         }
 
         val result = form.bind(data)
@@ -160,9 +160,9 @@ class DateMappingsSpec extends FreeSpec with MustMatchers with ScalaCheckPropert
       (date, field) =>
 
         val data = Map(
-          "value.day" -> date.getDayOfMonth.toString,
-          "value.month" -> date.getMonthValue.toString,
-          "value.year" -> field
+          "value-day" -> date.getDayOfMonth.toString,
+          "value-month" -> date.getMonthValue.toString,
+          "value-year" -> field
         )
 
         val result = form.bind(data)
@@ -180,16 +180,16 @@ class DateMappingsSpec extends FreeSpec with MustMatchers with ScalaCheckPropert
 
         val day = dayOpt.fold(Map.empty[String, String]) {
           value =>
-            Map("value.day" -> value)
+            Map("value-day" -> value)
         }
 
         val month = monthOpt.fold(Map.empty[String, String]) {
           value =>
-            Map("value.month" -> value)
+            Map("value-month" -> value)
         }
 
         val data: Map[String, String] = Map(
-          "value.year" -> date.getYear.toString
+          "value-year" -> date.getYear.toString
         ) ++ day ++ month
 
         val result = form.bind(data)
@@ -205,16 +205,16 @@ class DateMappingsSpec extends FreeSpec with MustMatchers with ScalaCheckPropert
 
         val day = dayOpt.fold(Map.empty[String, String]) {
           value =>
-            Map("value.day" -> value)
+            Map("value-day" -> value)
         }
 
         val year = yearOpt.fold(Map.empty[String, String]) {
           value =>
-            Map("value.year" -> value)
+            Map("value-year" -> value)
         }
 
         val data: Map[String, String] = Map(
-          "value.month" -> date.getMonthValue.toString
+          "value-month" -> date.getMonthValue.toString
         ) ++ day ++ year
 
         val result = form.bind(data)
@@ -230,16 +230,16 @@ class DateMappingsSpec extends FreeSpec with MustMatchers with ScalaCheckPropert
 
         val month = monthOpt.fold(Map.empty[String, String]) {
           value =>
-            Map("value.month" -> value)
+            Map("value-month" -> value)
         }
 
         val year = yearOpt.fold(Map.empty[String, String]) {
           value =>
-            Map("value.year" -> value)
+            Map("value-year" -> value)
         }
 
         val data: Map[String, String] = Map(
-          "value.day" -> date.getDayOfMonth.toString
+          "value-day" -> date.getDayOfMonth.toString
         ) ++ month ++ year
 
         val result = form.bind(data)
@@ -254,9 +254,9 @@ class DateMappingsSpec extends FreeSpec with MustMatchers with ScalaCheckPropert
       (date, day, month) =>
 
         val data = Map(
-          "value.day" -> day,
-          "value.month" -> month,
-          "value.year" -> date.getYear.toString
+          "value-day" -> day,
+          "value-month" -> month,
+          "value-year" -> date.getYear.toString
         )
 
         val result = form.bind(data)
@@ -271,9 +271,9 @@ class DateMappingsSpec extends FreeSpec with MustMatchers with ScalaCheckPropert
       (date, day, year) =>
 
         val data = Map(
-          "value.day" -> day,
-          "value.month" -> date.getMonthValue.toString,
-          "value.year" -> year
+          "value-day" -> day,
+          "value-month" -> date.getMonthValue.toString,
+          "value-year" -> year
         )
 
         val result = form.bind(data)
@@ -288,9 +288,9 @@ class DateMappingsSpec extends FreeSpec with MustMatchers with ScalaCheckPropert
       (date, month, year) =>
 
         val data = Map(
-          "value.day" -> date.getDayOfMonth.toString,
-          "value.month" -> month,
-          "value.year" -> year
+          "value-day" -> date.getDayOfMonth.toString,
+          "value-month" -> month,
+          "value-year" -> year
         )
 
         val result = form.bind(data)
@@ -305,9 +305,9 @@ class DateMappingsSpec extends FreeSpec with MustMatchers with ScalaCheckPropert
       (day, month, year) =>
 
         val data = Map(
-          "value.day" -> day,
-          "value.month" -> month,
-          "value.year" -> year
+          "value-day" -> day,
+          "value-month" -> month,
+          "value-year" -> year
         )
 
         val result = form.bind(data)
@@ -319,9 +319,9 @@ class DateMappingsSpec extends FreeSpec with MustMatchers with ScalaCheckPropert
   "fail to bind an invalid date" in {
 
     val data = Map(
-      "value.day" -> "30",
-      "value.month" -> "2",
-      "value.year" -> "2018"
+      "value-day" -> "30",
+      "value-month" -> "2",
+      "value-year" -> "2018"
     )
 
     val result = form.bind(data)
@@ -338,9 +338,9 @@ class DateMappingsSpec extends FreeSpec with MustMatchers with ScalaCheckPropert
 
         val filledForm = form.fill(date)
 
-        filledForm("value.day").value.value mustEqual date.getDayOfMonth.toString
-        filledForm("value.month").value.value mustEqual date.getMonthValue.toString
-        filledForm("value.year").value.value mustEqual date.getYear.toString
+        filledForm("value-day").value.value mustEqual date.getDayOfMonth.toString
+        filledForm("value-month").value.value mustEqual date.getMonthValue.toString
+        filledForm("value-year").value.value mustEqual date.getYear.toString
     }
   }
 }

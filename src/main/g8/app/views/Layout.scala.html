@@ -1,0 +1,33 @@
+@import config.FrontendAppConfig
+
+@this(
+    appConfig: FrontendAppConfig,
+    govukLayout: GovukLayout,
+    head: head,
+    govukBackLink: GovukBackLink,
+    scripts: scripts
+)
+
+@(
+        pageTitle: String,
+        backLinkUrl: Option[String] = None
+)(contentBlock: Html)(implicit request: Request[_], messages: Messages)
+
+@beforeContentBlock = {
+    @govukBackLink(backLink(backLinkUrl))
+    @if(appConfig.languageTranslationEnabled) {
+        @components.language_selection(
+            appConfig.languageMap,
+            appConfig.routeToSwitchLanguage,
+            Some("translate u-align--right")
+        )
+    }
+}
+
+@govukLayout(
+    pageTitle = Some(s"\${pageTitle} – \${messages("service.name")}"),
+    headBlock = Some(head()),
+    beforeContentBlock = Some(beforeContentBlock),
+    footerItems = Seq(FooterItem(href = Some("https://govuk-prototype-kit.herokuapp.com/"), text = Some("GOV.UK Prototype Kit v9.1.0"))),
+    bodyEndBlock = Some(scripts())
+)(contentBlock)

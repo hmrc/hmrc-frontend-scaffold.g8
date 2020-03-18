@@ -16,14 +16,16 @@ trait ViewBehaviours extends ViewSpecBase {
         "have the correct banner title" in {
 
           val doc = asDocument(view)
-          val nav = doc.getElementById("proposition-menu")
-          val span = nav.children.first
+          val bannerTitle = doc.getElementsByClass("govuk-header__link govuk-header__link--service-name")
+          bannerTitle.html() must equal(messages("service.name"))
         }
 
         "display the correct browser title" in {
 
           val doc = asDocument(view)
-          assertEqualsMessage(doc, "title", s"\$messageKeyPrefix.title")
+          val title = messages(s"\$messageKeyPrefix.title")
+          val serviceName = messages("service.name")
+          assertEqualsValue(doc, "title", s"\${title} – \${serviceName}")
         }
 
         "display the correct page title" in {

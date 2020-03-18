@@ -1,30 +1,33 @@
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import controllers.routes.$className$Controller
 @import models.{Mode, $className$}
 
 @this(
-    main_template: MainTemplate,
-    formHelper: FormWithCSRF
+        layout: Layout,
+        govukErrorSummary: GovukErrorSummary,
+        button: GovukButton,
+        input_checkboxes: components.input_checkboxes,
+        formHelper: FormWithCSRF
 )
 
 @(form: Form[Set[$className$]], mode: Mode)(implicit request: Request[_], messages: Messages)
 
-@main_template(
-    title = s"\${errorPrefix(form)} \${messages("$className;format="decap"$.title")}"
-    ) {
+@layout(
+    pageTitle = s"\${errorPrefix(form)} \${messages("$className;format="decap"$.title")}"
+) {
 
-    @formHelper(action = $className$Controller.onSubmit(mode), 'autoComplete -> "off") {
+    @formHelper(action = $className;format="cap"$Controller.onSubmit(mode), 'autoComplete -> "off") {
+        @if(form.errors.nonEmpty) {
+            @govukErrorSummary(ErrorSummary(errorList = form.errors.asTextErrorLinks, title = Text(messages("error.summary.title"))))
+        }
 
-        @components.back_link()
-
-        @components.error_summary(form.errors)
-
-        @components.input_checkboxes(
+        @input_checkboxes(
             field = form("value"),
             legend = messages("$className;format="decap"$.heading"),
             headingIsLegend = true,
-            inputs = $className$.options
+            inputs = mapRadioOptionsToCheckboxItems(form, false, $className$.options)
         )
 
-        @components.submit_button()
+        @button(Button(content = Text(messages("site.continue"))))
     }
 }

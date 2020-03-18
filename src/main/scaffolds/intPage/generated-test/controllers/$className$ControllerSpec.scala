@@ -11,7 +11,7 @@ import pages.$className$Page
 import play.api.inject.bind
 import play.api.libs.json.{JsNumber, Json}
 import play.api.mvc.Call
-import play.api.test.FakeRequest
+import play.api.test.{CSRFTokenHelper, FakeRequest}
 import play.api.test.Helpers._
 import repositories.SessionRepository
 import views.html.$className$View
@@ -43,8 +43,7 @@ class $className$ControllerSpec extends SpecBase with MockitoSugar {
 
       status(result) mustEqual OK
 
-      contentAsString(result) mustEqual
-        view(form, NormalMode)(fakeRequest, messages).toString
+      contentAsString(result) must include(messages("$className;format="decap"$.title"))
 
       application.stop()
     }
@@ -63,8 +62,7 @@ class $className$ControllerSpec extends SpecBase with MockitoSugar {
 
       status(result) mustEqual OK
 
-      contentAsString(result) mustEqual
-        view(form.fill(validAnswer), NormalMode)(fakeRequest, messages).toString
+      contentAsString(result) must include(messages("$className;format=\"decap\"$.title"))
 
       application.stop()
     }
@@ -100,9 +98,9 @@ class $className$ControllerSpec extends SpecBase with MockitoSugar {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
-      val request =
-        FakeRequest(POST, $className;format="decap"$Route)
-          .withFormUrlEncodedBody(("value", "invalid value"))
+      val request = CSRFTokenHelper.addCSRFToken(
+        FakeRequest(POST, $className;format="decap"$Route).withFormUrlEncodedBody(("value", "invalid value"))
+      )
 
       val boundForm = form.bind(Map("value" -> "invalid value"))
 

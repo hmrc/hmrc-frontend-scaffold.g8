@@ -19,8 +19,8 @@ lazy val root = (project in file("."))
     TwirlKeys.templateImports ++= Seq(
       "play.twirl.api.HtmlFormat",
       "play.twirl.api.HtmlFormat._",
-      "uk.gov.hmrc.play.views.html.helpers._",
-      "uk.gov.hmrc.play.views.html.layouts._",
+      "uk.gov.hmrc.govukfrontend.views.html.components._",
+      "uk.gov.hmrc.govukfrontend.views.html.helpers._",
       "views.ViewUtils._",
       "models.Mode",
       "controllers.routes._"
@@ -44,7 +44,7 @@ lazy val root = (project in file("."))
     // concatenate js
     Concat.groups := Seq(
       "javascripts/$name;format="word"$-app.js" ->
-        group(Seq("javascripts/show-hide-content.js", "javascripts/$name;format="word"$.js"))
+        group(Seq("javascripts/$name;format="word"$.js"))
     ),
     // prevent removal of unused code which generates warning errors due to use of third-party libs
     uglifyCompressOptions := Seq("unused=false", "dead_code=false"),

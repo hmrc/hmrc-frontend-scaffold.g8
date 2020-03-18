@@ -1,14 +1,12 @@
-@this(
-    main_template: MainTemplate
-)
+@this(layout: Layout)
 
 @()(implicit request: Request[_], messages: Messages)
 
-@main_template(
-    title = messages("index.title")
-    ) {
+@layout(
+    pageTitle = messages("index.title")
+) {
 
-    @components.heading("index.heading")
+    <h1>@messages("index.heading")</h1>
 
     <p>@messages("index.guidance")</p>
 }
