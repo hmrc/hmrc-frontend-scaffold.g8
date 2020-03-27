@@ -1,4 +1,3 @@
-@import viewmodels.Section
 @import views.ViewUtils
 
 @this(
@@ -8,7 +7,7 @@
         button: GovukButton
 )
 
-@(answerSections: Seq[Section])(implicit request: Request[_], messages: Messages)
+@(answerRows: Seq[SummaryListRow])(implicit request: Request[_], messages: Messages)
 
 @layout(
     pageTitle = messages("checkYourAnswers.title")
@@ -16,11 +15,7 @@
 
     @components.heading("checkYourAnswers.heading")
 
-    @govukSummaryList(
-        SummaryList(
-            mapAnswerSectionsToSummary(answerSections)
-        )
-    )
+    @govukSummaryList(SummaryList(answerRows))
 
     @button(Button(content = Text(messages("checkYourAnswers.submit"))))
 }

@@ -53,12 +53,21 @@ echo "Adding helper method to CheckYourAnswersHelper"
 awk '/class CheckYourAnswersHelper/ {\
      print;\
      print "";\
-     print "  def $className;format="decap"$: Option[AnswerRow] = userAnswers.get($className$Page) map {";\
+     print "  def $className;format="decap"$: Option[SummaryListRow] = userAnswers.get($className$Page) map {";\
      print "    x =>";\
-     print "      AnswerRow(";\
-     print "        HtmlFormat.escape(messages(\"$className;format="decap"$.checkYourAnswersLabel\")),";\
-     print "        HtmlFormat.escape(x.format(dateFormatter)),";\
-     print "        routes.$className$Controller.onPageLoad(CheckMode).url";\
+     print "      SummaryListRow(";\
+     print "              key = Key(Text(messages(\"$className;format="decap"$.checkYourAnswersLabel\")), \"govuk-!-width-one-half\"),";\
+     print "              value = Value(Text(x.format(dateFormatter)), \"govuk-!-width-one-quater\"),";\
+     print "              actions = Some(";\
+     print "                Actions(";\
+     print "                  items = Seq(";\
+     print "                    ActionItem(";\
+     print "                      routes.$className$Controller.onPageLoad(taxOfficeNumber, taxOfficeReference, employeeId, CheckMode).url,";\
+     print "                      Text(\"Change\")";\
+     print "                    )";\
+     print "                  )";\
+     print "                )";\
+     print "              )";\
      print "      )";\
      print "  }";\
      next }1' ../app/utils/CheckYourAnswersHelper.scala > tmp && mv tmp ../app/utils/CheckYourAnswersHelper.scala

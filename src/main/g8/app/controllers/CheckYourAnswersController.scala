@@ -4,9 +4,9 @@ import com.google.inject.Inject
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import uk.gov.hmrc.play.bootstrap.controller.FrontendBaseController
 import utils.CheckYourAnswersHelper
-import viewmodels.AnswerSection
 import views.html.CheckYourAnswersView
 
 class CheckYourAnswersController @Inject()(
@@ -23,8 +23,8 @@ class CheckYourAnswersController @Inject()(
 
       val checkYourAnswersHelper = new CheckYourAnswersHelper(request.userAnswers)
 
-      val sections = Seq(AnswerSection(None, Seq()))
-      
-      Ok(view(sections))
+      val answerRows = Seq[SummaryListRow]()
+
+      Ok(view(answerRows))
   }
 }

@@ -6,17 +6,16 @@ import controllers.routes
 import models.{CheckMode, UserAnswers}
 import pages._
 import play.api.i18n.Messages
-import play.twirl.api.{Html, HtmlFormat}
-import viewmodels.AnswerRow
 import CheckYourAnswersHelper._
+import uk.gov.hmrc.govukfrontend.views.html.components.{ActionItem, Actions, Key, SummaryListRow, Text, Value}
 
 class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messages) {
 
-  private def yesOrNo(answer: Boolean)(implicit messages: Messages): Html =
+  private def yesOrNo(answer: Boolean)(implicit messages: Messages) =
     if (answer) {
-      HtmlFormat.escape(messages("site.yes"))
+      messages("site.yes")
     } else {
-      HtmlFormat.escape(messages("site.no"))
+      messages("site.no")
     }
 }
 

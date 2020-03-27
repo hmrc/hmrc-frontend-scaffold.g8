@@ -62,13 +62,22 @@ echo "Adding helper method to CheckYourAnswersHelper"
 awk '/class/ {\
      print;\
      print "";\
-     print "  def $className;format="decap"$: Option[AnswerRow] = userAnswers.get($className$Page) map {";\
+     print "  def $className;format="decap"$: Option[SummaryListRow] = userAnswers.get($className$Page) map {";\
      print "    x =>";\
-     print "      AnswerRow(";\
-     print "        HtmlFormat.escape(messages(\"$className;format="decap"$.checkYourAnswersLabel\")),";\
-     print "        HtmlFormat.escape(messages(s\"$className;format="decap"$.\$x\")),";\
-     print "        routes.$className$Controller.onPageLoad(CheckMode).url";\
-     print "      )"
+     print "      SummaryListRow(";\
+     print "              key = Key(Text(messages(\"$className;format="decap"$.checkYourAnswersLabel\")), \"govuk-!-width-one-half\"),";\
+     print "              value = Value(Text(messages(s\"$className;format="decap"$.\$x\")), \"govuk-!-width-one-quater\"),";\
+     print "              actions = Some(";\
+     print "                Actions(";\
+     print "                  items = Seq(";\
+     print "                    ActionItem(";\
+     print "                      routes.$className$Controller.onPageLoad(taxOfficeNumber, taxOfficeReference, employeeId, CheckMode).url,";\
+     print "                      Text(\"Change\")";\
+     print "                    )";\
+     print "                  )";\
+     print "                )";\
+     print "              )";\
+     print "            )";\
      print "  }";\
      next }1' ../app/utils/CheckYourAnswersHelper.scala > tmp && mv tmp ../app/utils/CheckYourAnswersHelper.scala
 

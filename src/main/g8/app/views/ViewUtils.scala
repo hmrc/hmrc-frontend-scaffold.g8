@@ -5,7 +5,7 @@ import play.api.data.{Field, Form}
 import play.api.i18n.Messages
 import play.twirl.api.Html
 import uk.gov.hmrc.govukfrontend.views.html.components._
-import viewmodels.{AnswerRow, AnswerSection, RadioOption, RepeaterAnswerRow, RepeaterAnswerSection, Section}
+import viewmodels.RadioOption
 
 object ViewUtils {
 
@@ -79,43 +79,4 @@ object ViewUtils {
         attributes = if(trackGa) Map[String, String]("data-journey-click" -> s"$name$:click:\${a.id}") else Map.empty
       )
     )
-
-  private def mapAnswerRowToSummaryListRow(rows: Seq[AnswerRow]): Seq[SummaryListRow] =
-    rows.map {
-      row => SummaryListRow(
-        key = Key(Text(row.label.toString()), "govuk-!-width-one-half"),
-        value = Value(Text(row.answer.toString()), "govuk-!-width-one-quater"),
-        actions = Some(
-          Actions(
-            items = Seq(ActionItem(href = row.changeUrl, content = Text("Change")))))
-      )
-    }
-
-  private def mapRelevanceRowToSummaryListRow(row: AnswerRow, rows: Seq[RepeaterAnswerRow]): Seq[SummaryListRow] = {
-    val a = SummaryListRow(
-      key = Key(Text(row.label.toString())),
-      value = Value(Text(row.answer.toString())),
-      actions = Some(
-        Actions(
-          items = Seq(ActionItem(href = row.changeUrl, content = Text("Change")))))
-    )
-
-    val b = rows.map {
-      row => SummaryListRow(
-        value = Value(Text(row.answer.toString())),
-        actions = Some(
-          Actions(
-            items = Seq(ActionItem(href = row.changeUrl, content = Text("Change")))))
-      )
-    }
-    b ++ Seq(a)
-  }
-
-  def mapAnswerSectionsToSummary(answerSections: Seq[Section]): Seq[SummaryListRow] =
-    answerSections.flatMap {
-      section => section match {
-        case AnswerSection(headingKey, rows) => mapAnswerRowToSummaryListRow(rows)
-        case RepeaterAnswerSection(headingKey, relevanceRow, rows, _, _) => mapRelevanceRowToSummaryListRow(relevanceRow, rows)
-      }
-    }
 }
