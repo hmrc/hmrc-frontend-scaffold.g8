@@ -1,3 +1,4 @@
+\$govuk-global-styles: true;
 \$govuk-assets-path: "/$name$/assets/lib/govuk-frontend/govuk/assets/";
 
 @import 'lib/govuk-frontend/govuk/all';
@@ -6,20 +7,3 @@
   display: block;
   font-weight: bold;
 }
-
-@import 'partials/_variables';
-@import 'partials/_base';
-
-@import 'partials/_template';
-@import 'partials/_page';
-
-@import 'partials/_forms';
-@import 'partials/_typography';
-
-@import 'partials/_utilities';
-
-@import 'partials/_shame';
-
-// WCGA 2.1
-@import 'partials/_palette';
-@import 'partials/_focus';
