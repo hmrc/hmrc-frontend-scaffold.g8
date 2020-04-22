@@ -42,3 +42,9 @@ site.textarea.char_limit = (Limit is {0} characters)
 
 unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account
+
+footer.accessibility = Accessibility Statement
+footer.cookies = Cookies
+footer.privacy = Privacy policy
+footer.terms = Terms and conditions
+footer.help = Help using GOV.UK
