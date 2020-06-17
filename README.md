@@ -37,6 +37,7 @@ To create a new service:
 * Run `sbt new hmrc/hmrc-frontend-scaffold.g8` and supply a name, e.g. _example-frontend_.
 * `cd` into the new directory, e.g. `cd example-frontend`
 * Initialise a git repo and make an initial commit, e.g. `git init && git add . && git commit -m 'Initial commit'`
+* Create a repository.yaml file and add the "repoVisibility: xxxxx" line to it (these can be copied from another HMRC repo - public one can be found in this repo), replace xxxxx with the actual string.
 
 ### Adding new pages using scaffolds
 
