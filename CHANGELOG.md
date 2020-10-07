@@ -3,6 +3,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## v0.16.0 - 2020-10-07
+
+### Changed
+* Use play-language library for switching language
+* Update dependencies
+* Update to scala 2.12
+
+### Fixes
+* Ensure date forms are re-initialised each time a controller method is invoked
+* Change UserAnswers to use Gettable and Settable rather than QuestionPage, to allow for queries
+* Change UserAnswers.remove to use removeObject rather than setting to JsNull
+
 ## v0.15.0 - 2020-02-28
 
 ### Changed
