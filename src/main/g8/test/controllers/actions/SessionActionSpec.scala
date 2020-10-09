@@ -21,16 +21,18 @@ class SessionActionSpec extends SpecBase {
 
         val application = applicationBuilder(userAnswers = None).build()
 
-        val bodyParsers = application.injector.instanceOf[BodyParsers.Default]
+        running(application){
+          val bodyParsers = application.injector.instanceOf[BodyParsers.Default]
 
-        val sessionAction = new SessionIdentifierAction(frontendAppConfig, bodyParsers)
+          val sessionAction = new SessionIdentifierAction(frontendAppConfig, bodyParsers)
 
-        val controller = new Harness(sessionAction)
+          val controller = new Harness(sessionAction)
 
-        val result = controller.onPageLoad()(fakeRequest)
+          val result = controller.onPageLoad()(fakeRequest)
 
-        status(result) mustBe SEE_OTHER
-        redirectLocation(result).get must startWith(controllers.routes.SessionExpiredController.onPageLoad().url)
+          status(result) mustBe SEE_OTHER
+          redirectLocation(result).get must startWith(controllers.routes.SessionExpiredController.onPageLoad().url)
+        }
       }
     }
 
@@ -40,17 +42,19 @@ class SessionActionSpec extends SpecBase {
 
         val application = applicationBuilder(userAnswers = None).build()
 
-        val bodyParsers = application.injector.instanceOf[BodyParsers.Default]
+        running(application) {
+          val bodyParsers = application.injector.instanceOf[BodyParsers.Default]
 
-        val sessionAction = new SessionIdentifierAction(frontendAppConfig, bodyParsers)
+          val sessionAction = new SessionIdentifierAction(frontendAppConfig, bodyParsers)
 
-        val controller = new Harness(sessionAction)
+          val controller = new Harness(sessionAction)
 
-        val request = fakeRequest.withSession(SessionKeys.sessionId -> "foo")
+          val request = fakeRequest.withSession(SessionKeys.sessionId -> "foo")
 
-        val result = controller.onPageLoad()(request)
+          val result = controller.onPageLoad()(request)
 
-        status(result) mustBe OK
+          status(result) mustBe OK
+        }
       }
     }
   }
