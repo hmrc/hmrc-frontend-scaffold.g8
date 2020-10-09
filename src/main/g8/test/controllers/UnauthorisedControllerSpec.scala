@@ -7,9 +7,9 @@ import views.html.UnauthorisedView
 
 class UnauthorisedControllerSpec extends SpecBase {
 
-  "Unauthorised Controller" must {
+  "Unauthorised Controller" - {
 
-    "return OK and the correct view for a GET" in {
+    "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 

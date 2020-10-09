@@ -7,9 +7,9 @@ import views.html.SessionExpiredView
 
 class SessionExpiredControllerSpec extends SpecBase {
 
-  "SessionExpired Controller" must {
+  "SessionExpired Controller" - {
 
-    "return OK and the correct view for a GET" in {
+    "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = None).build()
 

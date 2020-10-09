@@ -5,8 +5,8 @@ import controllers.actions._
 import models.UserAnswers
 import org.scalatest.{OptionValues, TryValues}
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
+import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
-import org.scalatest.wordspec.AnyWordSpec
 import org.scalatestplus.play.guice._
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.guice.GuiceApplicationBuilder
@@ -14,7 +14,7 @@ import play.api.inject.{Injector, bind}
 import play.api.libs.json.Json
 import play.api.test.FakeRequest
 
-trait SpecBase extends AnyWordSpec with Matchers with GuiceOneAppPerSuite with TryValues with OptionValues with ScalaFutures with IntegrationPatience {
+trait SpecBase extends AnyFreeSpec with Matchers with GuiceOneAppPerSuite with TryValues with OptionValues with ScalaFutures with IntegrationPatience {
 
   val userAnswersId = "id"
 

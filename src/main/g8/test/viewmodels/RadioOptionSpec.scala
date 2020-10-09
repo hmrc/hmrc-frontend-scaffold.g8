@@ -4,9 +4,9 @@ import base.SpecBase
 
 class RadioOptionSpec extends SpecBase {
 
-  "Radio Option" must {
+  "Radio Option" - {
 
-    "build correctly from a key prefix and option" in {
+    "must build correctly from a key prefix and option" in {
 
       val radioOption = RadioOption("prefix", "option")
 
