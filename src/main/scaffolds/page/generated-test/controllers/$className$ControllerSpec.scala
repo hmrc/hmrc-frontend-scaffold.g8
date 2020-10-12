@@ -7,24 +7,22 @@ import views.html.$className$View
 
 class $className$ControllerSpec extends SpecBase {
 
-  "$className$ Controller" must {
+  "$className$ Controller" - {
 
-    "return OK and the correct view for a GET" in {
+    "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
-      val request = FakeRequest(GET, routes.$className$Controller.onPageLoad().url)
+      running(application) {
+        val request = FakeRequest(GET, routes.$className$Controller.onPageLoad().url)
 
-      val result = route(application, request).value
+        val result = route(application, request).value
 
-      val view = application.injector.instanceOf[$className$View]
+        val view = application.injector.instanceOf[$className$View]
 
-      status(result) mustEqual OK
-
-      contentAsString(result) mustEqual
-        view()(fakeRequest, messages).toString
-
-      application.stop()
+        status(result) mustEqual OK
+        contentAsString(result) mustEqual view()(request, messages(application)).toString
+      }
     }
   }
 }

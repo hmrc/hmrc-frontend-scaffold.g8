@@ -8,7 +8,7 @@ class $className$FormProviderSpec extends CheckboxFieldBehaviours {
 
   val form = new $className$FormProvider()()
 
-  ".value" must {
+  ".value" - {
 
     val fieldName = "value"
     val requiredKey = "$className;format="decap"$.error.required"

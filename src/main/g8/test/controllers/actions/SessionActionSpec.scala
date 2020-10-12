@@ -1,7 +1,9 @@
 package controllers.actions
 
 import base.SpecBase
+import config.FrontendAppConfig
 import play.api.mvc.{BodyParsers, Results}
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.SessionKeys
 
@@ -23,15 +25,16 @@ class SessionActionSpec extends SpecBase {
 
         running(application){
           val bodyParsers = application.injector.instanceOf[BodyParsers.Default]
+          val appConfig   = application.injector.instanceOf[FrontendAppConfig]
 
-          val sessionAction = new SessionIdentifierAction(frontendAppConfig, bodyParsers)
+          val sessionAction = new SessionIdentifierAction(appConfig, bodyParsers)
 
           val controller = new Harness(sessionAction)
 
-          val result = controller.onPageLoad()(fakeRequest)
+          val result = controller.onPageLoad()(FakeRequest())
 
           status(result) mustBe SEE_OTHER
-          redirectLocation(result).get must startWith(controllers.routes.SessionExpiredController.onPageLoad().url)
+          redirectLocation(result).value must startWith(controllers.routes.SessionExpiredController.onPageLoad().url)
         }
       }
     }
@@ -44,15 +47,15 @@ class SessionActionSpec extends SpecBase {
 
         running(application) {
           val bodyParsers = application.injector.instanceOf[BodyParsers.Default]
+          val appConfig   = application.injector.instanceOf[FrontendAppConfig]
 
-          val sessionAction = new SessionIdentifierAction(frontendAppConfig, bodyParsers)
+          val sessionAction = new SessionIdentifierAction(appConfig, bodyParsers)
 
           val controller = new Harness(sessionAction)
 
-          val request = fakeRequest.withSession(SessionKeys.sessionId -> "foo")
+          val request = FakeRequest().withSession(SessionKeys.sessionId -> "foo")
 
           val result = controller.onPageLoad()(request)
-
           status(result) mustBe OK
         }
       }

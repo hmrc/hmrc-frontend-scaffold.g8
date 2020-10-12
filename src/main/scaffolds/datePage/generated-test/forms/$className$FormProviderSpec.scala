@@ -9,7 +9,7 @@ class $className$FormProviderSpec extends DateBehaviours {
 
   val form = new $className$FormProvider()()
 
-  ".value" should {
+  ".value" - {
 
     val validData = datesBetween(
       min = LocalDate.of(2000, 1, 1),
