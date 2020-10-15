@@ -14,6 +14,7 @@ trait FormBehaviours extends FormSpec {
     "bind valid values correctly" in {
       val boundForm = form.bind(validData)
       boundForm.get mustBe expectedResult
+      result.errors mustBe empty
     }
   }
 
@@ -22,7 +23,7 @@ trait FormBehaviours extends FormSpec {
       s"bind when \$field is omitted" in {
         val data = validData - field
         val boundForm = form.bind(data)
-        boundForm.errors.isEmpty mustBe true
+        boundForm.errors mustBe empty
       }
     }
   }
@@ -47,7 +48,7 @@ trait FormBehaviours extends FormSpec {
     s"bind when \$booleanField is false and \$field is omitted" in {
       val data = validData + (booleanField -> "false") - field
       val boundForm = form.bind(data)
-      boundForm.errors.isEmpty mustBe true
+      boundForm.errors mustBe empty
     }
 
     s"fail to bind when \$booleanField is true and \$field is omitted" in {
@@ -78,7 +79,7 @@ trait FormBehaviours extends FormSpec {
       s"bind when \${field.name} is set to \$validValue" in {
         val data = validData + (field.name -> validValue)
         val boundForm = form.bind(data)
-        boundForm.errors.isEmpty mustBe true
+        boundForm.errors mustBe empty
       }
     }
 
@@ -191,6 +192,5 @@ trait FormBehaviours extends FormSpec {
       val expectedError = error("dateOfBirth", "error.invalid_date")
       checkForError(form, data, expectedError)
     }
-
   }
 }

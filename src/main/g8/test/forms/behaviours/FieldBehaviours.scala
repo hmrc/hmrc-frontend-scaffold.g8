@@ -18,6 +18,7 @@ trait FieldBehaviours extends FormSpec with ScalaCheckPropertyChecks with Genera
         dataItem: String =>
           val result = form.bind(Map(fieldName -> dataItem)).apply(fieldName)
           result.value.value mustBe dataItem
+          result.errors mustBe empty
       }
     }
   }
