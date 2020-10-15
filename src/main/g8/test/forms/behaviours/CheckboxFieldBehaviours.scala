@@ -15,7 +15,8 @@ trait CheckboxFieldBehaviours extends FormSpec {
       val data = Map(
         s"\$fieldName[\$i]" -> value.toString
       )
-      form.bind(data).get mustEqual Set(value)
+      val result = form.bind(data)
+      result.get mustEqual Set(value)
       result.errors mustBe empty
     }
 
