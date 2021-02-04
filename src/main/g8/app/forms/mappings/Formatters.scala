@@ -12,9 +12,9 @@ trait Formatters {
 
     override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], String] =
       data.get(key) match {
-        case None                    => Left(Seq(FormError(key, errorKey, args)))
-        case Some(s) if s.trim == "" => Left(Seq(FormError(key, errorKey, args)))
-        case Some(s)                 => Right(s)
+        case None                      => Left(Seq(FormError(key, errorKey, args)))
+        case Some(s) if s.trim.isEmpty => Left(Seq(FormError(key, errorKey, args)))
+        case Some(s)                   => Right(s)
       }
 
     override def unbind(key: String, value: String): Map[String, String] =
@@ -43,7 +43,7 @@ trait Formatters {
 
       val decimalRegexp = """^-?(\d*\.\d*)\$"""
 
-      private val baseFormatter = stringFormatter(requiredKey)
+      private val baseFormatter = stringFormatter(requiredKey, args)
 
       override def bind(key: String, data: Map[String, String]) =
         baseFormatter
@@ -66,12 +66,14 @@ trait Formatters {
   private[mappings] def enumerableFormatter[A](requiredKey: String, invalidKey: String, args: Seq[String] = Seq.empty)(implicit ev: Enumerable[A]): Formatter[A] =
     new Formatter[A] {
 
-      private val baseFormatter = stringFormatter(requiredKey)
+      private val baseFormatter = stringFormatter(requiredKey, args)
 
       override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], A] =
         baseFormatter.bind(key, data).right.flatMap {
           str =>
-            ev.withName(str).map(Right.apply).getOrElse(Left(Seq(FormError(key, invalidKey, args))))
+            ev.withName(str)
+              .map(Right.apply)
+              .getOrElse(Left(Seq(FormError(key, invalidKey, args))))
         }
 
       override def unbind(key: String, value: A): Map[String, String] =
