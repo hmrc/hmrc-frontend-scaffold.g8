@@ -7,10 +7,9 @@ import models.UserAnswers
 import play.api.Configuration
 import play.api.libs.json._
 import play.modules.reactivemongo.ReactiveMongoApi
-import reactivemongo.api.indexes.{Index, IndexType}
-import reactivemongo.bson.BSONDocument
-import reactivemongo.play.json.ImplicitBSONHandlers.JsObjectDocumentWriter
+import reactivemongo.api.indexes.IndexType
 import reactivemongo.play.json.collection.JSONCollection
+import reactivemongo.play.json.compat._
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -27,16 +26,16 @@ class DefaultSessionRepository @Inject()(
   private def collection: Future[JSONCollection] =
     mongo.database.map(_.collection[JSONCollection](collectionName))
 
-  private val lastUpdatedIndex = Index(
-    key     = Seq("lastUpdated" -> IndexType.Ascending),
-    name    = Some("user-answers-last-updated-index"),
-    options = BSONDocument("expireAfterSeconds" -> cacheTtl)
+  private val lastUpdatedIndex = IndexProvider.index(
+    key                = Seq("lastUpdated" -> IndexType.Ascending),
+    name               = Some("user-answers-last-updated-index"),
+    expireAfterSeconds = Some(cacheTtl)
   )
 
-  val started: Future[Unit] =
+  val started: Future[Boolean] =
     collection.flatMap {
       _.indexesManager.ensure(lastUpdatedIndex)
-    }.map(_ => ())
+    }.map(_ => true)
 
   override def get(id: String): Future[Option[UserAnswers]] =
     collection.flatMap(_.find(Json.obj("_id" -> id), None).one[UserAnswers])
@@ -63,7 +62,7 @@ class DefaultSessionRepository @Inject()(
 
 trait SessionRepository {
 
-  val started: Future[Unit]
+  val started: Future[Boolean]
 
   def get(id: String): Future[Option[UserAnswers]]
 
