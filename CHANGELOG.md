@@ -3,6 +3,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## v0.19.0 - 2021-02-22
+
+### Changed
+* Updated dependencies and test libraries
+* Consolidated unit tests to AnyFreeSpec and Matchers
+* Updated SessionRepository to keep session alive on gets
+
+### Fixed
+* Allow args to be passed to formatters / mappings
+* Fix genIntersperseString generator to preserve order of input
+
 ## v0.18.0 - 2020-11-17
 
 ### Fixed
