@@ -10,7 +10,7 @@ class $className$FormProviderSpec extends BooleanFieldBehaviours {
 
   val form = new $className$FormProvider()()
 
-  ".value" must {
+  ".value" - {
 
     val fieldName = "value"
 

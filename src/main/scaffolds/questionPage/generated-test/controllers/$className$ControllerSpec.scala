@@ -4,7 +4,7 @@ import base.SpecBase
 import forms.$className$FormProvider
 import models.{NormalMode, $className$, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
-import org.mockito.Matchers.any
+import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import pages.$className$Page
@@ -37,45 +37,41 @@ class $className$ControllerSpec extends SpecBase with MockitoSugar {
     )
   )
 
-  "$className$ Controller" must {
+  "$className$ Controller" - {
 
-    "return OK and the correct view for a GET" in {
+    "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
-      val request = FakeRequest(GET, $className;format="decap"$Route)
+      running(application) {
+        val request = FakeRequest(GET, $className;format="decap"$Route)
 
-      val view = application.injector.instanceOf[$className$View]
+        val view = application.injector.instanceOf[$className$View]
 
-      val result = route(application, request).value
+        val result = route(application, request).value
 
-      status(result) mustEqual OK
-
-      contentAsString(result) mustEqual
-        view(form, NormalMode)(request, messages).toString
-
-      application.stop()
+        status(result) mustEqual OK
+        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+      }
     }
 
-    "populate the view correctly on a GET when the question has previously been answered" in {
+    "must populate the view correctly on a GET when the question has previously been answered" in {
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
-      val request = FakeRequest(GET, $className;format="decap"$Route)
+      running(application) {
+        val request = FakeRequest(GET, $className;format="decap"$Route)
 
-      val view = application.injector.instanceOf[$className$View]
+        val view = application.injector.instanceOf[$className$View]
 
-      val result = route(application, request).value
+        val result = route(application, request).value
 
-      status(result) mustEqual OK
-
-      contentAsString(result) mustEqual
-        view(form.fill($className$("value 1", "value 2")), NormalMode)(fakeRequest, messages).toString
-
-      application.stop()
+        status(result) mustEqual OK
+        contentAsString(result) mustEqual view(form.fill($className$("value 1", "value 2")), NormalMode)(request, messages(application)).toString
+      }
     }
 
-    "redirect to the next page when valid data is submitted" in {
+    "must redirect to the next page when valid data is submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
 
@@ -89,71 +85,66 @@ class $className$ControllerSpec extends SpecBase with MockitoSugar {
           )
           .build()
 
+      running(application) {
+        val request =
+          FakeRequest(POST, $className;format="decap"$Route)
+            .withFormUrlEncodedBody(("$field1Name$", "value 1"), ("$field2Name$", "value 2"))
 
-      val request =
-        FakeRequest(POST, $className;format="decap"$Route)
-          .withFormUrlEncodedBody(("$field1Name$", "value 1"), ("$field2Name$", "value 2"))
+        val result = route(application, request).value
 
-      val result = route(application, request).value
-
-      status(result) mustEqual SEE_OTHER
-
-      redirectLocation(result).value mustEqual onwardRoute.url
-
-      application.stop()
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual onwardRoute.url
+      }
     }
 
-    "return a Bad Request and errors when invalid data is submitted" in {
+    "must return a Bad Request and errors when invalid data is submitted" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
-      val request =
-        FakeRequest(POST, $className;format="decap"$Route)
-          .withFormUrlEncodedBody(("value", "invalid value"))
+      running(application) {
+        val request =
+          FakeRequest(POST, $className;format="decap"$Route)
+            .withFormUrlEncodedBody(("value", "invalid value"))
 
-      val boundForm = form.bind(Map("value" -> "invalid value"))
+        val boundForm = form.bind(Map("value" -> "invalid value"))
 
-      val view = application.injector.instanceOf[$className$View]
+        val view = application.injector.instanceOf[$className$View]
 
-      val result = route(application, request).value
+        val result = route(application, request).value
 
-      status(result) mustEqual BAD_REQUEST
-
-      contentAsString(result) mustEqual
-        view(boundForm, NormalMode)(fakeRequest, messages).toString
-
-       application.stop()
+        status(result) mustEqual BAD_REQUEST
+        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+      }
     }
 
-    "redirect to Session Expired for a GET if no existing data is found" in {
+    "must redirect to Session Expired for a GET if no existing data is found" in {
 
       val application = applicationBuilder(userAnswers = None).build()
 
-      val request = FakeRequest(GET, $className;format="decap"$Route)
+      running(appliation) {
+        val request = FakeRequest(GET, $className;format="decap"$Route)
 
-      val result = route(application, request).value
+        val result = route(application, request).value
 
-      status(result) mustEqual SEE_OTHER
-      redirectLocation(result).value mustEqual routes.SessionExpiredController.onPageLoad().url
-
-      application.stop()
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.SessionExpiredController.onPageLoad().url
+      }
     }
 
-    "redirect to Session Expired for a POST if no existing data is found" in {
+    "must redirect to Session Expired for a POST if no existing data is found" in {
 
       val application = applicationBuilder(userAnswers = None).build()
 
-      val request =
-        FakeRequest(POST, $className;format="decap"$Route)
-          .withFormUrlEncodedBody(("$field1Name$", "value 1"), ("$field2Name$", "value 2"))
+      running(application) {
+        val request =
+          FakeRequest(POST, $className;format="decap"$Route)
+            .withFormUrlEncodedBody(("$field1Name$", "value 1"), ("$field2Name$", "value 2"))
 
-      val result = route(application, request).value
+        val result = route(application, request).value
 
-      status(result) mustEqual SEE_OTHER
-
-      redirectLocation(result).value mustEqual routes.SessionExpiredController.onPageLoad().url
-
-      application.stop()
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.SessionExpiredController.onPageLoad().url
+      }
     }
   }
 }

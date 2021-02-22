@@ -1,6 +1,8 @@
 package models
 
-import org.scalatest.{EitherValues, OptionValues, MustMatchers, WordSpec}
+import org.scalatest.{EitherValues, OptionValues}
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.must.Matchers
 import play.api.libs.json._
 
 object EnumerableSpec {
@@ -18,13 +20,13 @@ object EnumerableSpec {
   }
 }
 
-class EnumerableSpec extends WordSpec with MustMatchers with EitherValues with OptionValues with Enumerable.Implicits {
+class EnumerableSpec extends AnyFreeSpec with Matchers with EitherValues with OptionValues with Enumerable.Implicits {
 
   import EnumerableSpec._
 
-  ".reads" must {
+  ".reads" - {
 
-    "be found implicitly" in {
+    "must be found implicitly" in {
       implicitly[Reads[Foo]]
     }
 
@@ -35,14 +37,14 @@ class EnumerableSpec extends WordSpec with MustMatchers with EitherValues with O
         }
     }
 
-    "fail to bind for invalid values" in {
+    "must fail to bind for invalid values" in {
       Json.fromJson[Foo](JsString("invalid")).asEither.left.value must contain(JsPath -> Seq(JsonValidationError("error.invalid")))
     }
   }
 
-  ".writes" must {
+  ".writes" - {
 
-    "be found implicitly" in {
+    "must be found implicitly" in {
       implicitly[Writes[Foo]]
     }
 
@@ -54,9 +56,9 @@ class EnumerableSpec extends WordSpec with MustMatchers with EitherValues with O
     }
   }
 
-  ".formats" must {
+  ".formats" - {
 
-    "be found implicitly" in {
+    "must be found implicitly" in {
       implicitly[Format[Foo]]
     }
   }

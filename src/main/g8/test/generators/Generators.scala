@@ -21,18 +21,18 @@ trait Generators extends UserAnswersGenerator with PageGenerators with ModelGene
       seq1 <- gen
       seq2 <- Gen.listOfN(seq1.length, genValue)
     } yield {
-      seq1.toSeq.zip(seq2).foldRight("") {
-        case ((n, Some(v)), m) =>
-          m + n + v
-        case ((n, _), m) =>
-          m + n
+      seq1.toSeq.zip(seq2).foldLeft("") {
+        case (acc, (n, Some(v))) =>
+          acc + n + v
+        case (acc, (n, _)) =>
+          acc + n
       }
     }
   }
 
   def intsInRangeWithCommas(min: Int, max: Int): Gen[String] = {
-    val numberGen = choose[Int](min, max)
-    genIntersperseString(numberGen.toString, ",")
+    val numberGen = choose[Int](min, max).map(_.toString)
+    genIntersperseString(numberGen, ",")
   }
 
   def intsLargerThanMaxValue: Gen[BigInt] =

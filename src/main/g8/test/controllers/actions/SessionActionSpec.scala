@@ -1,7 +1,8 @@
 package controllers.actions
 
 import base.SpecBase
-import play.api.mvc.{BodyParsers, Results}
+import play.api.mvc.{Action, AnyContent, BodyParsers, Results}
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.SessionKeys
 
@@ -10,47 +11,50 @@ import scala.concurrent.ExecutionContext.Implicits.global
 class SessionActionSpec extends SpecBase {
 
   class Harness(action: IdentifierAction) {
-    def onPageLoad() = action { request => Results.Ok }
+    def onPageLoad(): Action[AnyContent] = action { _ => Results.Ok }
   }
 
-  "Session Action" when {
+  "Session Action" - {
 
-    "there's no active session" must {
+    "when there is no active session" - {
 
-      "redirect to the session expired page" in {
+      "must redirect to the session expired page" in {
 
         val application = applicationBuilder(userAnswers = None).build()
 
-        val bodyParsers = application.injector.instanceOf[BodyParsers.Default]
+        running(application){
+          val bodyParsers = application.injector.instanceOf[BodyParsers.Default]
 
-        val sessionAction = new SessionIdentifierAction(frontendAppConfig, bodyParsers)
+          val sessionAction = new SessionIdentifierAction(bodyParsers)
 
-        val controller = new Harness(sessionAction)
+          val controller = new Harness(sessionAction)
 
-        val result = controller.onPageLoad()(fakeRequest)
+          val result = controller.onPageLoad()(FakeRequest())
 
-        status(result) mustBe SEE_OTHER
-        redirectLocation(result).get must startWith(controllers.routes.SessionExpiredController.onPageLoad().url)
+          status(result) mustBe SEE_OTHER
+          redirectLocation(result).value must startWith(controllers.routes.SessionExpiredController.onPageLoad().url)
+        }
       }
     }
 
-    "there's an active session" must {
+    "when there is an active session" - {
 
-      "perform the action" in {
+      "must perform the action" in {
 
         val application = applicationBuilder(userAnswers = None).build()
 
-        val bodyParsers = application.injector.instanceOf[BodyParsers.Default]
+        running(application) {
+          val bodyParsers = application.injector.instanceOf[BodyParsers.Default]
 
-        val sessionAction = new SessionIdentifierAction(frontendAppConfig, bodyParsers)
+          val sessionAction = new SessionIdentifierAction(bodyParsers)
 
-        val controller = new Harness(sessionAction)
+          val controller = new Harness(sessionAction)
 
-        val request = fakeRequest.withSession(SessionKeys.sessionId -> "foo")
+          val request = FakeRequest().withSession(SessionKeys.sessionId -> "foo")
 
-        val result = controller.onPageLoad()(request)
-
-        status(result) mustBe OK
+          val result = controller.onPageLoad()(request)
+          status(result) mustBe OK
+        }
       }
     }
   }

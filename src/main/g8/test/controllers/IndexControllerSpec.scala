@@ -7,24 +7,23 @@ import views.html.IndexView
 
 class IndexControllerSpec extends SpecBase {
 
-  "Index Controller" must {
+  "Index Controller" - {
 
-    "return OK and the correct view for a GET" in {
+    "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = None).build()
 
-      val request = FakeRequest(GET, routes.IndexController.onPageLoad().url)
+      running(application) {
+        val request = FakeRequest(GET, routes.IndexController.onPageLoad().url)
 
-      val result = route(application, request).value
+        val result = route(application, request).value
 
-      val view = application.injector.instanceOf[IndexView]
+        val view = application.injector.instanceOf[IndexView]
 
-      status(result) mustEqual OK
+        status(result) mustEqual OK
 
-      contentAsString(result) mustEqual
-        view()(fakeRequest, messages).toString
-
-      application.stop()
+        contentAsString(result) mustEqual view()(request, messages(application)).toString
+      }
     }
   }
 }

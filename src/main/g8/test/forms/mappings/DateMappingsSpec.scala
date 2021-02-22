@@ -4,11 +4,13 @@ import java.time.LocalDate
 
 import generators.Generators
 import org.scalacheck.Gen
-import org.scalatest.{FreeSpec, MustMatchers, OptionValues}
+import org.scalatest.OptionValues
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.must.Matchers
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import play.api.data.{Form, FormError}
 
-class DateMappingsSpec extends FreeSpec with MustMatchers with ScalaCheckPropertyChecks with Generators with OptionValues
+class DateMappingsSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyChecks with Generators with OptionValues
   with Mappings {
 
   val form = Form(
@@ -29,7 +31,7 @@ class DateMappingsSpec extends FreeSpec with MustMatchers with ScalaCheckPropert
 
   val missingField: Gen[Option[String]] = Gen.option(Gen.const(""))
 
-  "bind valid data" in {
+  "must bind valid data" in {
 
     forAll(validData -> "valid date") {
       date =>
@@ -46,14 +48,14 @@ class DateMappingsSpec extends FreeSpec with MustMatchers with ScalaCheckPropert
     }
   }
 
-  "fail to bind an empty date" in {
+  "must fail to bind an empty date" in {
 
     val result = form.bind(Map.empty[String, String])
 
     result.errors must contain only FormError("value", "error.required.all", List.empty)
   }
 
-  "fail to bind a date with a missing day" in {
+  "must fail to bind a date with a missing day" in {
 
     forAll(validData -> "valid date", missingField -> "missing field") {
       (date, field) =>
@@ -74,7 +76,7 @@ class DateMappingsSpec extends FreeSpec with MustMatchers with ScalaCheckPropert
     }
   }
 
-  "fail to bind a date with an invalid day" in {
+  "must fail to bind a date with an invalid day" in {
 
     forAll(validData -> "valid date", invalidField -> "invalid field") {
       (date, field) =>
@@ -93,7 +95,7 @@ class DateMappingsSpec extends FreeSpec with MustMatchers with ScalaCheckPropert
     }
   }
 
-  "fail to bind a date with a missing month" in {
+  "must fail to bind a date with a missing month" in {
 
     forAll(validData -> "valid date", missingField -> "missing field") {
       (date, field) =>
@@ -114,7 +116,7 @@ class DateMappingsSpec extends FreeSpec with MustMatchers with ScalaCheckPropert
     }
   }
 
-  "fail to bind a date with an invalid month" in {
+  "must fail to bind a date with an invalid month" in {
 
     forAll(validData -> "valid data", invalidField -> "invalid field") {
       (date, field) =>
@@ -133,7 +135,7 @@ class DateMappingsSpec extends FreeSpec with MustMatchers with ScalaCheckPropert
     }
   }
 
-  "fail to bind a date with a missing year" in {
+  "must fail to bind a date with a missing year" in {
 
     forAll(validData -> "valid date", missingField -> "missing field") {
       (date, field) =>
@@ -154,7 +156,7 @@ class DateMappingsSpec extends FreeSpec with MustMatchers with ScalaCheckPropert
     }
   }
 
-  "fail to bind a date with an invalid year" in {
+  "must fail to bind a date with an invalid year" in {
 
     forAll(validData -> "valid data", invalidField -> "invalid field") {
       (date, field) =>
@@ -173,7 +175,7 @@ class DateMappingsSpec extends FreeSpec with MustMatchers with ScalaCheckPropert
     }
   }
 
-  "fail to bind a date with a missing day and month" in {
+  "must fail to bind a date with a missing day and month" in {
 
     forAll(validData -> "valid date", missingField -> "missing day", missingField -> "missing month") {
       (date, dayOpt, monthOpt) =>
@@ -198,7 +200,7 @@ class DateMappingsSpec extends FreeSpec with MustMatchers with ScalaCheckPropert
     }
   }
 
-  "fail to bind a date with a missing day and year" in {
+  "must fail to bind a date with a missing day and year" in {
 
     forAll(validData -> "valid date", missingField -> "missing day", missingField -> "missing year") {
       (date, dayOpt, yearOpt) =>
@@ -223,7 +225,7 @@ class DateMappingsSpec extends FreeSpec with MustMatchers with ScalaCheckPropert
     }
   }
 
-  "fail to bind a date with a missing month and year" in {
+  "must fail to bind a date with a missing month and year" in {
 
     forAll(validData -> "valid date", missingField -> "missing month", missingField -> "missing year") {
       (date, monthOpt, yearOpt) =>
@@ -248,7 +250,7 @@ class DateMappingsSpec extends FreeSpec with MustMatchers with ScalaCheckPropert
     }
   }
 
-  "fail to bind an invalid day and month" in {
+  "must fail to bind an invalid day and month" in {
 
     forAll(validData -> "valid date", invalidField -> "invalid day", invalidField -> "invalid month") {
       (date, day, month) =>
@@ -265,7 +267,7 @@ class DateMappingsSpec extends FreeSpec with MustMatchers with ScalaCheckPropert
     }
   }
 
-  "fail to bind an invalid day and year" in {
+  "must fail to bind an invalid day and year" in {
 
     forAll(validData -> "valid date", invalidField -> "invalid day", invalidField -> "invalid year") {
       (date, day, year) =>
@@ -282,7 +284,7 @@ class DateMappingsSpec extends FreeSpec with MustMatchers with ScalaCheckPropert
     }
   }
 
-  "fail to bind an invalid month and year" in {
+  "must fail to bind an invalid month and year" in {
 
     forAll(validData -> "valid date", invalidField -> "invalid month", invalidField -> "invalid year") {
       (date, month, year) =>
@@ -299,7 +301,7 @@ class DateMappingsSpec extends FreeSpec with MustMatchers with ScalaCheckPropert
     }
   }
 
-  "fail to bind an invalid day, month and year" in {
+  "must fail to bind an invalid day, month and year" in {
 
     forAll(invalidField -> "valid day", invalidField -> "invalid month", invalidField -> "invalid year") {
       (day, month, year) =>
@@ -316,7 +318,7 @@ class DateMappingsSpec extends FreeSpec with MustMatchers with ScalaCheckPropert
     }
   }
 
-  "fail to bind an invalid date" in {
+  "must fail to bind an invalid date" in {
 
     val data = Map(
       "value.day" -> "30",
@@ -331,7 +333,7 @@ class DateMappingsSpec extends FreeSpec with MustMatchers with ScalaCheckPropert
     )
   }
 
-  "unbind a date" in {
+  "must unbind a date" in {
 
     forAll(validData -> "valid date") {
       date =>
