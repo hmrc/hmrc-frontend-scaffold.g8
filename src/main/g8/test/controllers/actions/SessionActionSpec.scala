@@ -1,8 +1,7 @@
 package controllers.actions
 
 import base.SpecBase
-import config.FrontendAppConfig
-import play.api.mvc.{BodyParsers, Results}
+import play.api.mvc.{Action, AnyContent, BodyParsers, Results}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.SessionKeys
@@ -12,7 +11,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 class SessionActionSpec extends SpecBase {
 
   class Harness(action: IdentifierAction) {
-    def onPageLoad() = action { request => Results.Ok }
+    def onPageLoad(): Action[AnyContent] = action { _ => Results.Ok }
   }
 
   "Session Action" - {
@@ -25,9 +24,8 @@ class SessionActionSpec extends SpecBase {
 
         running(application){
           val bodyParsers = application.injector.instanceOf[BodyParsers.Default]
-          val appConfig   = application.injector.instanceOf[FrontendAppConfig]
 
-          val sessionAction = new SessionIdentifierAction(appConfig, bodyParsers)
+          val sessionAction = new SessionIdentifierAction(bodyParsers)
 
           val controller = new Harness(sessionAction)
 
@@ -47,9 +45,8 @@ class SessionActionSpec extends SpecBase {
 
         running(application) {
           val bodyParsers = application.injector.instanceOf[BodyParsers.Default]
-          val appConfig   = application.injector.instanceOf[FrontendAppConfig]
 
-          val sessionAction = new SessionIdentifierAction(appConfig, bodyParsers)
+          val sessionAction = new SessionIdentifierAction(bodyParsers)
 
           val controller = new Harness(sessionAction)
 
