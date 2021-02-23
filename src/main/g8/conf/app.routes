@@ -1,13 +1,22 @@
 # microservice specific routes
 
-GET        /                                            controllers.IndexController.onPageLoad
+->          /govuk-frontend                              govuk.Routes
+->          /hmrc-frontend                               hmrcfrontend.Routes
 
-GET        /assets/*file                                controllers.Assets.versioned(path="/public", file: Asset)
+GET         /                                            controllers.IndexController.onPageLoad
 
-GET        /language/:lang                              controllers.LanguageSwitchController.switchToLanguage(lang: String)
+GET         /assets/*file                                controllers.Assets.versioned(path="/public", file: Asset)
 
-GET        /this-service-has-been-reset                 controllers.SessionExpiredController.onPageLoad
+GET         /language/:lang                              controllers.LanguageSwitchController.switchToLanguage(lang: String)
 
-GET        /check-your-answers                          controllers.CheckYourAnswersController.onPageLoad
+GET         /refresh-session                            controllers.KeepAliveController.keepAlive
 
-GET        /unauthorised                                controllers.UnauthorisedController.onPageLoad
+GET         /there-is-a-problem                          controllers.JourneyRecoveryController.onPageLoad(continueUrl: Option[RedirectUrl] ?= None)
+
+GET         /check-your-answers                          controllers.CheckYourAnswersController.onPageLoad
+
+GET         /account/sign-out-survey                     controllers.auth.AuthController.signOut
+GET         /account/sign-out                            controllers.auth.AuthController.signOutNoSurvey
+GET         /account/signed-out                          controllers.auth.SignedOutController.onPageLoad
+
+GET         /unauthorised                                controllers.UnauthorisedController.onPageLoad

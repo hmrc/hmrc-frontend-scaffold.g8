@@ -3,6 +3,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## v0.20.0 - 2021-03-09
+
+### Changed
+* Replaced assets-frontend and play-ui with play-frontend-hmrc and play-frontend-govuk
+* Added "viewmodel helpers" to make working with play-frontend components simpler
+* Replaced CheckYourAnswersHelper with viewmodels that provide `SummaryListRow`s
+* Added timeout dialog to pages by default
+* Included tracking consent snippet by default
+* Replaced reactive-mongo with hmrc-mongo
+* Included "sign out" links on appropriate pages
+* Replaced SessionExpired controller with JourneyRecovery controller to better reflect its usage
+* Updated sbt version to 1.13.13
+* Updated libraries and dependencies
+
 ## v0.19.0 - 2021-02-22
 
 ### Changed

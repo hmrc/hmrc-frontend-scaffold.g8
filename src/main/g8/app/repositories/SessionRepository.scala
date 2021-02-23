@@ -1,97 +1,77 @@
 package repositories
 
-import models.{MongoDateTimeFormats, UserAnswers}
-import play.api.Configuration
-import play.api.libs.json._
-import play.modules.reactivemongo.ReactiveMongoApi
-import reactivemongo.api.indexes.IndexType
-import reactivemongo.play.json.collection.JSONCollection
-import reactivemongo.play.json.compat._
+import config.FrontendAppConfig
+import models.UserAnswers
+import org.mongodb.scala.bson.conversions.Bson
+import org.mongodb.scala.model._
+import play.api.libs.json.Format
+import uk.gov.hmrc.mongo.MongoComponent
+import uk.gov.hmrc.mongo.play.json.PlayMongoRepository
+import uk.gov.hmrc.mongo.play.json.formats.MongoJavatimeFormats
 
-import java.time.{Clock, LocalDateTime}
-import javax.inject.Inject
+import java.time.{Clock, Instant}
+import java.util.concurrent.TimeUnit
+import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
-class DefaultSessionRepository @Inject()(
-                                          mongo: ReactiveMongoApi,
-                                          config: Configuration,
-                                          clock: Clock
-                                        )(implicit ec: ExecutionContext) extends SessionRepository {
+@Singleton
+class SessionRepository @Inject()(
+                                   mongoComponent: MongoComponent,
+                                   appConfig: FrontendAppConfig,
+                                   clock: Clock
+                                 )(implicit ec: ExecutionContext)
+  extends PlayMongoRepository[UserAnswers](
+    collectionName = "user-answers",
+    mongoComponent = mongoComponent,
+    domainFormat   = UserAnswers.format,
+    indexes        = Seq(
+      IndexModel(
+        Indexes.ascending("lastUpdated"),
+        IndexOptions()
+          .name("lastUpdatedIdx")
+          .expireAfter(appConfig.cacheTtl, TimeUnit.SECONDS)
+      )
+    )
+  ) {
 
+  implicit val instantFormat: Format[Instant] = MongoJavatimeFormats.instantFormat
 
-  private val collectionName: String = "user-answers"
+  private def byId(id: String): Bson = Filters.equal("_id", id)
 
-  private def byId(id: String): JsObject = Json.obj("_id" -> id)
+  def keepAlive(id: String): Future[Boolean] =
+    collection
+      .updateOne(
+        filter = byId(id),
+        update = Updates.set("lastUpdated", Instant.now(clock)),
+      )
+      .toFuture
+      .map(_ => true)
 
-  private val cacheTtl = config.get[Int]("mongodb.timeToLiveInSeconds")
-
-  private def collection: Future[JSONCollection] =
-    mongo.database.map(_.collection[JSONCollection](collectionName))
-
-  private val lastUpdatedIndex = IndexProvider.index(
-    key                = Seq("lastUpdated" -> IndexType.Ascending),
-    name               = Some("user-answers-last-updated-index"),
-    expireAfterSeconds = Some(cacheTtl)
-  )
-
-  val started: Future[Boolean] =
-    collection.flatMap {
-      _.indexesManager.ensure(lastUpdatedIndex)
-    }.map(_ => true)
-
-  override def get(id: String): Future[Option[UserAnswers]] =
+  def get(id: String): Future[Option[UserAnswers]] =
     keepAlive(id).flatMap {
       _ =>
-        collection.flatMap {
-          _.find(byId(id), projection = None)
-            .one[UserAnswers]
-        }
+        collection
+          .find(byId(id))
+          .headOption
     }
 
-  override def set(userAnswers: UserAnswers): Future[Boolean] = {
+  def set(answers: UserAnswers): Future[Boolean] = {
 
-    val modifier = Json.obj(
-      "\$set" -> (userAnswers copy (lastUpdated = LocalDateTime.now(clock)))
-    )
+    val updatedAnswers = answers copy (lastUpdated = Instant.now(clock))
 
-    collection.flatMap {
-      _.update(ordered = false)
-        .one(byId(userAnswers.id), modifier, upsert = true).map {
-          lastError =>
-            lastError.ok
-      }
-    }
+    collection
+      .replaceOne(
+        filter      = byId(updatedAnswers.id),
+        replacement = updatedAnswers,
+        options     = ReplaceOptions().upsert(true)
+      )
+      .toFuture
+      .map(_ => true)
   }
 
-  override def clear(id: String): Future[Boolean] =
-    collection.flatMap(_.delete.one(byId(id)).map(_.ok))
-
-  override def keepAlive(id: String): Future[Boolean] = {
-
-    implicit val dateWrites: Writes[LocalDateTime] = MongoDateTimeFormats.localDateTimeWrite
-
-    val modifier = Json.obj("\$set" -> Json.obj("lastUpdated" -> LocalDateTime.now(clock)))
-
-    collection.flatMap {
-      _.update(ordered = false)
-        .one(byId(id), modifier)
-        .map {
-          lastError =>
-            lastError.ok
-        }
-    }
-  }
-}
-
-trait SessionRepository {
-
-  val started: Future[Boolean]
-
-  def get(id: String): Future[Option[UserAnswers]]
-
-  def set(userAnswers: UserAnswers): Future[Boolean]
-
-  def clear(id: String): Future[Boolean]
-
-  def keepAlive(id: String): Future[Boolean]
+  def clear(id: String): Future[Boolean] =
+    collection
+      .deleteOne(byId(id))
+      .toFuture
+      .map(_ => true)
 }

@@ -20,6 +20,7 @@ echo "$className;format="decap"$.$option1key;format="decap"$ = $option1msg$" >> 
 echo "$className;format="decap"$.$option2key;format="decap"$ = $option2msg$" >> ../conf/messages.en
 echo "$className;format="decap"$.checkYourAnswersLabel = $title$" >> ../conf/messages.en
 echo "$className;format="decap"$.error.required = Select $className;format="decap"$" >> ../conf/messages.en
+echo "$className;format="decap"$.change.hidden = $className$" >> ../conf/messages.en
 
 echo "Adding to UserAnswersEntryGenerators"
 awk '/trait UserAnswersEntryGenerators/ {\
@@ -57,19 +58,5 @@ awk '/val generators/ {\
     print;\
     print "    arbitrary[($className$Page.type, JsValue)] ::";\
     next }1' ../test/generators/UserAnswersGenerator.scala > tmp && mv tmp ../test/generators/UserAnswersGenerator.scala
-
-echo "Adding helper method to CheckYourAnswersHelper"
-awk '/class/ {\
-     print;\
-     print "";\
-     print "  def $className;format="decap"$: Option[AnswerRow] = userAnswers.get($className$Page) map {";\
-     print "    x =>";\
-     print "      AnswerRow(";\
-     print "        HtmlFormat.escape(messages(\"$className;format="decap"$.checkYourAnswersLabel\")),";\
-     print "        HtmlFormat.escape(messages(s\"$className;format="decap"$.\$x\")),";\
-     print "        routes.$className$Controller.onPageLoad(CheckMode).url";\
-     print "      )"
-     print "  }";\
-     next }1' ../app/utils/CheckYourAnswersHelper.scala > tmp && mv tmp ../app/utils/CheckYourAnswersHelper.scala
 
 echo "Migration $className;format="snake"$ completed"

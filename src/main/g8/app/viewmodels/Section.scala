@@ -1,3 +1,0 @@
-package viewmodels
-
-trait Section

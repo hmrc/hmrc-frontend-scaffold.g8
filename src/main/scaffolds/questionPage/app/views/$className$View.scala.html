@@ -1,35 +1,43 @@
-@import controllers.routes._
-@import models.Mode
+@import viewmodels.InputWidth._
 
 @this(
-    main_template: MainTemplate,
-    formHelper: FormWithCSRF
+    layout: templates.Layout,
+    formHelper: FormWithCSRF,
+    govukErrorSummary: GovukErrorSummary,
+    govukInput: GovukInput,
+    govukButton: GovukButton
 )
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
-@main_template(
-    title = s"\${errorPrefix(form)} \${messages("$className;format="decap"$.title")}"
-    ) {
+@layout(pageTitle = title(form, messages("$className;format="decap"$.title"))) {
 
-    @formHelper(action = $className;format="cap"$Controller.onSubmit(mode), 'autoComplete -> "off") {
+    @formHelper(action = routes.$className$Controller.onSubmit(mode), 'autoComplete -> "off") {
 
-        @components.back_link()
-        
-        @components.error_summary(form.errors)
+        @if(form.errors.nonEmpty) {
+            @govukErrorSummary(ErrorSummaryViewModel(form))
+        }
 
-        @components.heading("$className;format="decap"$.heading")
+        <h1 class="govuk-heading-xl">@messages("$className;format="decap"$.heading")</h1>
 
-        @components.input_text(
-            field = form("$field1Name$"),
-            label = messages("$className;format="decap"$.$field1Name$")
+        @govukInput(
+            InputViewModel(
+                field = form("$field1Name$"),
+                label = LabelViewModel(messages("$className;format="decap"$.$field1Name$"))
+            )
+            .withWidth(Full)
         )
 
-        @components.input_text(
-            field = form("$field2Name$"),
-            label = messages("$className;format="decap"$.$field2Name$")
+        @govukInput(
+            InputViewModel(
+                field = form("$field2Name$"),
+                label = LabelViewModel(messages("$className;format="decap"$.$field2Name$"))
+            )
+            .withWidth(Full)
         )
 
-        @components.submit_button()
+        @govukButton(
+            ButtonViewModel(messages("site.continue"))
+        )
     }
 }

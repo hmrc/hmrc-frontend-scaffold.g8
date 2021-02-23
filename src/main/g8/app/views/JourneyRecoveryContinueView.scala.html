@@ -1,0 +1,20 @@
+@this(
+    layout: templates.Layout,
+    govukButton: GovukButton
+)
+
+@(continueUrl: String)(implicit request: Request[_], messages: Messages)
+
+@layout(pageTitle = titleNoForm(messages("journeyRecovery.continue.title"))) {
+
+    <h1 class="govuk-heading-xl">@messages("journeyRecovery.continue.heading")</h1>
+
+    <p class="govuk-body">@messages("journeyRecovery.continue.guidance")</p>
+
+    <p class="govuk-body">
+        @govukButton(
+            ButtonViewModel(messages("site.continue"))
+                .asLink(continueUrl)
+        )
+    </p>
+}
