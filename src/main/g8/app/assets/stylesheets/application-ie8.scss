@@ -1,0 +1,5 @@
+\$govuk-assets-path: "/$name$/assets/lib/govuk-frontend/govuk/assets/";
+\$hmrc-assets-path: "/$name$/assets/lib/hmrc-frontend/hmrc/assets/";
+
+@import "lib/govuk-frontend/govuk/all-ie8";
+@import "lib/hmrc-frontend/hmrc/all-ie8";

@@ -1,14 +1,12 @@
 @this(
-    main_template: MainTemplate
+    layout: templates.Layout
 )
 
 @()(implicit request: Request[_], messages: Messages)
 
-@main_template(
-    title = messages("index.title")
-    ) {
+@layout(pageTitle = titleNoForm(messages("index.title"))) {
 
-    @components.heading("index.heading")
+    <h1 class="govuk-heading-xl">@messages("index.heading")</h1>
 
-    <p>@messages("index.guidance")</p>
+    <p class="govuk-body">@messages("index.guidance")</p>
 }

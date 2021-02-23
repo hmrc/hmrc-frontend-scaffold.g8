@@ -1,0 +1,47 @@
+@import config.FrontendAppConfig
+
+@this(
+    appConfig: FrontendAppConfig,
+    govukLayout: GovukLayout,
+    hmrcStandardHeader: HmrcStandardHeader,
+    hmrcStandardFooter: HmrcStandardFooter,
+    hmrcTrackingConsentSnippet: HmrcTrackingConsentSnippet,
+    hmrcLanguageSelect: HmrcLanguageSelect
+)
+
+@(pageTitle: String)(contentBlock: Html)(implicit request: Request[_], messages: Messages)
+
+@head = {
+    @hmrcTrackingConsentSnippet()
+    <!--[if lte IE 8]><link href=' @controllers.routes.Assets.versioned("stylesheets/application-ie-8.css")' rel="stylesheet" type="text/css" /><![endif]-->
+    <!--[if gt IE 8]><!--> <link href='@controllers.routes.Assets.versioned("stylesheets/application.css")' media="screen" rel="stylesheet" type="text/css" /><!--<![endif]-->
+}
+
+@scripts = {
+    <script src='@controllers.routes.Assets.versioned("javascripts/application.min.js")'></script>
+    <script src='@controllers.routes.Assets.versioned("lib/govuk-frontend/govuk/all.js")'></script>
+    <script src='@controllers.routes.Assets.versioned("lib/hmrc-frontend/hmrc/all.js")'></script>
+    <script>window.GOVUKFrontend.initAll();</script>
+    <script>window.HMRCFrontend.initAll();</script>
+}
+
+@beforeContent = {
+    @if(appConfig.languageTranslationEnabled) {
+        @hmrcLanguageSelect(LanguageSelect(
+            if (messages.lang.code == "cy") Cy else En,
+            (En, routes.LanguageSwitchController.switchToLanguage("en").url),
+            (Cy, routes.LanguageSwitchController.switchToLanguage("cy").url)
+        ))
+    }
+}
+
+@govukLayout(
+    pageTitle   = Some(pageTitle),
+    headBlock   = Some(head),
+    headerBlock = Some(hmrcStandardHeader(
+        serviceUrl = Some(routes.IndexController.onPageLoad().url)
+    )),
+    scriptsBlock       = Some(scripts),
+    footerBlock        = Some(hmrcStandardFooter()),
+    beforeContentBlock = Some(beforeContent)
+)(contentBlock)

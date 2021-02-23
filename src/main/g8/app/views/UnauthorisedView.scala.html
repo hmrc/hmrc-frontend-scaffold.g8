@@ -1,12 +1,12 @@
 @this(
-    main_template: MainTemplate
+    layout: templates.Layout
 )
 
 @()(implicit request: Request[_], messages: Messages)
 
-@main_template(
-    title = messages("unauthorised.title")
-    ) {
+@layout(pageTitle = titleNoForm(messages("unauthorised.title"))) {
 
-    @components.heading("unauthorised.heading")
+    <h1 class="govuk-heading-xl">@messages("unauthorised.heading")</h1>
+
+    <p class="govuk-body">@messages("unauthorised.guidance")</p>
 }

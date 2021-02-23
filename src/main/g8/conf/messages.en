@@ -1,3 +1,5 @@
+service.name = $name$
+
 checkYourAnswers.title = Check Your Answers
 checkYourAnswers.heading = Check Your Answers
 checkYourAnswers.guidance = Guidance for check your answers
@@ -37,8 +39,7 @@ site.hidden-edit = Change {0}
 site.no = No
 site.yes = Yes
 site.continue = Continue
-site.service_name = $name$
-site.textarea.char_limit = (Limit is {0} characters)
+site.govuk = GOV.UK
 
 unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account

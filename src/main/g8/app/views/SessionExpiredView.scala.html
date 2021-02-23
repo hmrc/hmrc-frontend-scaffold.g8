@@ -1,14 +1,12 @@
 @this(
-    main_template: MainTemplate
+    layout: templates.Layout
 )
 
 @()(implicit request: Request[_], messages: Messages)
 
-@main_template(
-    title = messages("session_expired.title")
-    ) {
+@layout(pageTitle = titleNoForm(messages("session_expired.title"))) {
 
-    @components.heading("session_expired.heading")
+    <h1 class="govuk-heading-xl">@messages("session_expired.heading")</h1>
 
-    <p>@messages("session_expired.guidance")</p>
+    <p class="govuk-body">@messages("session_expired.guidance")</p>
 }

@@ -1,25 +1,12 @@
-@import viewmodels.{AnswerSection, RepeaterAnswerSection, Section}
-
 @this(
-    main_template: MainTemplate
+    layout: templates.Layout
 )
 
-@(answerSections: Seq[Section])(implicit request: Request[_], messages: Messages)
+@()(implicit request: Request[_], messages: Messages)
 
-@main_template(
-    title = messages("checkYourAnswers.title")
-    ) {
+@layout(pageTitle = titleNoForm(messages("checkYourAnswers.title"))) {
 
-    @components.heading("checkYourAnswers.heading")</h1>
+    <h1 class="govuk-heading-xl">@messages("checkYourAnswers.heading")</h1>
 
-    <p>@messages("checkYourAnswers.guidance")</p>
-
-    @for(section <- answerSections){
-        @{
-            section match {
-                case a: AnswerSection => components.answer_section(a)
-                case r: RepeaterAnswerSection => components.repeater_answer_section(r)
-            }
-        }
-    }
+    <p class="govuk-body">@messages("checkYourAnswers.guidance")</p>
 }

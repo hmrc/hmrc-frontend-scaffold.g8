@@ -8,8 +8,7 @@ object AppDependencies {
     "org.reactivemongo" %% "play2-reactivemongo"            % "0.20.11-play27",
     "org.reactivemongo" %% "reactivemongo-play-json-compat" % "0.20.11-play27",
     "com.typesafe.play" %% "play-iteratees"                 % "2.6.1",
-    "uk.gov.hmrc"       %% "govuk-template"                 % "5.57.0-play-27",
-    "uk.gov.hmrc"       %% "play-ui"                        % "8.12.0-play-27",
+    "uk.gov.hmrc"       %% "play-frontend-hmrc"             % "0.44.0-play-27",
     "uk.gov.hmrc"       %% "play-conditional-form-mapping"  % "1.5.0-play-26",
     "uk.gov.hmrc"       %% "bootstrap-frontend-play-27"     % "4.0.0",
     "uk.gov.hmrc"       %% "play-language"                  % "4.10.0-play-27"
