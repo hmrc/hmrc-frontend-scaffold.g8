@@ -21,7 +21,10 @@ lazy val root = (project in file("."))
   .settings(
     scalaVersion := "2.12.10",
     name := appName,
-    RoutesKeys.routesImport += "models._",
+    RoutesKeys.routesImport ++= Seq(
+      "models._",
+      "uk.gov.hmrc.play.bootstrap.binders.RedirectUrl"
+    ),
     TwirlKeys.templateImports ++= Seq(
       "play.twirl.api.HtmlFormat",
       "play.twirl.api.HtmlFormat._",
@@ -31,11 +34,13 @@ lazy val root = (project in file("."))
       "uk.gov.hmrc.hmrcfrontend.views.html.helpers._",
       "views.ViewUtils._",
       "models.Mode",
-      "controllers.routes._"
+      "controllers.routes._",
+      "viewmodels.govuk.GovukFluency._",
+      "viewmodels.ImplicitConversions._"
     ),
     PlayKeys.playDefaultPort := $port$,
     ScoverageKeys.coverageExcludedFiles := "<empty>;Reverse.*;.*handlers.*;.*components.*;" +
-      ".*Routes.*;",
+      ".*Routes.*;.*viewmodels.govuk.*;",
     ScoverageKeys.coverageMinimum := 78,
     ScoverageKeys.coverageFailOnMinimum := true,
     ScoverageKeys.coverageHighlighting := true,
@@ -94,8 +99,7 @@ lazy val itSettings = Defaults.itSettings ++ Seq(
   parallelExecution := false,
   fork := true,
   javaOptions ++= Seq(
-    "-Dconfig.resource=it.application.conf",
-    "-Dlogger.resource=logback-it.xml"
+    "-Dconfig.resource=it.application.conf"
   )
 )
 

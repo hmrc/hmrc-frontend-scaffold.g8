@@ -4,7 +4,10 @@
 
 @()(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = titleNoForm(messages("unauthorised.title"))) {
+@layout(
+    pageTitle = titleNoForm(messages("unauthorised.title")),
+    timeout   = false
+) {
 
     <h1 class="govuk-heading-xl">@messages("unauthorised.heading")</h1>
 

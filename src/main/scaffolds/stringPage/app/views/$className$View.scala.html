@@ -1,29 +1,33 @@
-@import controllers.routes._
-@import models.Mode
+@import viewmodels.InputWidth._
 
 @this(
-    main_template: MainTemplate,
-    formHelper: FormWithCSRF
+    layout: templates.Layout,
+    formHelper: FormWithCSRF,
+    govukErrorSummary: GovukErrorSummary,
+    govukInput: GovukInput,
+    govukButton: GovukButton
 )
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
-@main_template(
-    title = s"\${errorPrefix(form)} \${messages("$className;format="decap"$.title")}"
-    ) {
+@layout(pageTitle = title(form, messages("$className;format="decap"$.title"))) {
 
-    @formHelper(action = $className$Controller.onSubmit(mode), 'autoComplete -> "off") {
+    @formHelper(action = routes.$className$Controller.onSubmit(mode)) {
 
-        @components.back_link()
+        @if(form.errors.nonEmpty) {
+            @govukErrorSummary(ErrorSummaryViewModel(form))
+        }
 
-        @components.error_summary(form.errors)
-
-        @components.input_text(
-          field = form("value"),
-          label = messages("$className;format="decap"$.heading"),
-          headingIsLabel = true
+        @govukInput(
+            InputViewModel(
+                field = form("value"),
+                label = LabelViewModel(messages("$className;format="decap"$.heading")).asPageHeading()
+            )
+            .withWidth(Full)
         )
 
-        @components.submit_button()
+        @govukButton(
+            ButtonViewModel(messages("site.continue"))
+        )
     }
 }

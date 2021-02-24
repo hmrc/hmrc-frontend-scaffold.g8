@@ -1,12 +1,13 @@
 @this(
-    layout: templates.Layout
+    layout: templates.Layout,
+    govukSummaryList: GovukSummaryList
 )
 
-@()(implicit request: Request[_], messages: Messages)
+@(list: SummaryList)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("checkYourAnswers.title"))) {
 
     <h1 class="govuk-heading-xl">@messages("checkYourAnswers.heading")</h1>
 
-    <p class="govuk-body">@messages("checkYourAnswers.guidance")</p>
+    @govukSummaryList(list)
 }

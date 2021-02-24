@@ -1,7 +1,8 @@
 package models
 
-import play.api.libs.json._
-import viewmodels.RadioOption
+import play.api.i18n.Messages
+import uk.gov.hmrc.govukfrontend.views.Aliases.Text
+import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.RadioItem
 
 sealed trait $className$
 
@@ -14,9 +15,13 @@ object $className$ extends Enumerable.Implicits {
     $option1key;format="Camel"$, $option2key;format="Camel"$
   )
 
-  val options: Seq[RadioOption] = values.map {
-    value =>
-      RadioOption("$className;format="decap"$", value.toString)
+  def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map {
+    case (value, index) =>
+      RadioItem(
+        content = Text(messages(s"$className;format="decap"$.\${value.toString}")),
+        value   = Some(value.toString),
+        id      = Some(s"value_\$index")
+      )
   }
 
   implicit val enumerable: Enumerable[$className$] =

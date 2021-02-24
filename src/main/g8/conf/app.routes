@@ -1,16 +1,22 @@
 # microservice specific routes
 
-->         /govuk-frontend                              govuk.Routes
-->         /hmrc-frontend                               hmrcfrontend.Routes
+->          /govuk-frontend                              govuk.Routes
+->          /hmrc-frontend                               hmrcfrontend.Routes
 
-GET        /                                            controllers.IndexController.onPageLoad
+GET         /                                            controllers.IndexController.onPageLoad
 
-GET        /assets/*file                                controllers.Assets.versioned(path="/public", file: Asset)
+GET         /assets/*file                                controllers.Assets.versioned(path="/public", file: Asset)
 
-GET        /language/:lang                              controllers.LanguageSwitchController.switchToLanguage(lang: String)
+GET         /language/:lang                              controllers.LanguageSwitchController.switchToLanguage(lang: String)
 
-GET        /this-service-has-been-reset                 controllers.SessionExpiredController.onPageLoad
+GET         /refresh-session                            controllers.KeepAliveController.keepAlive
 
-GET        /check-your-answers                          controllers.CheckYourAnswersController.onPageLoad
+GET         /there-is-a-problem                          controllers.JourneyRecoveryController.onPageLoad(continueUrl: Option[RedirectUrl] ?= None)
 
-GET        /unauthorised                                controllers.UnauthorisedController.onPageLoad
+GET         /check-your-answers                          controllers.CheckYourAnswersController.onPageLoad
+
+GET         /account/sign-out-survey                     controllers.auth.AuthController.signOut
+GET         /account/sign-out                            controllers.auth.AuthController.signOutNoSurvey
+GET         /account/signed-out                          controllers.auth.SignedOutController.onPageLoad
+
+GET         /unauthorised                                controllers.UnauthorisedController.onPageLoad
