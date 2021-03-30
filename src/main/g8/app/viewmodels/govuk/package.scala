@@ -12,7 +12,6 @@ package object govuk {
       with HintFluency
       with InputFluency
       with LabelFluency
-      with PhaseBannerFluency
       with RadiosFluency
       with SummaryListFluency
       with TagFluency

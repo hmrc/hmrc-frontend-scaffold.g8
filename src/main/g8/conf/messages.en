@@ -11,12 +11,6 @@ site.startAgain = Start again
 site.signIn = Sign in
 site.govuk = GOV.UK
 
-phase.alpha = Alpha
-phase.beta = Beta
-phase.feedback.before = This is a new service - your
-phase.feedback.link = feedback
-phase.feedback.after = will help us to improve it.
-
 date.day = Day
 date.month = Month
 date.year = Year
