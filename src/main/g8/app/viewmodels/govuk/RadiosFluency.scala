@@ -8,6 +8,8 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.hint.Hint
 import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.{RadioItem, Radios}
 import viewmodels.ErrorMessageAwareness
 
+object radios extends RadiosFluency
+
 trait RadiosFluency {
 
   object RadiosViewModel extends ErrorMessageAwareness with FieldsetFluency {

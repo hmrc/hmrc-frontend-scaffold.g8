@@ -5,6 +5,8 @@ import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.{Content, Text}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.errorsummary.{ErrorLink, ErrorSummary}
 
+object errorsummary extends ErrorSummaryFluency
+
 trait ErrorSummaryFluency {
 
   object ErrorSummaryViewModel {

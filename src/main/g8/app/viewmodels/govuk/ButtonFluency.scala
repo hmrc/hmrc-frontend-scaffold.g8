@@ -3,6 +3,8 @@ package viewmodels.govuk
 import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Content
 
+object button extends ButtonFluency
+
 trait ButtonFluency {
 
   object ButtonViewModel {

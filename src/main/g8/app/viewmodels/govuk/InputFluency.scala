@@ -7,6 +7,8 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.input.{Input, PrefixOrSuffix}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.label.Label
 import viewmodels.{ErrorMessageAwareness, InputWidth}
 
+object input extends InputFluency
+
 trait InputFluency {
 
   object InputViewModel extends ErrorMessageAwareness {

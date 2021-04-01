@@ -4,6 +4,8 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Content
 import uk.gov.hmrc.govukfrontend.views.viewmodels.label.Label
 import viewmodels.LabelSize
 
+object label extends LabelFluency
+
 trait LabelFluency {
 
   object LabelViewModel {

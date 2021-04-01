@@ -6,7 +6,9 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.Key
 
 import scala.language.implicitConversions
 
-object ImplicitConversions {
+object implicits extends ImplicitConversions
+
+trait ImplicitConversions {
 
   implicit def stringToText(string: String)(implicit messages: Messages): Text =
     Text(messages(string))

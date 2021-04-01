@@ -2,8 +2,9 @@ package viewmodels
 
 package object govuk {
 
-  object GovukFluency
-    extends BackLinkFluency
+  object all
+    extends ImplicitConversions
+      with BackLinkFluency
       with ButtonFluency
       with CheckboxFluency
       with DateFluency

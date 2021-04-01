@@ -10,6 +10,8 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.hint.Hint
 import uk.gov.hmrc.govukfrontend.views.viewmodels.label.Label
 import viewmodels.ErrorMessageAwareness
 
+object checkbox extends CheckboxFluency
+
 trait CheckboxFluency {
 
   object CheckboxesViewModel extends ErrorMessageAwareness with FieldsetFluency {

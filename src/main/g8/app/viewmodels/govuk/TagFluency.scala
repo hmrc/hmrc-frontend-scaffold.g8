@@ -3,6 +3,8 @@ package viewmodels.govuk
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Content
 import uk.gov.hmrc.govukfrontend.views.viewmodels.tag.Tag
 
+object tag extends TagFluency
+
 trait TagFluency {
 
   object TagViewModel {

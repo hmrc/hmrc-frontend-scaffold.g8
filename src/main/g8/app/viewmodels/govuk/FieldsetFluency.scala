@@ -5,6 +5,8 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Content
 import uk.gov.hmrc.govukfrontend.views.viewmodels.fieldset.{Fieldset, Legend}
 import viewmodels.LegendSize
 
+object fieldset extends FieldsetFluency
+
 trait FieldsetFluency {
 
   object FieldsetViewModel {
