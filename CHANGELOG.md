@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 * Included "sign out" links on appropriate pages
 * Replaced SessionExpired controller with JourneyRecovery controller to better reflect its usage
 * Updated sbt version to 1.13.13
+* Updated libraries and dependencies
 
 ## v0.19.0 - 2021-02-22
 
