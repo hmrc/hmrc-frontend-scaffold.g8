@@ -19,6 +19,7 @@ echo "$className;format="decap"$.heading = $className;format="decap"$" >> ../con
 echo "$className;format="decap"$.checkYourAnswersLabel = $className;format="decap"$" >> ../conf/messages.en
 echo "$className;format="decap"$.error.required = Enter $className;format="decap"$" >> ../conf/messages.en
 echo "$className;format="decap"$.error.length = $className$ must be $maxLength$ characters or less" >> ../conf/messages.en
+echo "$className;format="decap"$.change.hidden = $className$" >> ../conf/messages.en
 
 echo "Adding to UserAnswersEntryGenerators"
 awk '/trait UserAnswersEntryGenerators/ {\
@@ -46,19 +47,5 @@ awk '/val generators/ {\
     print;\
     print "    arbitrary[($className$Page.type, JsValue)] ::";\
     next }1' ../test/generators/UserAnswersGenerator.scala > tmp && mv tmp ../test/generators/UserAnswersGenerator.scala
-
-echo "Adding helper method to CheckYourAnswersHelper"
-awk '/class/ {\
-     print;\
-     print "";\
-     print "  def $className;format="decap"$: Option[AnswerRow] = userAnswers.get($className$Page) map {";\
-     print "    x =>";\
-     print "      AnswerRow(";\
-     print "        HtmlFormat.escape(messages(\"$className;format="decap"$.checkYourAnswersLabel\")),";\
-     print "        HtmlFormat.escape(x),";\
-     print "        routes.$className$Controller.onPageLoad(CheckMode).url";\
-     print "      )"
-     print "  }";\
-     next }1' ../app/utils/CheckYourAnswersHelper.scala > tmp && mv tmp ../app/utils/CheckYourAnswersHelper.scala
 
 echo "Migration $className;format="snake"$ completed"

@@ -1,61 +1,54 @@
 package repositories
 
+import config.FrontendAppConfig
 import models.UserAnswers
+import org.mockito.Mockito.when
+import org.mongodb.scala.model.Filters
+import org.scalatest.OptionValues
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
-import org.scalatest.{BeforeAndAfterEach, OptionValues}
-import play.api.inject.bind
-import play.api.inject.guice.GuiceApplicationBuilder
+import org.scalatestplus.mockito.MockitoSugar
 import play.api.libs.json.Json
-import play.api.test.Helpers.running
-import reactivemongo.play.json.collection.JSONCollection
-import reactivemongo.play.json.compat._
+import uk.gov.hmrc.mongo.test.DefaultPlayMongoRepositorySupport
 
-import java.time.{Clock, Instant, LocalDateTime, ZoneId}
+import java.time.{Clock, Instant, ZoneId}
 import scala.concurrent.ExecutionContext.Implicits.global
 
 class SessionRepositorySpec
   extends AnyFreeSpec
     with Matchers
-    with MongoSuite
+    with DefaultPlayMongoRepositorySupport[UserAnswers]
     with ScalaFutures
     with IntegrationPatience
     with OptionValues
-    with BeforeAndAfterEach {
-
-  override def beforeEach(): Unit = {
-    database.flatMap(_.drop).futureValue
-    super.beforeEach()
-  }
-
-  private val userAnswers = UserAnswers("id", Json.obj("foo" -> "bar"), LocalDateTime.of(2000, 1, 1, 1, 1, 1))
+    with MockitoSugar {
 
   private val instant = Instant.now
   private val stubClock: Clock = Clock.fixed(instant, ZoneId.systemDefault)
 
-  private val appBuilder: GuiceApplicationBuilder =
-    new GuiceApplicationBuilder()
-      .overrides(bind[Clock].toInstance(stubClock))
+  private val userAnswers = UserAnswers("id", Json.obj("foo" -> "bar"), Instant.ofEpochSecond(1))
+
+  private val mockAppConfig = mock[FrontendAppConfig]
+  when(mockAppConfig.cacheTtl) thenReturn 1
+
+  protected override val repository = new SessionRepository(
+    mongoComponent = mongoComponent,
+    appConfig      = mockAppConfig,
+    clock          = stubClock
+  )
 
   ".set" - {
 
-    "must save the supplied answers and set the last updated time to be `now`" in {
+    "must set the last updated time on the supplied user answers to `now`, and save them" in {
 
-      val app = appBuilder.build()
+      val expectedResult = userAnswers copy (lastUpdated = instant)
 
-      running(app) {
+      val setResult     = repository.set(userAnswers).futureValue
+      val updatedRecord = find(Filters.equal("_id", userAnswers.id)).futureValue.headOption.value
 
-        val repo = app.injector.instanceOf[SessionRepository]
-
-        val expectedAnswers = userAnswers.copy(lastUpdated = LocalDateTime.ofInstant(instant, ZoneId.systemDefault.getRules.getOffset(instant)))
-
-        val setResult = repo.set(userAnswers).futureValue
-        val updatedRecord = repo.get(userAnswers.id).futureValue
-
-        setResult mustEqual true
-        updatedRecord.value mustEqual expectedAnswers
-      }
+      setResult mustEqual true
+      updatedRecord mustEqual expectedResult
     }
   }
 
@@ -63,62 +56,42 @@ class SessionRepositorySpec
 
     "when there is a record for this id" - {
 
-      "must update the lastUpdated time to be `now` and get the record" in {
+      "must update the lastUpdated time and get the record" in {
 
-        val expectedAnswers = userAnswers.copy(lastUpdated = LocalDateTime.ofInstant(instant, ZoneId.systemDefault.getRules.getOffset(instant)))
+        insert(userAnswers).futureValue
 
-        database.flatMap {
-          _.collection[JSONCollection]("user-answers")
-            .insert(ordered = false)
-            .one(userAnswers)
-        }.futureValue
+        val result         = repository.get(userAnswers.id).futureValue
+        val expectedResult = userAnswers copy (lastUpdated = instant)
 
-        val app = appBuilder.build()
-
-        running(app) {
-
-          val repo = app.injector.instanceOf[SessionRepository]
-
-          val result = repo.get(userAnswers.id).futureValue
-
-          result.value mustEqual expectedAnswers
-        }
+        result.value mustEqual expectedResult
       }
     }
 
-    "when there isn't a record for this id" - {
+    "when there is no record for this id" - {
 
       "must return None" in {
 
-        val app = appBuilder.build()
-
-        running(app) {
-
-          val repo = app.injector.instanceOf[SessionRepository]
-
-          val result = repo.get("some id that doesn't exist").futureValue
-          result must not be defined
-        }
+        repository.get("id that does not exist").futureValue must not be defined
       }
     }
   }
 
   ".clear" - {
 
-    "must remove a record when it exists" in {
+    "must remove a record" in {
 
-      val app = appBuilder.build()
+      insert(userAnswers).futureValue
 
-      running(app) {
+      val result = repository.clear(userAnswers.id).futureValue
 
-        val repo = app.injector.instanceOf[SessionRepository]
+      result mustEqual true
+      repository.get(userAnswers.id).futureValue must not be defined
+    }
 
-        repo.set(userAnswers).futureValue
-        repo.get(userAnswers.id).futureValue mustBe defined
+    "must return true when there is no record to remove" in {
+      val result = repository.clear("id that does not exist").futureValue
 
-        repo.clear(userAnswers.id).futureValue
-        repo.get(userAnswers.id).futureValue must not be defined
-      }
+      result mustEqual true
     }
   }
 
@@ -126,49 +99,25 @@ class SessionRepositorySpec
 
     "when there is a record for this id" - {
 
-      "must update its lastUpdated time to `now`" in {
+      "must update its lastUpdated to `now` and return true" in {
 
-        val expectedAnswers = userAnswers.copy(lastUpdated = LocalDateTime.ofInstant(instant, ZoneId.systemDefault.getRules.getOffset(instant)))
+        insert(userAnswers).futureValue
 
-        database.flatMap {
-          _.collection[JSONCollection]("user-answers")
-            .insert(ordered = false)
-            .one(userAnswers)
-        }.futureValue
+        val result = repository.keepAlive(userAnswers.id).futureValue
 
-        val app = appBuilder.build()
+        val expectedUpdatedAnswers = userAnswers copy (lastUpdated = instant)
 
-        running(app) {
-
-          val repo = app.injector.instanceOf[SessionRepository]
-
-          val result = repo.keepAlive(userAnswers.id).futureValue
-          result mustEqual true
-
-          val updatedRecord = database.flatMap {
-            _.collection[JSONCollection]("user-answers")
-              .find(Json.obj("_id" -> userAnswers.id))
-              .one[UserAnswers]
-          }.futureValue
-
-          updatedRecord.value mustEqual expectedAnswers
-        }
+        result mustEqual true
+        val updatedAnswers = find(Filters.equal("_id", userAnswers.id)).futureValue.headOption.value
+        updatedAnswers mustEqual expectedUpdatedAnswers
       }
     }
 
-    "when there isn't a record for this id" - {
+    "when there is no record for this id" - {
 
       "must return true" in {
 
-        val app = appBuilder.build()
-
-        running(app) {
-
-          val repo = app.injector.instanceOf[SessionRepository]
-
-          val result = repo.keepAlive("some id that doesn't exist").futureValue
-          result mustEqual true
-        }
+        repository.keepAlive("id that does not exist").futureValue mustEqual true
       }
     }
   }
