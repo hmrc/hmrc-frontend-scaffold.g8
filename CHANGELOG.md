@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## v0.21.0 - 2021-03-21
+
+### Changed
+* Upgraded to Play 2.8
 ## v0.20.0 - 2021-03-09
 
 ### Changed
