@@ -19,7 +19,7 @@
     <p class="govuk-body">
         @govukButton(
             ButtonViewModel(messages("site.signIn"))
-                .asLink(routes.IndexController.onPageLoad().url)
+                .asLink(routes.IndexController.onPageLoad.url)
         )
     </p>
 }
