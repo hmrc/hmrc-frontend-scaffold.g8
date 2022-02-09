@@ -80,13 +80,14 @@ lazy val testSettings: Seq[Def.Setting[_]] = Seq(
   fork        := true,
   javaOptions ++= Seq(
     "-Dconfig.resource=test.application.conf"
-  )
+  ),
+  unmanagedSourceDirectories += baseDirectory.value / "test-utils"
 )
 
 lazy val itSettings = Defaults.itSettings ++ Seq(
   unmanagedSourceDirectories := Seq(
     baseDirectory.value / "it",
-    baseDirectory.value / "test" / "generators"
+    baseDirectory.value / "test-utils"
   ),
   unmanagedResourceDirectories := Seq(
     baseDirectory.value / "it" / "resources"
