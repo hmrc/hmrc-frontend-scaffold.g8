@@ -9,7 +9,7 @@ do
     echo "Applying migration \$file"
     chmod u+x \$file
     /bin/bash \$file
-    mv \$file ./applied_migrations
+    rm -rf \$file
 done
 
 echo ""
