@@ -3,7 +3,8 @@ package viewmodels.checkAnswers
 import java.time.format.DateTimeFormatter
 
 import controllers.routes
-import models.{CheckMode, UserAnswers}
+import models.UserAnswers
+import models.Mode.CheckMode
 import pages.$className$Page
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
