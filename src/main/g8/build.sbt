@@ -1,7 +1,6 @@
 import play.sbt.routes.RoutesKeys
 import sbt.Def
 import scoverage.ScoverageKeys
-import uk.gov.hmrc.DefaultBuildSettings
 import uk.gov.hmrc.versioning.SbtGitVersioning.autoImport.majorVersion
 
 lazy val appName: String = "$name$"
@@ -9,8 +8,6 @@ lazy val appName: String = "$name$"
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala, SbtAutoBuildPlugin, SbtDistributablesPlugin)
   .disablePlugins(JUnitXmlReportPlugin) //Required to prevent https://github.com/scalatest/scalatest/issues/1427
-  .settings(DefaultBuildSettings.scalaSettings: _*)
-  .settings(DefaultBuildSettings.defaultSettings(): _*)
   .settings(SbtDistributablesPlugin.publishingSettings: _*)
   .settings(inConfig(Test)(testSettings): _*)
   .configs(IntegrationTest)
@@ -71,10 +68,7 @@ lazy val root = (project in file("."))
   )
 
 lazy val testSettings: Seq[Def.Setting[_]] = Seq(
-  fork        := true,
-  javaOptions ++= Seq(
-    "-Dconfig.resource=test.application.conf"
-  ),
+  fork := true,
   unmanagedSourceDirectories += baseDirectory.value / "test-utils"
 )
 
@@ -87,8 +81,5 @@ lazy val itSettings = Defaults.itSettings ++ Seq(
     baseDirectory.value / "it" / "resources"
   ),
   parallelExecution := false,
-  fork := true,
-  javaOptions ++= Seq(
-    "-Dconfig.resource=it.application.conf"
-  )
+  fork := true
 )

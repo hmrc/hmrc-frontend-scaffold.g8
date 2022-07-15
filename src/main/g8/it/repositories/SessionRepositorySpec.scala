@@ -13,6 +13,7 @@ import play.api.libs.json.Json
 import uk.gov.hmrc.mongo.test.DefaultPlayMongoRepositorySupport
 
 import java.time.{Clock, Instant, ZoneId}
+import java.time.temporal.ChronoUnit
 import scala.concurrent.ExecutionContext.Implicits.global
 
 class SessionRepositorySpec
@@ -24,7 +25,7 @@ class SessionRepositorySpec
     with OptionValues
     with MockitoSugar {
 
-  private val instant = Instant.now
+  private val instant = Instant.now.truncatedTo(ChronoUnit.MILLIS)
   private val stubClock: Clock = Clock.fixed(instant, ZoneId.systemDefault)
 
   private val userAnswers = UserAnswers("id", Json.obj("foo" -> "bar"), Instant.ofEpochSecond(1))
