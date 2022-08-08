@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## v0.25.0 - 2022-08-08
+
+### Changed
+* Update configuraiton of session id filter
+* Updated library dependencies
+
 ## v0.24.0 - 2022-06-17
 
 ### Changed
