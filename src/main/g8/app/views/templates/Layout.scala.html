@@ -36,6 +36,8 @@
             )))
         } else None
     )
+
+    <link href="@routes.Assets.versioned("stylesheets/application.css")" media="all" rel="stylesheet" type="text/css"@CSPNonce.get.map {n=> nonce="@n"} />
 }
 
 @additionalScripts = {
@@ -53,7 +55,7 @@
     }
 
     @if(showBackLink) {
-        @govukBackLink(BackLinkViewModel(href = "#"))
+        @govukBackLink(BackLinkViewModel(href = "#")).withCssClass("js-visible"))
     }
 }
 
