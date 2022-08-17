@@ -36,7 +36,7 @@ trait InputFluency {
 
     def asNumeric(): Input =
       input
-        .withInputType("numeric")
+        .withInputMode("numeric")
         .withPattern("[0-9]*")
 
     def withId(id: String): Input =
