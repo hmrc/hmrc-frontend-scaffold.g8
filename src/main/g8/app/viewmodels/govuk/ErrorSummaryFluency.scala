@@ -34,12 +34,12 @@ trait ErrorSummaryFluency {
   implicit class FluentErrorSummary(errorSummary: ErrorSummary) {
 
     def withDescription(description: Content): ErrorSummary =
-      errorSummary copy (description = description)
+      errorSummary.copy(description = description)
 
     def withCssClass(newClass: String): ErrorSummary =
-      errorSummary copy (classes = s"\${errorSummary.classes} \$newClass")
+      errorSummary.copy(classes = s"\${errorSummary.classes} \$newClass")
 
     def withAttribute(attribute: (String, String)): ErrorSummary =
-      errorSummary copy (attributes = errorSummary.attributes + attribute)
+      errorSummary.copy(attributes = errorSummary.attributes + attribute)
   }
 }

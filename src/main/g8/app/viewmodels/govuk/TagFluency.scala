@@ -16,10 +16,10 @@ trait TagFluency {
   implicit class FluentTag(tag: Tag) {
 
     def withCssClass(newClass: String): Tag =
-      tag copy (classes = s"\${tag.classes} \$newClass")
+      tag.copy(classes = s"\${tag.classes} \$newClass")
 
     def withAttribute(attribute: (String, String)): Tag =
-      tag copy (attributes = tag.attributes + attribute)
+      tag.copy(attributes = tag.attributes + attribute)
 
     def grey(): Tag =
       withCssClass("govuk-tag--grey")

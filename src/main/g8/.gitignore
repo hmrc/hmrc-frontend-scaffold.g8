@@ -33,3 +33,6 @@ bin
 /*.ipr
 /.classpath
 *.iws
+.metals
+.vscode
+.bsp

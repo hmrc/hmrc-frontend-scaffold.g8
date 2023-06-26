@@ -22,7 +22,6 @@
 @head = {
 
     @hmrcHead(
-        nonce     = CSPNonce.get,
         headBlock = if(timeout) { Some(
             hmrcTimeoutDialog(TimeoutDialog(
                 timeout             = Some(appConfig.timeout),
@@ -37,7 +36,7 @@
         } else None
     )
 
-    <link href="@routes.Assets.versioned("stylesheets/application.css")" media="all" rel="stylesheet" type="text/css"@CSPNonce.get.map {n=> nonce="@n"} />
+    <link href="@routes.Assets.versioned("stylesheets/application.css")" media="all" rel="stylesheet" type="text/css" />
 }
 
 @additionalScripts = {
@@ -78,7 +77,6 @@
     beforeContentBlock = Some(beforeContent),
     footerBlock        = Some(hmrcStandardFooter()),
     scriptsBlock       = Some(hmrcScripts(
-        nonce        = CSPNonce.get,
         scriptsBlock = Some(additionalScripts)
     ))
 )(content)
