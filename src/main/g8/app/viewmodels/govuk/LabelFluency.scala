@@ -22,12 +22,12 @@ trait LabelFluency {
         .withCssClass(size.toString)
 
     def withCssClass(className: String): Label =
-      label copy (classes = s"\${label.classes} \$className")
+      label.copy(classes = s"\${label.classes} \$className")
 
     def withAttribute(attribute: (String, String)): Label =
-      label copy (attributes = label.attributes + attribute)
+      label.copy(attributes = label.attributes + attribute)
 
     def forAttr(attr: String): Label =
-      label copy (forAttr = Some(attr))
+      label.copy(forAttr = Some(attr))
   }
 }

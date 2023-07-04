@@ -1,19 +1,3 @@
-/*
- * Copyright 2021 HM Revenue & Customs
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package viewmodels.govuk
 
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Content
@@ -32,13 +16,13 @@ trait SummaryListFluency {
   implicit class FluentSummaryList(list: SummaryList) {
 
     def withoutBorders(): SummaryList =
-      list copy (classes = s"\${list.classes} govuk-summary-list--no-border")
+      list.copy(classes = s"\${list.classes} govuk-summary-list--no-border")
 
     def withCssClass(className: String): SummaryList =
-      list copy (classes = s"\${list.classes} \$className")
+      list.copy(classes = s"\${list.classes} \$className")
 
     def withAttribute(attribute: (String, String)): SummaryList =
-      list copy (attributes = list.attributes + attribute)
+      list.copy(attributes = list.attributes + attribute)
   }
 
   object SummaryListRowViewModel {
@@ -67,7 +51,7 @@ trait SummaryListFluency {
   implicit class FluentSummaryListRow(row: SummaryListRow) {
 
     def withCssClass(className: String): SummaryListRow =
-      row copy (classes = s"\${row.classes} \$className")
+      row.copy(classes = s"\${row.classes} \$className")
   }
 
   object ActionItemViewModel {
@@ -85,13 +69,13 @@ trait SummaryListFluency {
   implicit class FluentActionItem(actionItem: ActionItem) {
 
     def withVisuallyHiddenText(text: String): ActionItem =
-      actionItem copy (visuallyHiddenText = Some(text))
+      actionItem.copy(visuallyHiddenText = Some(text))
 
     def withCssClass(className: String): ActionItem =
-      actionItem copy (classes = s"\${actionItem.classes} \$className")
+      actionItem.copy(classes = s"\${actionItem.classes} \$className")
 
     def withAttribute(attribute: (String, String)): ActionItem =
-      actionItem copy (attributes = actionItem.attributes + attribute)
+      actionItem.copy(attributes = actionItem.attributes + attribute)
   }
 
   object KeyViewModel {
@@ -103,7 +87,7 @@ trait SummaryListFluency {
   implicit class FluentKey(key: Key) {
 
     def withCssClass(className: String): Key =
-      key copy (classes = s"\${key.classes} \$className")
+      key.copy(classes = s"\${key.classes} \$className")
   }
 
   object ValueViewModel {
@@ -115,6 +99,6 @@ trait SummaryListFluency {
   implicit class FluentValue(value: Value) {
 
     def withCssClass(className: String): Value =
-      value copy (classes = s"\${value.classes} \$className")
+      value.copy(classes = s"\${value.classes} \$className")
   }
 }
