@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## v0.31.0 - 2023-07-11
+
+### Changed
+* Encrypt the data portion of UserAnswers
+
 ## v0.30.0 - 2023-07-05
 
 ### Changed
