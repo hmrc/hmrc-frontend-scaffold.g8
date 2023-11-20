@@ -10,6 +10,7 @@ import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import pages.$className$Page
+import play.api.i18n.Messages
 import play.api.inject.bind
 import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Call}
 import play.api.test.FakeRequest
@@ -21,7 +22,9 @@ import scala.concurrent.Future
 
 class $className$ControllerSpec extends SpecBase with MockitoSugar {
 
-  val formProvider = new $className$FormProvider()
+  private implicit val messages: Messages = stubMessages()
+
+  private val formProvider = new $className$FormProvider()
   private def form = formProvider()
 
   def onwardRoute = Call("GET", "/foo")
