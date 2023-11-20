@@ -1,10 +1,9 @@
 package forms.mappings
 
-import java.time.LocalDate
-
 import play.api.data.FormError
 import play.api.data.format.Formatter
 
+import java.time.{LocalDate, Month}
 import scala.util.{Failure, Success, Try}
 
 private[mappings] class LocalDateFormatter(
@@ -34,9 +33,11 @@ private[mappings] class LocalDateFormatter(
       args
     )
 
+    val month = new MonthFormatter(invalidKey, args)
+
     for {
       day   <- int.bind(s"\$key.day", data)
-      month <- int.bind(s"\$key.month", data)
+      month <- month.bind(s"\$key.month", data)
       year  <- int.bind(s"\$key.year", data)
       date  <- toDate(key, day, month, year)
     } yield date
@@ -74,4 +75,27 @@ private[mappings] class LocalDateFormatter(
       s"\$key.month" -> value.getMonthValue.toString,
       s"\$key.year" -> value.getYear.toString
     )
+}
+
+private class MonthFormatter(invalidKey: String, args: Seq[String] = Seq.empty) extends Formatter[Int] with Formatters {
+
+  private val baseFormatter = stringFormatter(invalidKey, args)
+
+  override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], Int] = {
+
+    val months = Month.values.toList
+
+    baseFormatter
+      .bind(key, data)
+      .flatMap {
+        str =>
+          months
+            .find(m => m.getValue.toString == str || m.toString == str.toUpperCase || m.toString.take(3) == str.toUpperCase)
+            .map(x => Right(x.getValue))
+            .getOrElse(Left(List(FormError(key, invalidKey, args))))
+      }
+  }
+
+  override def unbind(key: String, value: Int): Map[String, String] =
+    Map(key -> value.toString)
 }

@@ -31,7 +31,7 @@ class DateMappingsSpec extends AnyFreeSpec with Matchers with ScalaCheckProperty
 
   val missingField: Gen[Option[String]] = Gen.option(Gen.const(""))
 
-  "must bind valid data" in {
+  "must bind valid dates with months provided as numbers" in {
 
     forAll(validData -> "valid date") {
       date =>
@@ -39,6 +39,74 @@ class DateMappingsSpec extends AnyFreeSpec with Matchers with ScalaCheckProperty
         val data = Map(
           "value.day" -> date.getDayOfMonth.toString,
           "value.month" -> date.getMonthValue.toString,
+          "value.year" -> date.getYear.toString
+        )
+
+        val result = form.bind(data)
+
+        result.value.value mustEqual date
+    }
+  }
+
+  "must bind valid dates with months provided as full names in upper case" in {
+
+    forAll(validData -> "valid date") {
+      date =>
+
+        val data = Map(
+          "value.day" -> date.getDayOfMonth.toString,
+          "value.month" -> date.getMonth.toString,
+          "value.year" -> date.getYear.toString
+        )
+
+        val result = form.bind(data)
+
+        result.value.value mustEqual date
+    }
+  }
+
+  "must bind valid dates with months provided as full names in lower case" in {
+
+    forAll(validData -> "valid date") {
+      date =>
+
+        val data = Map(
+          "value.day" -> date.getDayOfMonth.toString,
+          "value.month" -> date.getMonth.toString.toLowerCase,
+          "value.year" -> date.getYear.toString
+        )
+
+        val result = form.bind(data)
+
+        result.value.value mustEqual date
+    }
+  }
+
+  "must bind valid dates with months provided as three characters in upper case" in {
+
+    forAll(validData -> "valid date") {
+      date =>
+
+        val data = Map(
+          "value.day" -> date.getDayOfMonth.toString,
+          "value.month" -> date.getMonth.toString.take(3),
+          "value.year" -> date.getYear.toString
+        )
+
+        val result = form.bind(data)
+
+        result.value.value mustEqual date
+    }
+  }
+
+  "must bind valid dates with months provided as three characters in lower case" in {
+
+    forAll(validData -> "valid date") {
+      date =>
+
+        val data = Map(
+          "value.day" -> date.getDayOfMonth.toString,
+          "value.month" -> date.getMonth.toString.take(3).toLowerCase,
           "value.year" -> date.getYear.toString
         )
 
