@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Fixed
 * Make sure errors messages when parts of a date are omitted are internationalised
+* Only highlight specific day/month/fields in red when we know the problem is with specific field(s)
 
 ## v0.30.0 - 2023-07-05
 
