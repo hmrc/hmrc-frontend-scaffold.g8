@@ -31,7 +31,8 @@
                 signOutUrl          = Some(controllers.auth.routes.AuthController.signOut.url),
                 signOutButtonText   = Some(messages("timeout.signOut")),
                 title               = Some(messages("timeout.title")),
-                message             = Some(messages("timeout.message"))
+                message             = Some(messages("timeout.message")),
+                language            = Some(messages.lang.code)
             )))
         } else None
     )
