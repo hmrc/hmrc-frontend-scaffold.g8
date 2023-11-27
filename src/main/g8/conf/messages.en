@@ -14,6 +14,9 @@ site.govuk = GOV.UK
 date.day = Day
 date.month = Month
 date.year = Year
+date.error.day = day
+date.error.month = month
+date.error.year = year
 
 timeout.title = You’re about to be signed out
 timeout.message = For security reasons, you will be signed out of this service in

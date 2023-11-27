@@ -3,6 +3,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## v0.31.0 - 2023-11-21
+
+### Changed
+* Updated LocalDate formatter to allow months to be supplied as names (e.g. January) or abbreviations (e.g. Jan)
+* Updated dependencies
+
+### Fixed
+* Make sure errors messages when parts of a date are omitted are internationalised
+* Only highlight specific day/month/fields in red when we know the problem is with specific field(s)
+* Pass langauge code to the timeout dialog so its message is internationalised properly
+
 ## v0.30.0 - 2023-07-05
 
 ### Changed

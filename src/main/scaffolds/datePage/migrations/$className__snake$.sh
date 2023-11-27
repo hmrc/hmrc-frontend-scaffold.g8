@@ -16,7 +16,7 @@ echo "Adding messages to conf.messages"
 echo "" >> ../conf/messages.en
 echo "$className;format="decap"$.title = $className$" >> ../conf/messages.en
 echo "$className;format="decap"$.heading = $className$" >> ../conf/messages.en
-echo "$className;format="decap"$.hint = For example, 12 11 2007" >> ../conf/messages.en
+echo "$className;format="decap"$.hint = For example, 12 11 2007." >> ../conf/messages.en
 echo "$className;format="decap"$.checkYourAnswersLabel = $className$" >> ../conf/messages.en
 echo "$className;format="decap"$.error.required.all = Enter the $className;format="decap"$" >> ../conf/messages.en
 echo "$className;format="decap"$.error.required.two = The $className;format="decap"$" must include {0} and {1} >> ../conf/messages.en
