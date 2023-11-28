@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## v0.32.0 - 2023-11-28
+
+### Changed
+* Add DateTimeFormats utility to make internationalising dates easier, and use in DatePage's CYA viewmodel
+
 ## v0.31.0 - 2023-11-21
 
 ### Changed
