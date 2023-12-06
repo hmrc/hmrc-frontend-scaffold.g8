@@ -4,3 +4,7 @@ lib_managed/
 src_managed/
 project/plugins/project/
 .idea
+.metals/
+.vscode/
+project/metals.sbt
+.bsp/sbt.json

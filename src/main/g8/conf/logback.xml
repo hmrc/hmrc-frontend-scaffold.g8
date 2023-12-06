@@ -56,7 +56,7 @@
     <logger name="uk.gov" level="INFO"/>
 
     <logger name="reactivemongo.core" level="INFO"/>
-    <logger name="akka" level="INFO"/>
+    <logger name="pekko" level="INFO"/>
     <logger name="play" level="INFO"/>
     <logger name="org.jose4j" level="INFO"/>
     <logger name="class org.jose4j" level="INFO"/>
