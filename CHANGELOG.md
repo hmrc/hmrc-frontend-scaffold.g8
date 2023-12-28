@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## v0.33.0 - 2023-12-28
+
+### Changed
+* Upgrade to Play 3.0.0
+* Upgrade to sbt 1.9.7
+* Update dependencies
+
 ## v0.32.0 - 2023-11-28
 
 ### Changed

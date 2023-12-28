@@ -36,3 +36,4 @@ bin
 .metals
 .vscode
 .bsp
+project/metals.sbt
