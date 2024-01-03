@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## v0.34.0 - 2024-01-03
+
+### Fixed
+* Ensure the visually hidden "Error:" prefix on error messages is correctly translated
+
 ## v0.33.0 - 2023-12-28
 
 ### Changed
