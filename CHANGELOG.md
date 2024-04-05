@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Fixed
 * Ensure the visually hidden "Error" text on error links does not have a duplicate semecolon
+* Allow months to be entered with leading zeros
 
 ### Changed
 * Upgrade to Play 3.0.2
