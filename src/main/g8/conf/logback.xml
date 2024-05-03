@@ -55,7 +55,7 @@
 
     <logger name="uk.gov" level="INFO"/>
 
-    <logger name="reactivemongo.core" level="INFO"/>
+    <logger name="org.mongodb" level="INFO"/>
     <logger name="pekko" level="INFO"/>
     <logger name="play" level="INFO"/>
     <logger name="org.jose4j" level="INFO"/>
@@ -75,7 +75,7 @@
         <appender-ref ref="STDOUT"/>
     </logger>
 
-    <root level="DEBUG">
+    <root level="INFO">
         <appender-ref ref="FILE"/>
         <appender-ref ref="STDOUT"/>
     </root>
