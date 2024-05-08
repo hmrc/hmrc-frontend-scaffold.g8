@@ -55,8 +55,8 @@
 
     <logger name="uk.gov" level="INFO"/>
 
-    <logger name="org.mongodb" level="INFO"/>
-    <logger name="pekko" level="INFO"/>
+    <logger name="org.mongodb.driver" level="INFO"/>
+    <logger name="org.apache.pekko" level="INFO"/>
     <logger name="play" level="INFO"/>
     <logger name="org.jose4j" level="INFO"/>
     <logger name="class org.jose4j" level="INFO"/>
