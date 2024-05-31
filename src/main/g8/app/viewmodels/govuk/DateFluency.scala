@@ -81,8 +81,8 @@ trait DateFluency {
     def withHint(hint: Hint): DateInput =
       date.copy(hint = Some(hint))
 
-    def withFormGroup(formGroup: FormGroup): Radios =
-      radios.copy(formGroup = formGroup)
+    def withFormGroup(formGroup: FormGroup): DateInput =
+      date.copy(formGroup = formGroup)
 
     def withCssClass(newClass: String): DateInput =
       date.copy(classes = s"\${date.classes} \$newClass")

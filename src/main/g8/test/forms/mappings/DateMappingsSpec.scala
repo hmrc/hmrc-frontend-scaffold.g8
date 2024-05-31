@@ -59,7 +59,7 @@ class DateMappingsSpec extends AnyFreeSpec with Matchers with ScalaCheckProperty
 
         val data = Map(
           "value.day" -> date.getDayOfMonth.toString,
-          "value.month" -> s"0${date.getMonthValue.toString}",
+          "value.month" -> s"0\${date.getMonthValue.toString}",
           "value.year" -> date.getYear.toString
         )
 
