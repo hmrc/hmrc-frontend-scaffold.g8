@@ -3,6 +3,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## v0.35.0 - 2024-04-05
+
+### Fixed
+* Ensure the visually hidden "Error" text on error links does not have a duplicate semecolon
+* Allow months to be entered with leading zeros
+
+### Changed
+* Upgrade to Play 3.0.2
+* Update dependencies
+
 ## v0.34.0 - 2024-01-03
 
 ### Fixed

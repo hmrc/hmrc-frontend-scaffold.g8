@@ -15,6 +15,6 @@ object ViewUtils {
     s"\${messages(title)} - \${section.fold("")(messages(_) + " - ")}\${messages("service.name")} - \${messages("site.govuk")}"
 
   def errorPrefix(form: Form[_])(implicit messages: Messages): String = {
-    if (form.hasErrors || form.hasGlobalErrors) messages("error.prefix") else ""
+    if (form.hasErrors || form.hasGlobalErrors) messages("error.title.prefix") else ""
   }
 }

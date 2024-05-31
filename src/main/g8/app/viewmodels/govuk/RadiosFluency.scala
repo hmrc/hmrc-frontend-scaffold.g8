@@ -2,6 +2,7 @@ package viewmodels.govuk
 
 import play.api.data.Field
 import play.api.i18n.Messages
+import uk.gov.hmrc.govukfrontend.views.viewmodels.FormGroup
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 import uk.gov.hmrc.govukfrontend.views.viewmodels.fieldset.{Fieldset, Legend}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.hint.Hint
@@ -77,8 +78,8 @@ trait RadiosFluency {
     def withHint(hint: Hint): Radios =
       radios.copy(hint = Some(hint))
 
-    def withFormGroupClasses(classes: String): Radios =
-      radios.copy(formGroupClasses = classes)
+    def withFormGroup(formGroup: FormGroup): Radios =
+      radios.copy(formGroup = formGroup)
 
     def withIdPrefix(prefix: String): Radios =
       radios.copy(idPrefix = Some(prefix))
