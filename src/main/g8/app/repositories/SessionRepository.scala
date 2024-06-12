@@ -4,6 +4,7 @@ import config.FrontendAppConfig
 import models.UserAnswers
 import org.mongodb.scala.bson.conversions.Bson
 import org.mongodb.scala.model._
+import org.mongodb.scala.SingleObservableFuture
 import play.api.libs.json.Format
 import uk.gov.hmrc.mongo.MongoComponent
 import uk.gov.hmrc.mongo.play.json.PlayMongoRepository

@@ -2,7 +2,7 @@
     layout: templates.Layout
 )
 
-@(pageTitle: String, heading: String, message: String)(implicit request: Request[_], messages: Messages)
+@(pageTitle: String, heading: String, message: String)(implicit rh: RequestHeader, messages: Messages)
 
 @layout(pageTitle = titleNoForm(pageTitle)) {
     <h1 class="govuk-heading-xl">@messages(heading)</h1>

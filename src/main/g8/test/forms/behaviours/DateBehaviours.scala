@@ -13,7 +13,7 @@ class DateBehaviours extends FieldBehaviours {
     "bind valid data" in {
 
       forAll(validData -> "valid date") {
-        date =>
+        (date: LocalDate) =>
 
           val data = Map(
             s"\$key.day"   -> date.getDayOfMonth.toString,
@@ -36,7 +36,7 @@ class DateBehaviours extends FieldBehaviours {
       val generator = datesBetween(max.plusDays(1), max.plusYears(10))
 
       forAll(generator -> "invalid dates") {
-        date =>
+        (date: LocalDate) =>
 
           val data = Map(
             s"\$key.day"   -> date.getDayOfMonth.toString,
@@ -58,7 +58,7 @@ class DateBehaviours extends FieldBehaviours {
       val generator = datesBetween(min.minusYears(10), min.minusDays(1))
 
       forAll(generator -> "invalid dates") {
-        date =>
+        (date: LocalDate) =>
 
           val data = Map(
             s"\$key.day"   -> date.getDayOfMonth.toString,

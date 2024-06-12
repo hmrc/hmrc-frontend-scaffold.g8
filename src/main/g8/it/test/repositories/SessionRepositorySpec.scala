@@ -35,9 +35,9 @@ class SessionRepositorySpec
   private val userAnswers = UserAnswers("id", Json.obj("foo" -> "bar"), Instant.ofEpochSecond(1))
 
   private val mockAppConfig = mock[FrontendAppConfig]
-  when(mockAppConfig.cacheTtl) thenReturn 1
+  when(mockAppConfig.cacheTtl) thenReturn 1L
 
-  protected override val repository = new SessionRepository(
+  protected override val repository: SessionRepository = new SessionRepository(
     mongoComponent = mongoComponent,
     appConfig      = mockAppConfig,
     clock          = stubClock
@@ -52,7 +52,6 @@ class SessionRepositorySpec
       val setResult     = repository.set(userAnswers).futureValue
       val updatedRecord = find(Filters.equal("_id", userAnswers.id)).futureValue.headOption.value
 
-      setResult mustEqual true
       updatedRecord mustEqual expectedResult
     }
 
@@ -93,7 +92,6 @@ class SessionRepositorySpec
 
       val result = repository.clear(userAnswers.id).futureValue
 
-      result mustEqual true
       repository.get(userAnswers.id).futureValue must not be defined
     }
 
@@ -118,7 +116,6 @@ class SessionRepositorySpec
 
         val expectedUpdatedAnswers = userAnswers copy (lastUpdated = instant)
 
-        result mustEqual true
         val updatedAnswers = find(Filters.equal("_id", userAnswers.id)).futureValue.headOption.value
         updatedAnswers mustEqual expectedUpdatedAnswers
       }

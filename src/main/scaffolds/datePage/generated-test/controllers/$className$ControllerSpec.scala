@@ -58,7 +58,7 @@ class $className$ControllerSpec extends SpecBase with MockitoSugar {
         val view = application.injector.instanceOf[$className$View]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(getRequest, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode)(getRequest(), messages(application)).toString
       }
     }
 
@@ -74,7 +74,7 @@ class $className$ControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, getRequest()).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode)(getRequest, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode)(getRequest(), messages(application)).toString
       }
     }
 
@@ -125,7 +125,7 @@ class $className$ControllerSpec extends SpecBase with MockitoSugar {
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val result = route(application, getRequest).value
+        val result = route(application, getRequest()).value
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
