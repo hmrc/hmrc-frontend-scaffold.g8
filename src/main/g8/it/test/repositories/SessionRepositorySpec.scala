@@ -4,17 +4,21 @@ import config.FrontendAppConfig
 import models.UserAnswers
 import org.mockito.Mockito.when
 import org.mongodb.scala.model.Filters
+import org.scalactic.source.Position
 import org.scalatest.OptionValues
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
 import org.scalatestplus.mockito.MockitoSugar
+import org.slf4j.MDC
 import play.api.libs.json.Json
 import uk.gov.hmrc.mongo.test.DefaultPlayMongoRepositorySupport
+import uk.gov.hmrc.play.bootstrap.dispatchers.MDCPropagatingExecutorService
 
 import java.time.{Clock, Instant, ZoneId}
 import java.time.temporal.ChronoUnit
-import scala.concurrent.ExecutionContext.Implicits.global
+import java.util.concurrent.Executors
+import scala.concurrent.{ExecutionContext, Future}
 
 class SessionRepositorySpec
   extends AnyFreeSpec
@@ -31,13 +35,13 @@ class SessionRepositorySpec
   private val userAnswers = UserAnswers("id", Json.obj("foo" -> "bar"), Instant.ofEpochSecond(1))
 
   private val mockAppConfig = mock[FrontendAppConfig]
-  when(mockAppConfig.cacheTtl) thenReturn 1
+  when(mockAppConfig.cacheTtl) thenReturn 1L
 
-  protected override val repository = new SessionRepository(
+  protected override val repository: SessionRepository = new SessionRepository(
     mongoComponent = mongoComponent,
     appConfig      = mockAppConfig,
     clock          = stubClock
-  )
+  )(scala.concurrent.ExecutionContext.Implicits.global)
 
   ".set" - {
 
@@ -48,9 +52,10 @@ class SessionRepositorySpec
       val setResult     = repository.set(userAnswers).futureValue
       val updatedRecord = find(Filters.equal("_id", userAnswers.id)).futureValue.headOption.value
 
-      setResult mustEqual true
       updatedRecord mustEqual expectedResult
     }
+
+    mustPreserveMdc(repository.set(userAnswers))
   }
 
   ".get" - {
@@ -75,6 +80,8 @@ class SessionRepositorySpec
         repository.get("id that does not exist").futureValue must not be defined
       }
     }
+
+    mustPreserveMdc(repository.get(userAnswers.id))
   }
 
   ".clear" - {
@@ -85,7 +92,6 @@ class SessionRepositorySpec
 
       val result = repository.clear(userAnswers.id).futureValue
 
-      result mustEqual true
       repository.get(userAnswers.id).futureValue must not be defined
     }
 
@@ -94,6 +100,8 @@ class SessionRepositorySpec
 
       result mustEqual true
     }
+
+    mustPreserveMdc(repository.clear(userAnswers.id))
   }
 
   ".keepAlive" - {
@@ -108,7 +116,6 @@ class SessionRepositorySpec
 
         val expectedUpdatedAnswers = userAnswers copy (lastUpdated = instant)
 
-        result mustEqual true
         val updatedAnswers = find(Filters.equal("_id", userAnswers.id)).futureValue.headOption.value
         updatedAnswers mustEqual expectedUpdatedAnswers
       }
@@ -121,5 +128,20 @@ class SessionRepositorySpec
         repository.keepAlive("id that does not exist").futureValue mustEqual true
       }
     }
+
+    mustPreserveMdc(repository.keepAlive(userAnswers.id))
   }
+
+  private def mustPreserveMdc[A](f: => Future[A])(implicit pos: Position): Unit =
+    "must preserve MDC" in {
+
+      implicit lazy val ec: ExecutionContext =
+        ExecutionContext.fromExecutor(new MDCPropagatingExecutorService(Executors.newFixedThreadPool(2)))
+
+      MDC.put("test", "foo")
+
+      f.map { _ =>
+        MDC.get("test") mustEqual "foo"
+      }.futureValue
+    }
 }

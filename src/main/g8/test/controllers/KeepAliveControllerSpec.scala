@@ -45,7 +45,7 @@ class KeepAliveControllerSpec extends SpecBase with MockitoSugar {
 
         running(application) {
 
-          val request = FakeRequest(GET, routes.KeepAliveController.keepAlive.url)
+          val request = FakeRequest(GET, routes.KeepAliveController.keepAlive().url)
 
           val result = route(application, request).value
 
@@ -69,7 +69,7 @@ class KeepAliveControllerSpec extends SpecBase with MockitoSugar {
 
         running(application) {
 
-          val request = FakeRequest(GET, routes.KeepAliveController.keepAlive.url)
+          val request = FakeRequest(GET, routes.KeepAliveController.keepAlive().url)
 
           val result = route(application, request).value
 

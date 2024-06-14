@@ -3,6 +3,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## v0.37.0 - 2024-06-10
+
+### Fixed
+* Preserve MDC in session repository methods
+
+### Changed
+* Update to SBT 1.9.9
+* Update dependencies
+* Consolidate syntax to make a future migration to scala 3 simpler
+
 ## v0.36.0 - 2024-05-31
 
 ### Fixed
