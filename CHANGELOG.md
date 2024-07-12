@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## v0.38.0 - 2024-07-12
+
+### Fixed
+* Change feedback url to allow relative values
+* Fix bug in the multiple questions scaffold
+
+### Changed
+* Update dependencies
+
 ## v0.37.0 - 2024-06-10
 
 ### Fixed
