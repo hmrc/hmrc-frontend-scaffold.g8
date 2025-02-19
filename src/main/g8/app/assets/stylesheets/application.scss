@@ -1,3 +1,8 @@
+/*
+    Styling in this and other .scss files will be compiled by the sbt-sass-compiler plugin: https://github.com/hmrc/sbt-sass-compiler
+    If you encounter any issue with Sass compilation using the plugin, please reach out to the PlatUI team.
+ */
+
 .js-visible {
   display: none !important;
 }
