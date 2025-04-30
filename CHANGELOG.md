@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## v0.40.0 - 2025-04-10
+
+### Changed
+* Updated signout URL to use bas-gateway
+* Updated dependencies
+
 ## v0.39.0 - 2024-08-29
 
 ### Fixed
