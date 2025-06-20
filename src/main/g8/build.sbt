@@ -43,7 +43,6 @@ lazy val microservice = (project in file("."))
     ),
     libraryDependencies ++= AppDependencies(),
     retrieveManaged := true,
-    resolvers ++= Seq(Resolver.jcenterRepo),
     pipelineStages := Seq(digest),
     Assets / pipelineStages := Seq(concat)
   )
