@@ -36,11 +36,13 @@ class SessionRepositorySpec
   private val mockAppConfig = mock[FrontendAppConfig]
   when(mockAppConfig.cacheTtl) thenReturn 1L
 
+  implicit val productionLikeTestMdcExecutionContext: ExecutionContext = MdcExecutionContext()
+
   protected override val repository: SessionRepository = new SessionRepository(
     mongoComponent = mongoComponent,
     appConfig      = mockAppConfig,
     clock          = stubClock
-  )(scala.concurrent.ExecutionContext.Implicits.global)
+  )
 
   ".set" - {
 
@@ -134,13 +136,10 @@ class SessionRepositorySpec
   private def mustPreserveMdc[A](f: => Future[A])(implicit pos: Position): Unit =
     "must preserve MDC" in {
 
-      implicit val ec: ExecutionContext =
-        new MdcExecutionContext(ExecutionContext.Implicits.global.asInstanceOf[ExecutionContextExecutorService])
-
       MDC.put("test", "foo")
 
-      f.map { _ =>
-        MDC.get("test") mustEqual "foo"
-      }.futureValue
+      (f.map { _ =>
+        Option(MDC.get("test"))
+      }.futureValue) mustEqual Some("foo")
     }
 }
