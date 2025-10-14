@@ -11,14 +11,13 @@ import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
 import org.scalatestplus.mockito.MockitoSugar
 import org.slf4j.MDC
+import uk.gov.hmrc.mdc.MdcExecutionContext
 import play.api.libs.json.Json
 import uk.gov.hmrc.mongo.test.DefaultPlayMongoRepositorySupport
-import uk.gov.hmrc.play.bootstrap.dispatchers.MDCPropagatingExecutorService
 
 import java.time.{Clock, Instant, ZoneId}
 import java.time.temporal.ChronoUnit
-import java.util.concurrent.Executors
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.{ExecutionContext, Future, ExecutionContextExecutorService}
 
 class SessionRepositorySpec
   extends AnyFreeSpec
@@ -37,11 +36,13 @@ class SessionRepositorySpec
   private val mockAppConfig = mock[FrontendAppConfig]
   when(mockAppConfig.cacheTtl) thenReturn 1L
 
+  implicit val productionLikeTestMdcExecutionContext: ExecutionContext = MdcExecutionContext()
+
   protected override val repository: SessionRepository = new SessionRepository(
     mongoComponent = mongoComponent,
     appConfig      = mockAppConfig,
     clock          = stubClock
-  )(scala.concurrent.ExecutionContext.Implicits.global)
+  )
 
   ".set" - {
 
@@ -135,13 +136,10 @@ class SessionRepositorySpec
   private def mustPreserveMdc[A](f: => Future[A])(implicit pos: Position): Unit =
     "must preserve MDC" in {
 
-      implicit lazy val ec: ExecutionContext =
-        ExecutionContext.fromExecutor(new MDCPropagatingExecutorService(Executors.newFixedThreadPool(2)))
-
       MDC.put("test", "foo")
 
-      f.map { _ =>
-        MDC.get("test") mustEqual "foo"
-      }.futureValue
+      (f.map { _ =>
+        Option(MDC.get("test"))
+      }.futureValue) mustEqual Some("foo")
     }
 }
