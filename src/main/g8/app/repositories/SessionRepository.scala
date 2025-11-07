@@ -40,7 +40,7 @@ class SessionRepository @Inject()(
 
   private def byId(id: String): Bson = Filters.equal("_id", id)
 
-  def keepAlive(id: String): Future[Boolean] = Mdc.preservingMdc {
+  def keepAlive(id: String): Future[Boolean] = {
     collection
       .updateOne(
         filter = byId(id),
@@ -59,7 +59,7 @@ class SessionRepository @Inject()(
     }
   }
 
-  def set(answers: UserAnswers): Future[Boolean] = Mdc.preservingMdc {
+  def set(answers: UserAnswers): Future[Boolean] = {
 
     val updatedAnswers = answers copy (lastUpdated = Instant.now(clock))
 
@@ -73,7 +73,7 @@ class SessionRepository @Inject()(
       .map(_ => true)
   }
 
-  def clear(id: String): Future[Boolean] = Mdc.preservingMdc {
+  def clear(id: String): Future[Boolean] = {
     collection
       .deleteOne(byId(id))
       .toFuture()
