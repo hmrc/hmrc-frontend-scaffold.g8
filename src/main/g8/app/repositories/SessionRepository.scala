@@ -50,12 +50,14 @@ class SessionRepository @Inject()(
       .map(_ => true)
   }
 
-  def get(id: String): Future[Option[UserAnswers]] = Mdc.preservingMdc {
+  def get(id: String): Future[Option[UserAnswers]] = {
     keepAlive(id).flatMap {
       _ =>
-        collection
-          .find(byId(id))
-          .headOption()
+        Mdc.preservingMdc {
+          collection
+            .find(byId(id))
+            .headOption()
+        }
     }
   }
 
