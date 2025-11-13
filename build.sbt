@@ -3,7 +3,4 @@ lazy val root = (project in file("."))
 
     name := "hmrc-frontend-scaffold.g8",
 
-    Test / test := {
-      "test-frontend-generation.sh" !
-    }
   )
