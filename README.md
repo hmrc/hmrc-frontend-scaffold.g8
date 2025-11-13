@@ -47,7 +47,7 @@ To use a scaffold, run `sbt` in interactive mode and issue the command `g8Scaffo
 
 Exit out of `sbt` and run the bash script `migrate.sh` in the root directory of your service.  This will modify a couple of files in the service, including routes and messages.
 
-## Testing
+## Script for testing
 
 In order to easily test that this template generates a service with compiling code and passing tests, there is a `test-frontend-generation.sh` shell script which will:
 
