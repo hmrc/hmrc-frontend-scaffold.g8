@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/usr/bin/env bash -e
 
 # The script tests hmrc-frontend-scaffold.g8 in CI and local environment
 
