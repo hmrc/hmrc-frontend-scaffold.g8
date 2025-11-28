@@ -6,3 +6,4 @@ project/plugins/project/
 .idea
 .metals/
 .vscode/
+.bsp/
