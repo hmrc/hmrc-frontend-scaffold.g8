@@ -47,6 +47,16 @@ To use a scaffold, run `sbt` in interactive mode and issue the command `g8Scaffo
 
 Exit out of `sbt` and run the bash script `migrate.sh` in the root directory of your service.  This will modify a couple of files in the service, including routes and messages.
 
+## Script for testing
+
+In order to easily test that this template generates a service with compiling code and passing tests, there is a `test-frontend-generation.sh` shell script which will:
+
+* generate a service from the template into `target/g8`
+* copy in the required repository.yaml file
+* compile the generated service and run both the unit and integration test suites that have been generated
+
+This can be run using `sh test-frontend-generation.sh` in the root directory of this project.
+
 ## Contributing
 
 If you’ve spotted an issue or thought of a feature that you’d like to contribute to the scaffold, please take a few minutes to review our [contribution process and guidelines](CONTRIBUTING.md) before you submit your request.
