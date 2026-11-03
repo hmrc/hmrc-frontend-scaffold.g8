@@ -1,44 +1,48 @@
 package controllers
 
 import base.SpecBase
+import models.UserAnswers
+import org.mockito.ArgumentMatchers.{any, eq as eqTo}
+import org.mockito.Mockito.{verify, when}
+import org.scalatestplus.mockito.MockitoSugar
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import viewmodels.govuk.SummaryListFluency
 import views.html.CheckYourAnswersView
 
 class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
+  private abstract class Setup extends MockitoSugar {
+    val givenUserAnswers: Option[UserAnswers]
+
+    val mockView: CheckYourAnswersView = mock
+    when(mockView.apply(any)(any, any)) thenReturn play.twirl.api.Html("CheckYourAnswers")
+
+    lazy val controllerUnderTest = new CheckYourAnswersController(
+      mockAppControllerComponents(givenUserAnswers),
+      mockView
+    )
+  }
 
   "Check Your Answers Controller" - {
 
-    "must return OK and the correct view for a GET" in {
+    "must return OK and the correct view for a GET" in new Setup {
+      val givenUserAnswers: Option[UserAnswers] = Some(emptyUserAnswers)
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      private val result = controllerUnderTest.onPageLoad()(FakeRequest())
 
-      running(application) {
-        val request = FakeRequest(GET, routes.CheckYourAnswersController.onPageLoad().url)
+      private val expectedList = SummaryListViewModel(Seq.empty)
 
-        val result = route(application, request).value
-
-        val view = application.injector.instanceOf[CheckYourAnswersView]
-        val list = SummaryListViewModel(Seq.empty)
-
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(list)(request, messages(application)).toString
-      }
+      status(result) mustEqual OK
+      verify(mockView).apply(eqTo(expectedList))(any, any)
     }
 
-    "must redirect to Journey Recovery for a GET if no existing data is found" in {
+    "must redirect to Journey Recovery for a GET if no existing data is found" in new Setup {
+      val givenUserAnswers: Option[UserAnswers] = None
 
-      val application = applicationBuilder(userAnswers = None).build()
+      private val result = controllerUnderTest.onPageLoad()(FakeRequest())
 
-      running(application) {
-        val request = FakeRequest(GET, routes.CheckYourAnswersController.onPageLoad().url)
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
-      }
+      status(result) mustEqual SEE_OTHER
+      redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
     }
   }
 }
