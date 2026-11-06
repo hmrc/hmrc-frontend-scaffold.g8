@@ -1,29 +1,28 @@
 package controllers
 
 import base.SpecBase
+import org.mockito.ArgumentMatchers.any
+import org.mockito.Mockito.{verify, when}
+import org.scalatestplus.mockito.MockitoSugar
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import views.html.IndexView
 
 class IndexControllerSpec extends SpecBase {
+  private class Setup extends MockitoSugar {
+    val mockView: IndexView = mock
+    when(mockView.apply()(any, any)) thenReturn play.twirl.api.Html("IndexView")
+
+    val controllerUnderTest = new IndexController(mockAppControllerComponents(), mockView)
+  }
 
   "Index Controller" - {
 
-    "must return OK and the correct view for a GET" in {
+    "must return OK and the correct view for a GET" in new Setup {
+      private val result = controllerUnderTest.onPageLoad()(FakeRequest())
 
-      val application = applicationBuilder(userAnswers = None).build()
-
-      running(application) {
-        val request = FakeRequest(GET, routes.IndexController.onPageLoad().url)
-
-        val result = route(application, request).value
-
-        val view = application.injector.instanceOf[IndexView]
-
-        status(result) mustEqual OK
-
-        contentAsString(result) mustEqual view()(request, messages(application)).toString
-      }
+      status(result) mustEqual OK
+      verify(mockView).apply()(any, any)
     }
   }
 }
