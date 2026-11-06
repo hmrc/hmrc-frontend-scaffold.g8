@@ -4,6 +4,7 @@ import base.SpecBase
 import controllers.routes
 import pages._
 import models._
+import models.Mode._
 
 class NavigatorSpec extends SpecBase {
 
