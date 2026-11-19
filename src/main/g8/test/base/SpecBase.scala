@@ -6,11 +6,9 @@ import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
 import org.scalatest.{OptionValues, TryValues}
-import play.api.Application
-import play.api.i18n.{Messages, MessagesApi}
-import play.api.inject.bind
-import play.api.inject.guice.GuiceApplicationBuilder
-import play.api.test.FakeRequest
+import play.api.mvc.MessagesControllerComponents
+
+import scala.concurrent.ExecutionContext
 
 trait SpecBase
   extends AnyFreeSpec
@@ -19,18 +17,16 @@ trait SpecBase
     with OptionValues
     with ScalaFutures
     with IntegrationPatience {
+  protected given ExecutionContext = stubControllerComponents.executionContext
+
+  protected val stubControllerComponents: MessagesControllerComponents = play.api.test.Helpers.stubMessagesControllerComponents()
+
+  val dataRequiredAction = new DataRequiredActionImpl
+  def dataRetrievalAction(userAnswers: Option[UserAnswers] = None) = new FakeDataRetrievalAction(userAnswers)
+  val identifierAction = new FakeIdentifierAction(stubControllerComponents.parsers)
 
   val userAnswersId: String = "id"
 
   def emptyUserAnswers : UserAnswers = UserAnswers(userAnswersId)
 
-  def messages(app: Application): Messages = app.injector.instanceOf[MessagesApi].preferred(FakeRequest())
-
-  protected def applicationBuilder(userAnswers: Option[UserAnswers] = None): GuiceApplicationBuilder =
-    new GuiceApplicationBuilder()
-      .overrides(
-        bind[DataRequiredAction].to[DataRequiredActionImpl],
-        bind[IdentifierAction].to[FakeIdentifierAction],
-        bind[DataRetrievalAction].toInstance(new FakeDataRetrievalAction(userAnswers))
-      )
 }
