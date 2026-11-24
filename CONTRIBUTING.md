@@ -31,9 +31,9 @@ Once you've identified (or created) an [issue](https://github.com/hmrc/hmrc-fron
 * Fork the repository
 * Write tests along with your code
 * Add logical, atomic commits with [good commit messages](#commit-messages)
-* Raise your Pull Request against the `develop` branch using our [Pull Request template](.github/PULL_REQUEST_TEMPLATE.md)
+* Raise your Pull Request against the `main` branch using our [Pull Request template](.github/PULL_REQUEST_TEMPLATE.md)
 * We will review and offer any feedback
-* Once merged to `develop`, we will coordinate a merge into `main` and a release
+* We will coordinate a merge into `main` and a release
 
 ## Commits
 
